@@ -13,7 +13,7 @@
 <html>
 <head>
    <meta charset="UTF-8">
-    <title>비씨투어</title>
+    <title>비씨투어123123</title>
     <style>
     @charset "UTF-8";
 @font-face {
