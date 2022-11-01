@@ -55,7 +55,7 @@
                 </div>
                 <div class="column2">
                     <div>
-                    	개인정보123
+                    	개인정보
                     </div>
                 </div>
             </div>
