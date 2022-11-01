@@ -56,17 +56,18 @@
                 	<div class="b_readcontent">
 						<div class="b_readbtn">
 							<input type="hidden" name="bno" value="${boardDto.bno}" readonly="readonly">
-							<button type="button" id="listbtn" class="btn">목록</button>
-							<button type="button" id="modfybtn" class="btn">수정</button>
-							<button type="button" id="removebtn" class="btn">삭제</button>
+							<button type="button" id="listbtn" class="b_btnsize">목록</button>
+							<button type="button" id="modfybtn" class="b_btnsize">수정</button>
+							<button type="button" id="removebtn" class="b_btnsize">삭제</button>
 						</div>
 						<div class="b_readtitle">
 							${boardDto.title}
 						</div>
 						<div class="b_readwriter">
-							작성자: ${boardDto.writer}, 등록일: ${boardDto.reg_Date}
+						<fmt:formatDate value="${boardDto.reg_Date}" pattern="yyyy-MM-dd HH:mm:ss" var="regDate" />
+							작성자: ${boardDto.writer},&nbsp;&nbsp; 등록일: ${regDate}
 						</div>
-						<div class="b_contentarea">
+						<div class="b_readcontentarea">
 							${boardDto.content}
 						</div>
 					</div>
