@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Room No.703';
+    src: url('../font/establishRoomNo703.woff2') format('woff2'),
+        url('../font/establishRoomNo703.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+

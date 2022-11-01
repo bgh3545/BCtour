@@ -1,0 +1,216 @@
+@charset "UTF-8";
+@font-face {
+    font-family: 'Miwon';
+    src: url('resources/font/Miwon.woff') format('woff'),
+        url('resources/font/Miwon.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+    }
+    @font-face {
+    font-family: 'establishRoomNo703OTF';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRoomNo703OTF.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+	}
+     * {
+     	font-family:'establishRoomNo703OTF'; 
+        }
+   .main{
+        width: 100%;
+        height: 934px;
+    }
+    .allDiv{
+        width: 1380px;
+        height: 100%;
+        margin: 0px auto;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+    }
+    .header{ 
+        position: absolute;
+        align-self: flex-end;
+    }
+    .header>ul{
+     	list-style: none;
+     	display: inline;
+    }
+    .header>ul>li{
+    	list-style: none;
+        color: rgba(0, 0, 0, 0.5);
+        padding-right: 20px;
+    }
+    li{
+        display: inline;
+    }
+    a[href]{
+    	list-style:none;
+    	text-decoration:none;
+    	color:black;
+    }
+    a[href]:hover{
+    	color: rgb(145,210,57);
+    }
+    .search{
+        width: 1350px;
+        border-bottom: 3px solid rgba(0, 0, 0, 0.3);
+        text-align: center;
+        margin: 0px auto;
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .logoDiv{
+        width: 360px;
+        height:130px;
+        text-align: center;
+    }
+    .logo{
+        color: rgb(145,210,57);
+        margin-top: 40px;
+        font-size: 40px;
+    }
+    .searchEngine{
+        text-align: center;
+    }
+    .searchEngine>input{
+        width: 600px;
+        height: 55px;
+        border-radius: 8px;
+        border-color: rgb(145,210,57);
+        margin-bottom: 10px;
+    }
+    .myPageDiv{
+        text-align: center;
+    }
+  	.mypageDiv>.mypage>li{
+        font-size: 20px;
+        padding-right: 10px;
+    }
+    .nav{
+        width:1350px;
+        height: 780px;
+        margin: 0px auto;
+        margin-bottom: 10px;
+        display: flex;
+    }
+    #column{
+        width:355px;
+        height:650px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align:center;
+        margin-top: 15px;
+    }
+    .city{
+        display: flex;
+    }
+    .chungnam_city{
+        display: none
+    }
+    #column>.city>h2{
+        color: gray;
+        font-size: 25px;
+        font-weight: lighter;
+    }
+    #column>.city>h2:hover{
+        color: rgb(145,210,57);
+    }
+    .city:hover{
+        display: flex;
+        flex-direction: column;
+    }
+    .city:hover .chungnam_city{
+        display: block;
+    }
+    .chungnam_city>li{
+        margin-top: 40px;
+    }
+    #select{
+    	color: rgb(145,210,57);
+    }
+    .column2{
+        width:939px;
+        height:650px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding:10px;
+        
+    }
+    .imgContainer{
+        width:800px; 
+        height:175px;
+        border: 5px solid black;
+        text-align: center;
+        margin-top: 20px;
+        margin-right: 15px;
+        overflow: hidden;
+    }
+    .inputLogo{
+        text-align: center;
+    }
+    .icon{
+        width:50px;
+        height: 50px;
+    }
+    .icon{
+        width:200px;
+        height: 150px;
+        margin-right: 0px;
+    }
+    #b_column2upside{
+    	width:900px;
+    	height:60px;
+    	font-size:40px;
+    	text-align:left;
+    	padding-top:20px;
+    	padding-bottom:15px;
+    }
+    #b_column2center{
+    	width:900px;
+    	height:600px;
+    	display:flex;
+    	flex-wrap:wrap;
+    	
+    }
+    #b_column2centerContent{
+    	width: 400px;
+    	height: 250px;
+    	margin:10px;
+    	display:flex;
+    	justify-content:center;
+    	flex-direction:column;
+    }
+    #b_icon{
+    	font-size:80px;
+    }
+    #b_iconname{
+    	font-size:30px;
+    	padding-top:30px;
+    }
+    #b_iconsimplecontent{
+    	font-size:30px;
+    	margin-left:30px;
+    }
+    #b_iconcontent{
+    	display:flex;
+    	align-items:center;
+    	justify-content:center;
+    }
+    .redcolor{
+    	color:red;
+    }
+    #personalInfo{
+    	width:300px;
+    	height:30px;
+    	border-radius:5px;
+    	margin-right:15px;
+    }
+    #personalInfoButton{
+    width:50px;
+    height:30px;
+    }

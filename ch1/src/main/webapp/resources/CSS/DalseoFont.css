@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'DalseoHealing';
+    src: url("../font/DalseoHealingBold.woff2") format("woff2"),
+        url("../font/DalseoHealingBold.woff") format("woff");
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'DalseoHealing';
+    src: url("../font/DalseoHealingMedium.woff2") format("woff2"),
+        url("../font/DalseoHealingMedium.woff") format("woff");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'DalseoDarling';
+    src: url("../font/DalseoDarling.woff2") format("woff2"),
+        url("../font/DalseoDarling.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
