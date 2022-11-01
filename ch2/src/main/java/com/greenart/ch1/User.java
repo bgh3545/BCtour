@@ -1,0 +1,71 @@
+package com.greenart.ch1;
+
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+public class User {
+	private String id;
+	private String pwd;
+	private String name;
+	private String email;
+	private String[] sns;
+	private String[] hobby;
+//	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private LocalDate birth;
+//	private Date birth;
+	
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getPwd() {
+		return pwd;
+	}
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public LocalDate getBirth() {
+		return birth;
+	}
+	public void setBirth(LocalDate birth) {
+		this.birth = birth;
+	}
+	public String[] getSns() {
+		return sns;
+	}
+	public void setSns(String[] sns) {
+		this.sns = sns;
+	}
+	public String[] getHobby() {
+		return hobby;
+	}
+	public void setHobby(String[] hobby) {
+		this.hobby = hobby;
+	}
+	
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", pw=" + pwd + ", name=" + name + ", email=" + email + ", birth=" + birth + ", sns="
+				+ Arrays.toString(sns) + ", hobby=" + Arrays.toString(hobby) + "]";
+	}
+
+	
+}

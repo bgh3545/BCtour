@@ -1,0 +1,2 @@
+car = com.greenart.di.Truck
+engine = com.greenart.di.Engine
