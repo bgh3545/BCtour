@@ -233,6 +233,8 @@
     .b_btnsize{
     	width:60px;
     	height:30px;
+    	font-size:20px;
+    	line-height:30px;
     }
     .b_content{
     	width:940px;
@@ -311,12 +313,17 @@
     	text-align:right;
     	margin-right:20px;
     }
+    .b_readtitlearea{
+    	width:920px;
+    	height:50px;
+    	display:flex;
+    	justify-content:center;
+    }
     .b_readtitle{
     	font-size:40px;
-    	height:50px;
-    	text-align:left;
-    	padding-left:10px;
-    	line-height:60px;
+    	width:920px;
+    	margin-top:5px;
+    	padding:5px;
     }
     .b_readwriter{
     	font-size:20px;
@@ -327,12 +334,29 @@
     	line-height:40px;
     	border-bottom:1px solid rgba(44, 44, 44, 0.3);
     }
-    .b_contentarea{
+    .b_readcontentarea{
+    	font-size:20px;
+    	width:920px;
+    	min-height:150px;
+    	margin-top:20px;
+    	padding-left:10px;
+    	text-align:left;
+    	word-wrap: break-word;
+    }
+    .b_writecontentarea{
     	width:920px;
     	min-height:150px;
     	margin-top:5px;
     	text-align:left;
-    	font-size:20px;
-    	padding:20px;
     	word-wrap: break-word;
+    	display:flex;
+    	justify-content:center;
+    }
+    .b_textarea{
+    	margin-top:10px;
+    	font-size:20px;
+    	width:920px;
+    	height:500px;
+    	padding:10px;
+    	border-radius:7px;
     }

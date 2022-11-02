@@ -13,7 +13,7 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
-<link href="../resources/CSS/BCtourStyle.css?qq" rel="stylesheet"/>
+<link href="../resources/CSS/BCtourStyle.css?qq1" rel="stylesheet"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 </head>
 <body>
@@ -56,14 +56,14 @@
                 	<div class="b_readcontent">
 						<div class="b_readbtn">
 							<input type="hidden" name="bno" value="${boardDto.bno}" readonly="readonly">
-							<button type="button" id="listbtn" class="b_btnsize">등록</button>
-							<button type="button" id="modfybtn" class="b_btnsize">취소</button>
+							<button type="button" id="writebtn" class="b_btnsize">등록</button>
+							<button type="button" id="cancelbtn" class="b_btnsize">취소</button>
 						</div>
-						<div class="b_readtitle">
-							<input class="b_readtitle" type="text" name="title">
+						<div class="b_readtitlearea">
+							<input class="b_readtitle" type="text" name="title" placeholder="제목을 입력해 주세요">
 						</div>
-						<div class="b_contentarea">
-							<textarea></textarea>
+						<div class="b_contentwritearea">
+							<textarea name="content" class="b_textarea" placeholder="내용을 입력해 주세요."></textarea>
 						</div>
 					</div>
                 </div>
