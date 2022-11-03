@@ -31,7 +31,7 @@ public class logInController_v1 {
 		System.out.println("rememberId="+rememberId);
 		
 		if(!loginCheck(id,pwd)) {
-			String msg= URLEncoder.encode(" id또는 비밀번호를 확인해주세요","utf-8");
+			String msg= URLEncoder.encode("id 혹은 비밀번호를 확인해 주세요","utf-8");
 			return "redirect:/logIn1/logIn1?msg="+msg;
 		}
 		
@@ -64,6 +64,7 @@ public class logInController_v1 {
 	
 	private boolean loginCheck(String id, String pwd) throws Exception {
 		User user = userDao.SelectUser(id);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@"+user);
 		if(user==null) return false;
 		
 		return user.getPwd().equals(pwd);

@@ -21,4 +21,8 @@ public interface BoardService {
 
 	List<BoardDto> getNotice(Map map) throws Exception;
 
+	int getSearchResultCnt(SearchCondition sc) throws Exception;
+
+	List<BoardDto> getSearchResultPage(SearchCondition sc) throws Exception;
+
 }

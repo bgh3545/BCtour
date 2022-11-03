@@ -94,6 +94,7 @@
         margin: 0px auto;
         margin-bottom: 10px;
         display: flex;
+        justify-content: center;
     }
     #column{
         width:355px;
@@ -132,8 +133,7 @@
     	color: rgb(145,210,57);
     }
     .column2{
-        width:939px;
-        height:650px;
+        width:980px;
         text-align: center;
         display: flex;
         flex-direction: column;
@@ -226,14 +226,14 @@
         font-size:30px;
     }
     .b_writebtn{
-    	padding-top:10px;
+    	margin-top:10px;
     	width:939px;
     	text-align:right;
     }
     .b_btnsize{
     	width:60px;
     	height:30px;
-    	font-size:20px;
+    	font-size:18px;
     	line-height:30px;
     }
     .b_content{
@@ -306,24 +306,41 @@
     	border:1px solid rgba(44, 44, 44, 0.3);
     	border-radius:8px;
     	width:940px;
-    	height:700px;
     	padding:15px;
+    }
+    .b_writecontent{
+    	border-radius:8px;
+    	width:960px;
+    	height:720px;
     }
     .b_readbtn{
     	text-align:right;
     	margin-right:20px;
     }
-    .b_readtitlearea{
+    .b_writetitlearea{
+    	margin-top:10px;
+    	margin-bottom:10px;
     	width:920px;
-    	height:50px;
+    	height:70px;
     	display:flex;
-    	justify-content:center;
+    	align-items:center;
     }
     .b_readtitle{
     	font-size:40px;
     	width:920px;
     	margin-top:5px;
     	padding:5px;
+    	text-align:left;
+    }
+    .b_writetitle{
+    	font-size:40px;
+    	width:880px;
+    	height:40px;
+    	line-height:40px;
+    	margin-top:5px;
+    	padding:20px;
+    	border:1px solid rgba(44, 44, 44, 0.7);
+    	border-radius:7px;
     }
     .b_readwriter{
     	font-size:20px;
@@ -350,13 +367,104 @@
     	text-align:left;
     	word-wrap: break-word;
     	display:flex;
-    	justify-content:center;
     }
     .b_textarea{
     	margin-top:10px;
     	font-size:20px;
-    	width:920px;
+    	width:880px;
     	height:500px;
-    	padding:10px;
+    	padding:20px;
+    	border-radius:7px;
+    	resize:none;
+    }
+    .b_commentcolumn{
+    	margin-top:20px;
+    	display:flex;
+    	flex-direction:row;
+    }
+    .b_commentarea{
+    	padding-top:20px;
+    	padding-bottom:20px;
+    	display:flex;
+    	flex-direction:column;
+    	justify-content:flex-start;
+    }
+    .b_commentwriter{
+    	text-align:left;
+    	padding-left:20px;
+    	width:100px;
+    	height:45px;
+    	line-height:45px;
+    }
+    .b_commentcontent{
+    	text-align:left;
+    	padding-left:20px;
+    	width:600px;
+    	line-height:45px;
+    	border-left:1px solid rgba(44, 44, 44, 0.3);
+    }
+    .b_commentwritearea{
+    	display:flex;
+    	align-items:center;
+    	width:800px;
+    	height:60px;
+    	border:1px solid rgba(44, 44, 44, 0.3);
     	border-radius:7px;
     }
+    .b_commentwritewriter{
+    	font-size:20px;
+    	width:100px;
+    	height:30px;
+    	line-height:30px;
+    }
+	.b_commentwritecontent{
+		font-size:20px;
+		width:800px;
+		height:30px;
+		resize:none;
+		border:none;
+	}
+	.b_commentwritecontent:focus{
+		outline:none;
+	}
+	.b_writecommbtn{
+		margin-left:20px;
+		width:80px;
+		height:50px;
+		font-size:20px;
+		border-radius:7px;
+	}
+	.b_commentflex{
+		display:flex;
+		align-items:center;
+	}
+	.b_commentmenu{
+		display:flex;
+		align-items:flex-end;
+	}
+	.b_searchboardarea{
+		padding:5px;
+		margin-top:15px;
+		display:flex;
+		flex-direction:row;
+		justify-content:center;
+	}
+	.b_searchform{
+		display:flex;
+		align-items:center;
+	}
+	.b_searchnavi{
+		font-family:auto;
+		height:35px;
+	}
+	.b_searchbar{
+		width:400px;
+		height:30px;
+		margin-left:10px;
+		margin-right:5px;
+	}
+	.b_searchbutton{
+		width:55px;
+		height:35px;
+		font-size:20px;
+	}

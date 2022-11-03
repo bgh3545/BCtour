@@ -1,7 +1,5 @@
 package com.greenart.ch1;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +11,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class insertTest {
 	
 	@Autowired
-	BoardDao boardDao;
+	private CommunityDao commDao;
 	
 	@Test
 	public void test() throws Exception {
+		commDao.c_deleteAll();
 		for(int i=1; i<=220; i++) {
-			BoardDto boardDto = new BoardDto("title"+i, "no content", "asdf");
-			assertTrue(boardDao.insert(boardDto)==1);
+			CommunityDto commDto = new CommunityDto("title"+i, "no content", "asdf");
+			commDao.c_insert(commDto);
 		}
 	}
-
 }

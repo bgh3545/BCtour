@@ -1,39 +1,46 @@
 package com.greenart.ch1;
 
 public class PageHandler {
+	private SearchCondition sc;
 	private int totalCnt;
-	private int pageSize;
 	private int naviSize=10;
 	private int totalPage;
-	private int page;
 	private int beginPage;
 	private int endPage;
 	private boolean showPrev;
 	private boolean showNext;
 	
-	public PageHandler(int totalCnt, int page) {
-		this(totalCnt, page, 10);
+	public PageHandler(int totalCnt, SearchCondition sc) {
+		this.totalCnt=totalCnt;
+		this.sc=sc;
+		doPaging(totalCnt,sc);
 	}
 	
-	public PageHandler(int totalCnt, int page, int pageSize) {
+	public void doPaging(int totalCnt, SearchCondition sc) {
 		this.totalCnt= totalCnt;
-		this.page= page;
-		this.pageSize= pageSize;
 		
-		totalPage= (int)Math.ceil(totalCnt/(double)pageSize);
-		beginPage= (page-1)/naviSize*naviSize+1;
+		totalPage= (int)Math.ceil(totalCnt/(double)sc.getPageSize());
+		beginPage= (sc.getPage()-1)/naviSize*naviSize+1;
 		endPage= Math.min(beginPage+naviSize-1, totalPage);
 		showPrev= beginPage!= 1;
 		showNext= endPage!= totalPage;
 	}
 	
 	void print() {
-		System.out.println("page="+page);
+		System.out.println("page="+sc.getPage());
 		System.out.println(showPrev?"<":"");
 		for(int i=beginPage; i<=endPage; i++) {
 			System.out.println(i+" ");
 		}
 		System.out.println(showNext?">":"");
+	}
+
+	public SearchCondition getSc() {
+		return sc;
+	}
+
+	public void setSc(SearchCondition sc) {
+		this.sc = sc;
 	}
 
 	public int getTotalCnt() {
@@ -42,14 +49,6 @@ public class PageHandler {
 
 	public void setTotalCnt(int totalCnt) {
 		this.totalCnt = totalCnt;
-	}
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
 	}
 
 	public int getNaviSize() {
@@ -66,14 +65,6 @@ public class PageHandler {
 
 	public void setTotalPage(int totalPage) {
 		this.totalPage = totalPage;
-	}
-
-	public int getPage() {
-		return page;
-	}
-
-	public void setPage(int page) {
-		this.page = page;
 	}
 
 	public int getBeginPage() {
@@ -108,14 +99,20 @@ public class PageHandler {
 		this.showNext = showNext;
 	}
 
-	public PageHandler(int totalCnt, int pageSize, int naviSize, int totalPage, int page, int beginPage, int endPage,
+	@Override
+	public String toString() {
+		return "PageHandler [sc=" + sc + ", totalCnt=" + totalCnt + ", naviSize=" + naviSize + ", totalPage="
+				+ totalPage + ", beginPage=" + beginPage + ", endPage=" + endPage + ", showPrev=" + showPrev
+				+ ", showNext=" + showNext + "]";
+	}
+
+	public PageHandler(SearchCondition sc, int totalCnt, int naviSize, int totalPage, int beginPage, int endPage,
 			boolean showPrev, boolean showNext) {
 		super();
+		this.sc = sc;
 		this.totalCnt = totalCnt;
-		this.pageSize = pageSize;
 		this.naviSize = naviSize;
 		this.totalPage = totalPage;
-		this.page = page;
 		this.beginPage = beginPage;
 		this.endPage = endPage;
 		this.showPrev = showPrev;
@@ -125,5 +122,6 @@ public class PageHandler {
 	public PageHandler() {
 		super();
 	}
+
 	
 }

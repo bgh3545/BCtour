@@ -5,5 +5,9 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="BoardDto" type="com.greenart.ch1.BoardDto"/>
+		<typeAlias alias="CommunityDto" type="com.greenart.ch1.CommunityDto"/>
+		<typeAlias alias="SearchCondition" type="com.greenart.ch1.SearchCondition"/>
+		<typeAlias alias="c_SearchCondition" type="com.greenart.ch1.SearchCondition"/>
 	</typeAliases>
+	
 </configuration>

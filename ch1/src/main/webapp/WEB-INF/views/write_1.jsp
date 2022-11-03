@@ -13,7 +13,7 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
-<link href="../resources/CSS/BCtourStyle.css?qq1" rel="stylesheet"/>
+<link href="../resources/CSS/BCtourStyle.css?asdf" rel="stylesheet"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 </head>
 <body>
@@ -53,16 +53,16 @@
                 </div>
                 <form id="form">
                 <div class="column2">
-                	<div class="b_readcontent">
-						<div class="b_readbtn">
+                	<div class="b_writecontent">
+						<div class="b_writebtn">
 							<input type="hidden" name="bno" value="${boardDto.bno}" readonly="readonly">
 							<button type="button" id="writebtn" class="b_btnsize">등록</button>
 							<button type="button" id="cancelbtn" class="b_btnsize">취소</button>
 						</div>
-						<div class="b_readtitlearea">
-							<input class="b_readtitle" type="text" name="title" placeholder="제목을 입력해 주세요">
+						<div class="b_writetitlearea">
+							<input class="b_writetitle" type="text" name="title" placeholder="제목을 입력해 주세요">
 						</div>
-						<div class="b_contentwritearea">
+						<div class="b_writecontentarea">
 							<textarea name="content" class="b_textarea" placeholder="내용을 입력해 주세요."></textarea>
 						</div>
 					</div>
@@ -73,8 +73,15 @@
 	</div>
 	<script>
 		
-		document.getElementById('listbtn').addEventListener('click',e=>{
-		window.location = "<c:url value='/board/list_v1_1'/>?page=${page}&pageSize=${pageSize}";
+		document.getElementById('cancelbtn').addEventListener('click',e=>{
+		window.location = "<c:url value='/board/list_v1_1'/>";
+		});
+	
+		document.getElementById('writebtn').addEventListener('click',e=>{
+		var form = document.getElementById('form');
+		form.action="<c:url value='/board/write_1'/>";
+		form.method="post"
+		form.submit();
 		});
 		
 		document.getElementById('removebtn').addEventListener('click',e=>{

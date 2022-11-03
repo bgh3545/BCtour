@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var = "mypageLink" value="${sessionScope.id==null? '':'/myPage/myPage_v1_1'}"/>
 <c:set var = "mypage" value="${sessionScope.id==null? '':'마이 페이지'}"/>
 <c:set var = "LoginOutlink" value="${sessionScope.id==null? '/logIn1/logIn1':'/logIn1/logOut1'}"/>
@@ -12,7 +13,8 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
-<link href="../resources/CSS/BCtourStyle.css" rel="stylesheet"/>
+<link href="../resources/CSS/BCtourStyle.css?a1sd" rel="stylesheet"/>
+<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 </head>
 <body>
 	<div class="main">
@@ -46,14 +48,87 @@
                         <h2><a href="<c:url value='/board/list_v1_2'/>">여행일지</a></h2>
                     </div>
                     <div class="city">
-                        <h2><a id="select" href="<c:url value='/board/list_v1_3'/>">자유게시판</a></h2>
+                        <h2><a id="select"  href="<c:url value='/board/list_v1_3'/>">자유게시판</a></h2>
                     </div>
                 </div>
                 <div class="column2">
-                    <div></div>
+                    <div class="b_title">커뮤니티</div>
+                    <div class="b_writebtn"><button type="button" id="writebtn" class="b_btnsize">글쓰기</button></div>
+                    <div class="b_content">
+                    	<div class="b_indextitle">
+                    		<div class="b_indexNum">번호</div>
+                    		<div class="b_indexName">제목</div>
+                    		<div class="b_indexNum">작성자</div>
+                    		<div class="b_indexNum">조회수</div>
+                    		<div class="b_indexDate">등록일</div>
+                    	</div>
+                    	<c:if test="${1 == page}">
+                    	<c:forEach var="i" items="${notice}">
+                    		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
+							<fmt:formatDate value="${i.reg_Date}" pattern="yyyy-MM-dd" var="regDate" />
+							<fmt:formatDate value="${i.reg_Date}" pattern="HH:mm" var="regTime" />
+	                    	<div class="b_indextitle b_noticebgcolor">
+	                    		<div class="b_contentNum">공지사항</div>
+	                    		<div class="b_contentName"><a href="<c:url value='/board/read_3?bno=${i.bno}&page=${page}&pageSize=${pageSize}'/>">${i.title}</a></div>
+	                    		<div class="b_contentNum">${i.writer}</div>
+	                    		<div class="b_contentNum">${i.view_cnt}</div>
+	                    		<div class="b_contentDate">${today==regDate? regTime:regDate}</div>
+	                    	</div>
+                    	</c:forEach>
+                    	</c:if>
+                    	<c:forEach var="i" items="${comm}">
+                    		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
+							<fmt:formatDate value="${i.comm_reg_date}" pattern="yyyy-MM-dd" var="regDate" />
+							<fmt:formatDate value="${i.comm_reg_date}" pattern="HH:mm" var="regTime" />
+	                    	<div class="b_indextitle">
+	                    		<div class="b_contentNum">${i.comm_num}</div>
+	                    		<div class="b_contentName"><a href="<c:url value='/board/read_3?comm_num=${i.comm_num}&page=${page}&pageSize=${pageSize}'/>">${i.comm_title}</a></div>
+	                    		<div class="b_contentNum">${i.comm_writer}</div>
+	                    		<div class="b_contentNum">${i.comm_view}</div>
+	                    		<div class="b_contentDate">${today==regDate? regTime:regDate}</div>
+	                    	</div>
+                    	</c:forEach>
+                    	<div class="b_pageNavi">
+                    		<c:if test="${ph.showPrev}">
+                    		<a href="<c:url value='/board/list_v1_3${ph.sc.getQueryString(ph.beginPage-1)}'/>"><div class="b_preNext">이전</div></a>
+                    		</c:if>
+                    		<c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
+                    		<c:if test="${i == page}">
+                    		<a href="<c:url value='/board/list_v1_3${ph.sc.getQueryString(i)}'/>"><div id="select" class="b_pageNum">${i}</div></a>
+                    		</c:if>
+                    		<c:if test="${i != page}">
+                    		<a href="<c:url value='/board/list_v1_3${ph.sc.getQueryString(i)}'/>"><div class="b_pageNum">${i}</div></a>
+                    		</c:if>
+                    		</c:forEach>
+                    		<c:if test="${ph.showNext}">
+                    		<a href="<c:url value='/board/list_v1_3${ph.sc.getQueryString(ph.endPage+1)}'/>"><div class="b_preNext">다음</div></a>
+                    		</c:if>
+                    	</div>
+                    	<div class="b_searchboardarea">
+                    	<form action="<c:url value='/board/list_v1_3'/>" class="b_searchform" method="get">
+                    		<select class="b_searchnavi">
+                    			<option value="A" ${ph.sc.option=='A' || ph.sc.option==''? "selected":""}>제목+내용</option>
+                    			<option value="T" ${ph.sc.option=='T' ? "selected":""}>제목</option>
+                    			<option value="W" ${ph.sc.option=='W' ? "selected":""}>작성자</option>
+                    		</select>
+                    		<input class="b_searchbar" name="keyword" type="text" value="${ph.sc.keyword}" placeholder="검색">
+                    		<input type="submit" class="b_searchbutton" value="검색">
+                    	</form>
+                    	</div>
+                    </div>
                 </div>
             </div>
         </div>
 	</div>
+	<script>
+		document.getElementById('writebtn').addEventListener('click',e=>{
+		window.location = "<c:url value='/board/write_3'/>";
+		});
+	
+		let msg = "${msg}"
+		if(msg == "del") alert("성공적으로 삭제되었습니다.")
+		if(msg == "error") alert("삭제에 실패하였습니다.")
+		if(msg == "write_error") alert("게시글 작성에 실패하였습니다. 다시 작성해 주세요")
+	</script>
 </body>
 </html>

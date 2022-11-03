@@ -67,4 +67,14 @@ public class BoardDaoImpl implements BoardDao{
 	public List<BoardDto> selectNoticePage(Map map) throws Exception{
 		return session.selectList(namespace+"selectNoticePage",map);
 	}
+	
+	@Override
+	public List<BoardDto> searchSelectPage(SearchCondition sc) throws Exception{
+		return session.selectList(namespace+"searchSelectPage",sc);
+	}
+	
+	@Override
+	public int searchResultCnt(SearchCondition sc) throws Exception{
+		return session.selectOne(namespace+"searchResultCnt", sc);
+	}
 }

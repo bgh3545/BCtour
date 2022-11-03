@@ -52,4 +52,34 @@
 		order by reg_date desc, bno desc limit 3
 	</select>
 	
+	<select id="searchSelectPage" parameterType="SearchCondition" resultType="BoardDto">
+		<include refid="selectFromBoard"/>
+		where true
+		<include refid="searchCondition"/>
+		order by reg_date desc, bno desc
+		limit #{offset}, #{pageSize}
+	</select>
+	
+	<select id="searchResultCnt" parameterType="SearchCondition" resultType="int">
+		select count(*) from board
+		where true
+		<include refid="searchCondition"/>
+	</select>
+	
+	<sql id="searchCondition">
+		<choose>
+			<when test="option=='T'">
+				and title like concat('%',#{keyword},'%')
+			</when>
+			<when test="option=='W'">
+				and writer like concat('%',#{keyword},'%')
+			</when>
+			<otherwise>
+				and (title like concat('%',#{keyword},'%')
+				or content
+				like concat('%',#{keyword},'%'))
+			</otherwise>
+		</choose>
+	</sql>
+	
 </mapper>

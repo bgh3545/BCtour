@@ -13,7 +13,7 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
-<link href="../resources/CSS/BCtourStyle.css?qq" rel="stylesheet"/>
+<link href="../resources/CSS/BCtourStyle.css?asd" rel="stylesheet"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 </head>
 <body>
@@ -56,21 +56,39 @@
                 	<div class="b_readcontent">
 						<div class="b_readbtn">
 							<input type="hidden" name="bno" value="${boardDto.bno}" readonly="readonly">
+							${sessionScope.id==boardDto.writer?
+							'<button type="button" id="modifybtn" class="b_btnsize">수정</button>
+							<button type="button" id="removebtn" class="b_btnsize">삭제</button>':''}
 							<button type="button" id="listbtn" class="b_btnsize">목록</button>
-							<button type="button" id="modfybtn" class="b_btnsize">수정</button>
-							<button type="button" id="removebtn" class="b_btnsize">삭제</button>
 						</div>
-						<div class="b_readtitle">
+						<div class="b_readtitle" id="title">
 							${boardDto.title}
 						</div>
 						<div class="b_readwriter">
 						<fmt:formatDate value="${boardDto.reg_Date}" pattern="yyyy-MM-dd HH:mm:ss" var="regDate" />
 							작성자: ${boardDto.writer},&nbsp;&nbsp; 등록일: ${regDate}
 						</div>
-						<div class="b_readcontentarea">
+						<div class="b_readcontentarea" id="content">
 							${boardDto.content}
 						</div>
 					</div>
+					<div class="b_commentarea">
+						<div class="b_commentcolumn">
+							<div class="b_commentwriter">이름</div><div class="b_commentcontent">코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용</div><div class="b_commentmenu"><a>수정</a>&nbsp&nbsp<a>삭제</a></div>
+						</div>
+						<div class="b_commentcolumn">
+							<div class="b_commentwriter">이름</div><div class="b_commentcontent">코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용</div><div class="b_commentmenu"><a>수정</a>&nbsp&nbsp<a>삭제</a></div>
+						</div>
+						<div class="b_commentcolumn">
+							<div class="b_commentwriter">이름</div><div class="b_commentcontent">코멘트</div><div class="b_commentmenu"><a>수정</a>&nbsp&nbsp<a>삭제</a></div>
+						</div>
+					</div>
+					<div class="b_commentflex">
+					<div class="b_commentwritearea">
+						<div class="b_commentwritewriter">${sessionScope.id}</div><textarea class="b_commentwritecontent"></textarea>
+					</div>
+					<button type="button" id="writecommbtn" class="b_writecommbtn">댓글달기</button>
+                	</div>
                 </div>
                 </form>
             </div>
@@ -89,6 +107,12 @@
 		form.method="post"
 		form.submit();
 		});
+		
+		document.getElementById('modifybtn').addEventListener('click',e=>{
+		window.location = "<c:url value='/board/modify_1'/>?bno=${boardDto.bno}&page=${page}&pageSize=${pageSize}";
+		});
+		
+
 	</script>
 </body>
 </html>

@@ -25,7 +25,7 @@ public class UserDaoImpl implements UserDao {
 		int rowCnt = FAIL;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		String sql = "delete from member where id=?";
+		String sql = "delete from member where mem_id=?";
 		try {
 			conn=ds.getConnection();
 			pstmt=conn.prepareStatement(sql);
@@ -77,7 +77,7 @@ public class UserDaoImpl implements UserDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String sql = "select * from member where email=?";
+		String sql = "select * from member where mem_email=?";
 		try {
 			conn=ds.getConnection();
 			pstmt=conn.prepareStatement(sql);
@@ -130,7 +130,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public int updateUser(User user) {
 		int rowCnt=FAIL;
-		String sql="update member set pwd=?,name=?,email=?,birth=?,sns=?,reg_date=? where id=?";
+		String sql="update member set mem_pwd=?,mem_name=?,mem_email=?,mem_birth=?,mem_sns=?,mem_reg_date=? where mem_id=?";
 		try(
 			Connection conn = ds.getConnection();
 			PreparedStatement pstmt=conn.prepareStatement(sql);
