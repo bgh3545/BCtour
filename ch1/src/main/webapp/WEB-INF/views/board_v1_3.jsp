@@ -82,7 +82,7 @@
 							<fmt:formatDate value="${i.comm_reg_date}" pattern="HH:mm" var="regTime" />
 	                    	<div class="b_indextitle">
 	                    		<div class="b_contentNum">${i.comm_num}</div>
-	                    		<div class="b_contentName"><a href="<c:url value='/board/read_3?comm_num=${i.comm_num}&page=${page}&pageSize=${pageSize}'/>">${i.comm_title}</a></div>
+	                    		<div class="b_contentName"><a href="<c:url value='/board/read_3?comm_num=${i.comm_num}&page=${page}&pageSize=${pageSize}'/>">${i.comm_title}&nbsp${i.comm_comment==0?'':[i.comm_comment]}</a></div>
 	                    		<div class="b_contentNum">${i.comm_writer}</div>
 	                    		<div class="b_contentNum">${i.comm_view}</div>
 	                    		<div class="b_contentDate">${today==regDate? regTime:regDate}</div>

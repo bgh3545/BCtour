@@ -42,13 +42,13 @@
             <div class ="nav">
                 <div id="column">
                     <div class="city">
-                        <h2><a id="select" href="<c:url value='/board/list_v1_1'/>">공지사항</a></h2>
+                        <h2><a href="<c:url value='/board/list_v1_1'/>">공지사항</a></h2>
                     </div>
                     <div class="city">
                         <h2><a href="<c:url value='/board/list_v1_2'/>">여행일지</a></h2>
                     </div>
                     <div class="city">
-                        <h2><a href="<c:url value='/board/list_v1_3'/>">자유게시판</a></h2>
+                        <h2><a id="select" href="<c:url value='/board/list_v1_3'/>">자유게시판</a></h2>
                     </div>
                 </div>
                 <form id="form">
@@ -60,10 +60,10 @@
 							<button type="button" id="cancelbtn" class="b_btnsize">취소</button>
 						</div>
 						<div class="b_writetitlearea">
-							<input class="b_writetitle" type="text" name="title" placeholder="제목을 입력해 주세요">
+							<input class="b_writetitle" type="text" name="comm_title" placeholder="제목을 입력해 주세요">
 						</div>
 						<div class="b_writecontentarea">
-							<textarea name="content" class="b_textarea" placeholder="내용을 입력해 주세요."></textarea>
+							<textarea name="comm_content" class="b_textarea" placeholder="내용을 입력해 주세요."></textarea>
 						</div>
 					</div>
                 </div>

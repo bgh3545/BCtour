@@ -231,6 +231,8 @@
     	text-align:right;
     }
     .b_btnsize{
+    	margin-left:3px;
+    	margin-right:3px;
     	width:60px;
     	height:30px;
     	font-size:18px;
@@ -314,7 +316,8 @@
     	height:720px;
     }
     .b_readbtn{
-    	text-align:right;
+    	display:flex;
+    	justify-content:flex-end;
     	margin-right:20px;
     }
     .b_writetitlearea{

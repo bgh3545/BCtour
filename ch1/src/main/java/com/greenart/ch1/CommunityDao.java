@@ -26,4 +26,8 @@ public interface CommunityDao {
 	int c_searchResultCnt(SearchCondition sc) throws Exception;
 
 	List<CommunityDto> c_searchSelectPage(SearchCondition sc) throws Exception;
+
+	int c_increaseCommCnt(Integer comm_num) throws Exception;
+
+	int c_decreaseCommCnt(Integer comm_num) throws Exception;
 }

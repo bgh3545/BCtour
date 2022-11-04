@@ -38,6 +38,18 @@
 		where comm_num= #{comm_num}
 	</update>
 	
+	<update id="c_increaseCommCnt" parameterType="int">
+		update community
+		set comm_comment= comm_comment+1
+		where comm_num= #{comm_num}
+	</update>
+	
+	<update id="c_decreaseCommCnt" parameterType="int">
+		update community
+		set comm_comment= comm_comment-1
+		where comm_num= #{comm_num}
+	</update>
+	
 	<sql id="c_selectFromCommunity">
 		select comm_num, comm_title, comm_content, comm_writer, comm_view, comm_comment, comm_reg_date from community
 	</sql>

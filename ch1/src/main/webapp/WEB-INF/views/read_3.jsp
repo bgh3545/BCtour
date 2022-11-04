@@ -13,7 +13,7 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
-<link href="../resources/CSS/BCtourStyle.css?asd" rel="stylesheet"/>
+<link href="../resources/CSS/BCtourStyle.css?asdq" rel="stylesheet"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 </head>
 <body>
@@ -42,23 +42,22 @@
             <div class ="nav">
                 <div id="column">
                     <div class="city">
-                        <h2><a id="select" href="<c:url value='/board/list_v1_1'/>">공지사항</a></h2>
+                        <h2><a href="<c:url value='/board/list_v1_1'/>">공지사항</a></h2>
                     </div>
                     <div class="city">
                         <h2><a href="<c:url value='/board/list_v1_2'/>">여행일지</a></h2>
                     </div>
                     <div class="city">
-                        <h2><a href="<c:url value='/board/list_v1_3'/>">자유게시판</a></h2>
+                        <h2><a id="select" href="<c:url value='/board/list_v1_3'/>">자유게시판</a></h2>
                     </div>
                 </div>
-                <form id="form">
+                <form id="form" action="<c:url value='/board/modify2comm_3'/>?comm_num=${commDto.comm_num}&page=${page}&pageSize=${pageSize}" method="post" >
                 <div class="column2">
                 	<div class="b_readcontent">
 						<div class="b_readbtn">
-							<input type="hidden" name="comm_num" value="${commDto.comm_num}" readonly="readonly">
-							${sessionScope.id==commDto.comm_writer?
-							'<button type="button" id="modifybtn" class="b_btnsize">수정</button>
-							<button type="button" id="removebtn" class="b_btnsize">삭제</button>':''}
+							<input type="hidden" name="comm_num" value="${commDto.comm_num}">
+							<button type="button" id="modifybtn" class="b_btnsize" ${sessionScope.id==commDto.comm_writer?'':'style="display:none;"'}>수정</button>
+							<button type="button" id="removebtn" class="b_btnsize" ${sessionScope.id==commDto.comm_writer?'':'style="display:none;"'}>삭제</button>
 							<button type="button" id="listbtn" class="b_btnsize">목록</button>
 						</div>
 						<div class="b_readtitle" id="title">
@@ -73,19 +72,35 @@
 						</div>
 					</div>
 					<div class="b_commentarea">
+					<c:forEach var="i" items="${c_comment}">
+					<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
+					<fmt:formatDate value="${i.comm_comm_date}" pattern="yyyy-MM-dd" var="regDate" />
+					<fmt:formatDate value="${i.comm_comm_date}" pattern="HH:mm:ss" var="regTime" />
+						<c:if test="${i.comm_comm_num != param.cNum }">
 						<div class="b_commentcolumn">
-							<div class="b_commentwriter">이름</div><div class="b_commentcontent">코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용</div><div class="b_commentmenu"><a>수정</a>&nbsp&nbsp<a>삭제</a></div>
+							<input type="hidden" name="comm_comm_num" value="${i.comm_comm_num}" readonly="readonly">
+							<div class="b_commentwriter">${i.comm_comm_writer}</div>
+							<div class="b_commentcontent">${i.comm_comm_content}</div>
+							<div class="b_commentmenu">
+								${today==regDate? regTime:regDate}&nbsp&nbsp&nbsp
+								<c:if test="${sessionScope.id==i.comm_comm_writer}">
+								<a href="<c:url value='/board/modifycomm_3'/>?comm_num=${commDto.comm_num}&comm_comm_num=${i.comm_comm_num}&page=${page}&pageSize=${pageSize}">수정</a>&nbsp&nbsp&nbsp
+								<a href="<c:url value='/board/removecomm_3?comm_num=${commDto.comm_num}&comm_comm_num=${i.comm_comm_num}&page=${page}&pageSize=${pageSize}'/>">삭제</a>
+								</c:if>
+							</div>
 						</div>
-						<div class="b_commentcolumn">
-							<div class="b_commentwriter">이름</div><div class="b_commentcontent">코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용</div><div class="b_commentmenu"><a>수정</a>&nbsp&nbsp<a>삭제</a></div>
-						</div>
-						<div class="b_commentcolumn">
-							<div class="b_commentwriter">이름</div><div class="b_commentcontent">코멘트</div><div class="b_commentmenu"><a>수정</a>&nbsp&nbsp<a>삭제</a></div>
-						</div>
+						</c:if>
+						<div class="b_commentflex" ${i.comm_comm_num == param.cNum? '':'style="display:none;"'}>
+							<div class="b_commentwritearea">
+								<input type="hidden" name="comm_comm_num" value="${i.comm_comm_num}"><div class="b_commentwritewriter">${sessionScope.id}</div><textarea class="b_commentwritecontent" name="comm_comm_modicontent">${i.comm_comm_content}</textarea>
+							</div>
+							<button type="submit" id="modicommbtn" class="b_writecommbtn">수정하기</button>
+                		</div>
+					</c:forEach>
 					</div>
 					<div class="b_commentflex">
 					<div class="b_commentwritearea">
-						<div class="b_commentwritewriter">${sessionScope.id}</div><textarea class="b_commentwritecontent"></textarea>
+						<div class="b_commentwritewriter">${sessionScope.id}</div><textarea class="b_commentwritecontent" name="comm_comm_content"></textarea>
 					</div>
 					<button type="button" id="writecommbtn" class="b_writecommbtn">댓글달기</button>
                 	</div>
@@ -107,10 +122,22 @@
 		form.method="post"
 		form.submit();
 		});
-		
 		document.getElementById('modifybtn').addEventListener('click',e=>{
+		console.log(c_comment.comm_comm_num)
 		window.location = "<c:url value='/board/modify_3'/>?comm_num=${commDto.comm_num}&page=${page}&pageSize=${pageSize}";
 		});
+		
+		document.getElementById('writecommbtn').addEventListener('click',e=>{
+		var form = document.getElementById('form');
+		form.action="<c:url value='/board/read_3'/>?comm_num=${commDto.comm_num}&page=${page}&pageSize=${pageSize}";
+		form.method="post"
+		form.submit();
+		});
+		
+		
+		let msg = "${msg}"
+		if(msg == "del") alert("성공적으로 삭제되었습니다.")
+		if(msg == "error") alert("삭제에 실패하였습니다.")
 		
 	</script>
 </body>

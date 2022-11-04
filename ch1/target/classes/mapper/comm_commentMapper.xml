@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace = "com.greenart.ch1">
+	<select id="cm_count" resultType="int">
+		select count(*) from comm_comment where comm_num=#{comm_num}
+	</select>
+	
+	<select id="cm_selectAll" resultType="comm_commentDto">
+		select * from comm_comment where comm_num= #{comm_num} order by comm_comm_date asc, comm_comm_num asc
+	</select>
+	
+	<select id="cm_select" parameterType="int" resultType="comm_commentDto">
+		select * from comm_comment where comm_comm_num = #{comm_comm_num}
+	</select>
+	<delete id="cm_deleteAll">
+		delete from comm_comment
+	</delete>
+	
+	<delete id="cm_delete" parameterType="map">
+		delete from comm_comment where comm_comm_num= #{comm_comm_num} and comm_comm_writer= #{comm_comm_writer}
+	</delete>
+	
+	<insert id="cm_insert" parameterType="comm_commentDto">
+		insert into comm_comment (comm_num, comm_comm_content,comm_comm_writer) values(#{comm_num}, #{comm_comm_content}, #{comm_comm_writer})
+	</insert>
+	
+	<update id="cm_update" parameterType="comm_commentDto">
+		update comm_comment
+		set comm_comm_content= #{comm_comm_modicontent}, comm_comm_up= now()
+		where comm_comm_num= #{comm_comm_num}
+	</update>
+	
+	<sql id="cm_selectFromcomm_comment">
+		select comm_num, comm_comm_num, comm_comm_content, comm_comm_writer, comm_comm_date from comm_comment
+	</sql>
+	
+	<select id="cm_selectPage" parameterType="map" resultType="comm_commentDto">
+		<include refid="cm_selectFromcomm_comment"/>
+		order by comm_comm_date desc, comm_comm_num desc limit #{offset},#{pageSize}
+	</select>
+	
+</mapper>

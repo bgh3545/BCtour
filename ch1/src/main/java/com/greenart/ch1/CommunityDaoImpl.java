@@ -22,15 +22,15 @@ public class CommunityDaoImpl implements CommunityDao{
 	@Override
 	public int c_delete(Integer comm_num, String comm_writer) throws Exception{
 		Map map= new HashMap();
-		map.put("bno", comm_num);
-		map.put("writer", comm_writer);
+		map.put("comm_num", comm_num);
+		map.put("comm_writer", comm_writer);
 		
 		return session.delete(namespace+"c_delete",map);
 	}
 	
 	@Override
-	public int c_insert(CommunityDto dto) throws Exception{
-		return session.insert(namespace+"c_insert",dto);
+	public int c_insert(CommunityDto commDto) throws Exception{
+		return session.insert(namespace+"c_insert",commDto);
 	}
 	
 	@Override
@@ -46,6 +46,16 @@ public class CommunityDaoImpl implements CommunityDao{
 	@Override
 	public int c_increaseViewCnt(Integer comm_num) throws Exception{
 		return session.update(namespace+"c_increaseViewCnt", comm_num);
+	}
+	
+	@Override
+	public int c_decreaseCommCnt(Integer comm_num) throws Exception{
+		return session.update(namespace+"c_decreaseCommCnt", comm_num);
+	}
+	
+	@Override
+	public int c_increaseCommCnt(Integer comm_num) throws Exception{
+		return session.update(namespace+"c_increaseCommCnt", comm_num);
 	}
 	
 	@Override

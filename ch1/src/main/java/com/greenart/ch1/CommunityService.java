@@ -22,4 +22,8 @@ public interface CommunityService {
 	int c_getSearchResultCnt(SearchCondition sc) throws Exception;
 
 	List<CommunityDto> c_getSearchResultPage(SearchCondition sc) throws Exception;
+
+	int c_increaseCommCnt(Integer comm_num) throws Exception;
+
+	int c_decreaseCommCnt(Integer comm_num) throws Exception;
 }

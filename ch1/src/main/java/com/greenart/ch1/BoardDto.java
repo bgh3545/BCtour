@@ -12,6 +12,16 @@ public class BoardDto {
 	private int comment_cnt;
 	private Date reg_Date;
 	
+	public BoardDto(Integer bno, String title, String writer, int view_cnt, int comment_cnt, Date reg_Date) {
+		super();
+		this.bno = bno;
+		this.title = title;
+		this.writer = writer;
+		this.view_cnt = view_cnt;
+		this.comment_cnt = comment_cnt;
+		this.reg_Date = reg_Date;
+	}
+
 	public Integer getBno() {
 		return bno;
 	}

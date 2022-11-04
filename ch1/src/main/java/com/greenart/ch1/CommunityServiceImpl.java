@@ -40,6 +40,16 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 	
 	@Override
+	public int c_increaseCommCnt(Integer comm_num) throws Exception{
+		return commDao.c_increaseCommCnt(comm_num);
+	}
+	
+	@Override
+	public int c_decreaseCommCnt(Integer comm_num) throws Exception{
+		return commDao.c_decreaseCommCnt(comm_num);
+	}
+	
+	@Override
 	public List<CommunityDto> c_getPage(Map map) throws Exception{
 		return commDao.c_selectPage(map);
 	}
