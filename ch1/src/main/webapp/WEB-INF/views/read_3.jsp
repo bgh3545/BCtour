@@ -51,7 +51,7 @@
                         <h2><a id="select" href="<c:url value='/board/list_v1_3'/>">자유게시판</a></h2>
                     </div>
                 </div>
-                <form id="form" action="<c:url value='/board/modify2comm_3'/>?comm_num=${commDto.comm_num}&page=${page}&pageSize=${pageSize}" method="post" >
+                <form id="form">
                 <div class="column2">
                 	<div class="b_readcontent">
 						<div class="b_readbtn">
@@ -78,7 +78,6 @@
 					<fmt:formatDate value="${i.comm_comm_date}" pattern="HH:mm:ss" var="regTime" />
 						<c:if test="${i.comm_comm_num != param.cNum }">
 						<div class="b_commentcolumn">
-							<input type="hidden" name="comm_comm_num" value="${i.comm_comm_num}" readonly="readonly">
 							<div class="b_commentwriter">${i.comm_comm_writer}</div>
 							<div class="b_commentcontent">${i.comm_comm_content}</div>
 							<div class="b_commentmenu">
@@ -90,12 +89,14 @@
 							</div>
 						</div>
 						</c:if>
-						<div class="b_commentflex" ${i.comm_comm_num == param.cNum? '':'style="display:none;"'}>
+						<c:if test="${i.comm_comm_num == param.cNum}">
+						<div class="b_commentflex">
 							<div class="b_commentwritearea">
-								<input type="hidden" name="comm_comm_num" value="${i.comm_comm_num}"><div class="b_commentwritewriter">${sessionScope.id}</div><textarea class="b_commentwritecontent" name="comm_comm_modicontent">${i.comm_comm_content}</textarea>
+								<input type="hidden" ${i.comm_comm_num == param.cNum? 'name="comm_comm_num"':''} value="${i.comm_comm_num}"><div class="b_commentwritewriter">${sessionScope.id}</div><textarea class="b_commentwritecontent" name="comm_comm_modicontent">${i.comm_comm_content}</textarea>
 							</div>
-							<button type="submit" id="modicommbtn" class="b_writecommbtn">수정하기</button>
+							<button type="button" id="modicommbtn" class="b_writecommbtn">수정하기</button>
                 		</div>
+                		</c:if>
 					</c:forEach>
 					</div>
 					<div class="b_commentflex">
@@ -122,10 +123,20 @@
 		form.method="post"
 		form.submit();
 		});
+		
 		document.getElementById('modifybtn').addEventListener('click',e=>{
-		console.log(c_comment.comm_comm_num)
 		window.location = "<c:url value='/board/modify_3'/>?comm_num=${commDto.comm_num}&page=${page}&pageSize=${pageSize}";
 		});
+		
+		var modiBtn = document.getElementById('modicommbtn')
+		if( modiBtn != null){
+		document.getElementById('modicommbtn').addEventListener('click',e=>{
+		var form = document.getElementById('form');
+		form.action="<c:url value='/board//modify2comm_3'/>?comm_num=${commDto.comm_num}&page=${page}&pageSize=${pageSize}";
+		form.method="post"
+		form.submit();
+		});
+		}
 		
 		document.getElementById('writecommbtn').addEventListener('click',e=>{
 		var form = document.getElementById('form');

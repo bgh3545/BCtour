@@ -371,7 +371,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/modify_3")
-	public String modify_3(HttpServletRequest request,Model m, CommunityDto commDto, HttpSession session, SearchCondition sc, RedirectAttributes redatt) {
+	public String modify_3(HttpServletRequest request,Model m,Integer comm_num, CommunityDto commDto, HttpSession session, SearchCondition sc, RedirectAttributes redatt) {
 		if(!loginCheck(request))
 			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
 		
@@ -385,13 +385,13 @@ public class BoardController {
 			int rowCnt = commService.c_modify(commDto);
 			if(rowCnt!=1) throw new Exception("modify error");
 			redatt.addFlashAttribute("msg", "modify_ok");
-			return "redirect:/board/list_v1_3"+sc.getQueryString();
+			return "redirect:/board/read_3?comm_num="+comm_num+"&page="+sc.getPage()+"&pageSize="+sc.getPageSize();
 		}catch(Exception e){
 			e.printStackTrace();
 			m.addAttribute("commDto", commDto);
 			m.addAttribute("msg", "modify_error");
 			
-			return "read_3";
+			return "redirect:/board/read_3?comm_num="+comm_num+"&page="+sc.getPage()+"&pageSize="+sc.getPageSize();
 		}
 	}
 	
