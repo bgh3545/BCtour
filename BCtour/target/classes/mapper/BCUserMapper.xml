@@ -11,12 +11,12 @@
 	<!-- 아이디 찾기 -->
 	<select id="idToTelUser" parameterType="map" resultType="BCUserDto">
 		SELECT * FROM member 
-		WHERE name = #{name} AND tel = #{tel}
+		WHERE name = #{name} AND email = #{email}
 	</select>
 	<!-- 비밀번호 찾기 -->
 	<select id="pwdToTelUser" parameterType="map" resultType="BCUserDto">
 		SELECT * FROM member 
-		WHERE id=#{id} AND name=#{name} AND tel=#{tel}
+		WHERE id=#{id} AND name=#{name} AND email=#{email}
 	</select>
 	<!-- 고객 정보 찾기 -->
 	<select id="selectUser" parameterType="String" resultType="BCUserDto">

@@ -21,17 +21,17 @@ public class BCFindController {
 	}
 
 	@PostMapping("/BCFindingId")
-	public String findid2(Model m, String name, String tel) throws Exception { // 조건 작성 해야댐 ( 폼에서 들어올 때 조건을 만족 해야 찾음 )
-		if (idCheck(name, tel) != null) {
-			m.addAttribute("userfindid", idCheck(name, tel));
+	public String findid2(Model m, String name, String email) throws Exception { // 조건 작성 해야댐 ( 폼에서 들어올 때 조건을 만족 해야 찾음 )
+		if (idCheck(name, email) != null) {
+			m.addAttribute("userfindid", idCheck(name, email));
 			return "BCFindId";
 		}
 		return "BCFindingId";
 	}
 	// 
-	private BCUserDto idCheck(String name, String tel) throws Exception { // 전화번호 인증번호해서 추가
-		BCUserDto user = bcUserDao.idToTelUser(name, tel);
-		if (user.getName().equals(name) && user.getTel().equals(tel)) {
+	private BCUserDto idCheck(String name, String email) throws Exception { // 전화번호 인증번호해서 추가
+		BCUserDto user = bcUserDao.idToTelUser(name, email);
+		if (user.getName().equals(name) && user.getEmail().equals(email)) {
 			return user;
 		}
 		return null;
@@ -44,18 +44,18 @@ public class BCFindController {
 	}
 
 	@PostMapping("/BCFindingPwd")
-	public String findpwd2(Model m, String id, String name, String tel) throws Exception { // 조건 작성
-		if (pwdCheck(id, name, tel) != null) {
-			m.addAttribute("userfindpwd", pwdCheck(id, name, tel));
+	public String findpwd2(Model m, String id, String name, String email) throws Exception { // 조건 작성
+		if (pwdCheck(id, name, email) != null) {
+			m.addAttribute("userfindpwd", pwdCheck(id, name, email));
 			return "BCFindPwd";
 		}
 		return "BCFingdingPwd";
 	}
 
-	private BCUserDto pwdCheck(String id, String name, String tel) throws Exception { // 전화번호 인증번호 추가
-		BCUserDto user = bcUserDao.pwdToTelUser(id, name, tel);
+	private BCUserDto pwdCheck(String id, String name, String email) throws Exception { // 전화번호 인증번호 추가
+		BCUserDto user = bcUserDao.pwdToTelUser(id, name, email);
 		if (user.getId().equals(id) && user.getName().equals(name)
-				&& user.getTel().equals(tel)) {
+				&& user.getEmail().equals(email)) {
 			return user;
 		}
 		return null;

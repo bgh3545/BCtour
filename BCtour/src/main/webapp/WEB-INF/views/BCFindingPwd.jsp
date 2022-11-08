@@ -95,7 +95,7 @@ a {
 	font-size: 1.5em;
 }
 
-.form_container_pwd>div>input[type="tel"] {
+.form_container_pwd>div>input[type="email"] {
 	width: 230px;
 	font-size: 1.5em;
 	padding: 10px;
