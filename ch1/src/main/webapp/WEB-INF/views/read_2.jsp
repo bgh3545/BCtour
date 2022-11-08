@@ -47,54 +47,55 @@
                         <h2><a href="<c:url value='/board/list_v1_1'/>">공지사항</a></h2>
                     </div>
                     <div class="city">
-                        <h2><a href="<c:url value='/board/list_v1_2'/>">여행일지</a></h2>
+                        <h2><a id="select" href="<c:url value='/board/list_v1_2'/>">여행일지</a></h2>
                     </div>
                     <div class="city">
-                        <h2><a id="select" href="<c:url value='/board/list_v1_3'/>">자유게시판</a></h2>
+                        <h2><a href="<c:url value='/board/list_v1_3'/>">자유게시판</a></h2>
                     </div>
                 </div>
                 <form id="form">
                 <div class="column2">
                 	<div class="b_readcontent">
 						<div class="b_readbtn">
-							<input type="hidden" name="comm_num" value="${commDto.comm_num}">
-							<button type="button" id="modifybtn" class="b_btnsize" ${sessionScope.id==commDto.comm_writer?'':'style="display:none;"'}>수정</button>
-							<button type="button" id="removebtn" class="b_btnsize" ${sessionScope.id==commDto.comm_writer?'':'style="display:none;"'}>삭제</button>
+							<input type="hidden" name="rec_num" value="${recDto.rec_num}">
+							<button type="button" id="modifybtn" class="b_btnsize" ${sessionScope.id==recDto.rec_writer?'':'style="display:none;"'}>수정</button>
+							<button type="button" id="removebtn" class="b_btnsize" ${sessionScope.id==recDto.rec_writer?'':'style="display:none;"'}>삭제</button>
+							<button type="button" id="recommend" class="b_btnsize" ${sessionScope.id==recDto.rec_writer?'style="display:none;"':''}>추천</button>
 							<button type="button" id="listbtn" class="b_btnsize">목록</button>
 						</div>
 						<div class="b_readtitle" id="title">
-							${commDto.comm_title}
+							${recDto.rec_title}
 						</div>
 						<div class="b_readwriter">
-						<fmt:formatDate value="${commDto.comm_reg_date}" pattern="yyyy-MM-dd HH:mm:ss" var="regDate" />
-							작성자: ${commDto.comm_writer},&nbsp;&nbsp; 등록일: ${regDate}
+						<fmt:formatDate value="${recDto.rec_reg_date}" pattern="yyyy-MM-dd HH:mm:ss" var="regDate" />
+							추천수: ${recDto.rec_recommend},&nbsp;&nbsp; 작성자: ${recDto.rec_writer},&nbsp;&nbsp; 등록일: ${regDate}
 						</div>
 						<div class="b_readcontentarea" id="content">
-							${fn:replace(commDto.comm_content, cn, br)}
+							${fn:replace(recDto.rec_content, cn, br)}
 						</div>
 					</div>
 					<div class="b_commentarea">
-					<c:forEach var="i" items="${c_comment}">
+					<c:forEach var="i" items="${r_comment}">
 					<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
-					<fmt:formatDate value="${i.comm_comm_date}" pattern="yyyy-MM-dd" var="regDate" />
-					<fmt:formatDate value="${i.comm_comm_date}" pattern="HH:mm:ss" var="regTime" />
-						<c:if test="${i.comm_comm_num != param.cNum }">
+					<fmt:formatDate value="${i.rec_comm_date}" pattern="yyyy-MM-dd" var="regDate" />
+					<fmt:formatDate value="${i.rec_comm_date}" pattern="HH:mm:ss" var="regTime" />
+						<c:if test="${i.rec_comm_num != param.cNum }">
 						<div class="b_commentcolumn">
-							<div class="b_commentwriter">${i.comm_comm_writer}</div>
-							<div class="b_commentcontent">${fn:replace(i.comm_comm_content, cn, br)}</div>
+							<div class="b_commentwriter">${i.rec_comm_writer}</div>
+							<div class="b_commentcontent">${fn:replace(i.rec_comm_content, cn, br)}</div>
 							<div class="b_commentmenu">
 								${today==regDate? regTime:regDate}&nbsp&nbsp&nbsp
-								<c:if test="${sessionScope.id==i.comm_comm_writer}">
-								<a href="<c:url value='/board/modifycomm_3'/>?comm_num=${commDto.comm_num}&comm_comm_num=${i.comm_comm_num}&page=${page}&pageSize=${pageSize}">수정</a>&nbsp&nbsp&nbsp
-								<a href="<c:url value='/board/removecomm_3?comm_num=${commDto.comm_num}&comm_comm_num=${i.comm_comm_num}&page=${page}&pageSize=${pageSize}'/>">삭제</a>
+								<c:if test="${sessionScope.id==i.rec_comm_writer}">
+								<a href="<c:url value='/board/modifycomm_2'/>?rec_num=${recDto.rec_num}&rec_comm_num=${i.rec_comm_num}&page=${page}&pageSize=${pageSize}">수정</a>&nbsp&nbsp&nbsp
+								<a href="<c:url value='/board/removecomm_2?rec_num=${recDto.rec_num}&rec_comm_num=${i.rec_comm_num}&page=${page}&pageSize=${pageSize}'/>">삭제</a>
 								</c:if>
 							</div>
 						</div>
 						</c:if>
-						<c:if test="${i.comm_comm_num == param.cNum}">
+						<c:if test="${i.rec_comm_num == param.cNum}">
 						<div class="b_commentflex">
 							<div class="b_commentwritearea">
-								<input type="hidden" name="comm_comm_num" value="${i.comm_comm_num}"><div class="b_commentwritewriter">${sessionScope.id}</div><textarea class="b_commentwritecontent" name="comm_comm_modicontent">${i.comm_comm_content}</textarea>
+								<input type="hidden" name="rec_comm_num" value="${i.rec_comm_num}"><div class="b_commentwritewriter">${sessionScope.id}</div><textarea class="b_commentwritecontent" name="rec_comm_modicontent">${i.rec_comm_content}</textarea>
 							</div>
 							<button type="button" id="modicommbtn" class="b_writecommbtn">수정하기</button>
                 		</div>
@@ -103,7 +104,7 @@
 					</div>
 					<div class="b_commentflex">
 					<div class="b_commentwritearea">
-						<div class="b_commentwritewriter">${sessionScope.id}</div><textarea class="b_commentwritecontent" name="comm_comm_content"></textarea>
+						<div class="b_commentwritewriter">${sessionScope.id}</div><textarea class="b_commentwritecontent" name="rec_comm_content"></textarea>
 					</div>
 					<button type="button" id="writecommbtn" class="b_writecommbtn">댓글달기</button>
                 	</div>
@@ -115,24 +116,24 @@
 	<script>
 		
 		document.getElementById('listbtn').addEventListener('click',e=>{
-		window.location = "<c:url value='/board/list_v1_3'/>?page=${page}&pageSize=${pageSize}";
+		window.location = "<c:url value='/board/list_v1_2'/>?page=${page}&pageSize=${pageSize}";
 		});
 		
 		document.getElementById('removebtn').addEventListener('click',e=>{
 		if(!confirm("삭제하시겠습니까?")) return;
 		var form = document.getElementById('form');
-		form.action="<c:url value='/board/remove_3'/>?page=${page}&pageSize=${pageSize}";
+		form.action="<c:url value='/board/remove_2'/>?page=${page}&pageSize=${pageSize}";
 		form.method="post"
 		form.submit();
 		});
 		
 		document.getElementById('modifybtn').addEventListener('click',e=>{
-		window.location = "<c:url value='/board/modify_3'/>?comm_num=${commDto.comm_num}&page=${page}&pageSize=${pageSize}";
+		window.location = "<c:url value='/board/modify_2'/>?rec_num=${recDto.rec_num}&page=${page}&pageSize=${pageSize}";
 		});
 		
 		document.getElementById('writecommbtn').addEventListener('click',e=>{
 		var form = document.getElementById('form');
-		form.action="<c:url value='/board/read_3'/>?comm_num=${commDto.comm_num}&page=${page}&pageSize=${pageSize}";
+		form.action="<c:url value='/board/read_2'/>?rec_num=${recDto.rec_num}&page=${page}&pageSize=${pageSize}";
 		form.method="post"
 		form.submit();
 		});
@@ -141,12 +142,18 @@
 		if( modiBtn != null){
 		document.getElementById('modicommbtn').addEventListener('click',e=>{
 		var form = document.getElementById('form');
-		form.action="<c:url value='/board//modify2comm_3'/>?comm_num=${commDto.comm_num}&page=${page}&pageSize=${pageSize}";
+		form.action="<c:url value='/board/modify2comm_2'/>?rec_num=${recDto.rec_num}&page=${page}&pageSize=${pageSize}";
 		form.method="post"
 		form.submit();
 		});
-		}
-		
+		}		
+	
+		document.getElementById('recommend').addEventListener('click',e=>{
+		var form = document.getElementById('form');
+		form.action="<c:url value='/board/recBtn_2'/>?rec_num=${recDto.rec_num}";
+		form.method="post"
+		form.submit();
+		});
 		
 		let msg = "${msg}"
 		if(msg == "del") alert("성공적으로 삭제되었습니다.")

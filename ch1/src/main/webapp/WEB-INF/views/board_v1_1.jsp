@@ -107,7 +107,7 @@
                     	</div>
                     	<div class="b_searchboardarea">
                     	<form action="<c:url value='/board/list_v1_1'/>" class="b_searchform" method="get">
-                    		<select class="b_searchnavi">
+                    		<select class="b_searchnavi" name="option">
                     			<option value="A" ${ph.sc.option=='A' || ph.sc.option==''? "selected":""}>제목+내용</option>
                     			<option value="T" ${ph.sc.option=='T' ? "selected":""}>제목</option>
                     			<option value="W" ${ph.sc.option=='W' ? "selected":""}>작성자</option>

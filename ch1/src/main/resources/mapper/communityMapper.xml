@@ -8,7 +8,7 @@
 	</select>
 	
 	<select id="c_selectAll" resultType="CommunityDto">
-		select * from community order by reg_date desc, comm_num desc
+		select * from community order by comm_reg_date desc, comm_num desc
 	</select>
 	
 	<select id="c_select" parameterType="int" resultType="CommunityDto">
@@ -59,7 +59,7 @@
 		order by comm_reg_date desc, comm_num desc limit #{offset},#{pageSize}
 	</select>
 	
-	<select id="c_searchSelectPage" parameterType="c_SearchCondition" resultType="CommunityDto">
+	<select id="c_searchSelectPage" parameterType="SearchCondition" resultType="CommunityDto">
 		<include refid="c_selectFromCommunity"/>
 		where true
 		<include refid="c_searchCondition"/>
@@ -67,7 +67,7 @@
 		limit #{offset}, #{pageSize}
 	</select>
 	
-	<select id="c_searchResultCnt" parameterType="c_SearchCondition" resultType="int">
+	<select id="c_searchResultCnt" parameterType="SearchCondition" resultType="int">
 		select count(*) from community
 		where true
 		<include refid="c_searchCondition"/>
@@ -75,10 +75,10 @@
 	
 	<sql id="c_searchCondition">
 		<choose>
-			<when test="option=='T'">
+			<when test='option=="T"'>
 				and comm_title like concat('%',#{keyword},'%')
 			</when>
-			<when test="option=='W'">
+			<when test='option=="W"'>
 				and comm_writer like concat('%',#{keyword},'%')
 			</when>
 			<otherwise>

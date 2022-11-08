@@ -55,7 +55,7 @@
                     <div class="b_title">커뮤니티</div>
                     <div class="b_writebtn"><button type="button" id="writebtn" class="b_btnsize">글쓰기</button></div>
                     <div class="b_content">
-                    	<div class="b_indextitle">
+             	       <div class="b_indextitle">
                     		<div class="b_indexNum">번호</div>
                     		<div class="b_indexName">제목</div>
                     		<div class="b_indexNum">작성자</div>
@@ -69,7 +69,7 @@
 							<fmt:formatDate value="${i.reg_Date}" pattern="HH:mm" var="regTime" />
 	                    	<div class="b_indextitle b_noticebgcolor">
 	                    		<div class="b_contentNum">공지사항</div>
-	                    		<div class="b_contentName"><a href="<c:url value='/board/read_3?bno=${i.bno}&page=${page}&pageSize=${pageSize}'/>">${i.title}</a></div>
+	                    		<div class="b_contentName"><a href="<c:url value='/board/read_1?bno=${i.bno}&page=${page}&pageSize=${pageSize}'/>">${i.title}</a></div>
 	                    		<div class="b_contentNum">${i.writer}</div>
 	                    		<div class="b_contentNum">${i.view_cnt}</div>
 	                    		<div class="b_contentDate">${today==regDate? regTime:regDate}</div>
@@ -106,7 +106,7 @@
                     	</div>
                     	<div class="b_searchboardarea">
                     	<form action="<c:url value='/board/list_v1_3'/>" class="b_searchform" method="get">
-                    		<select class="b_searchnavi">
+                    		<select class="b_searchnavi" name="option">
                     			<option value="A" ${ph.sc.option=='A' || ph.sc.option==''? "selected":""}>제목+내용</option>
                     			<option value="T" ${ph.sc.option=='T' ? "selected":""}>제목</option>
                     			<option value="W" ${ph.sc.option=='W' ? "selected":""}>작성자</option>

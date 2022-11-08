@@ -83,14 +83,6 @@
 		form.method="post"
 		form.submit();
 		});
-		
-		document.getElementById('removebtn').addEventListener('click',e=>{
-		if(!confirm("삭제하시겠습니까?")) return;
-		var form = document.getElementById('form');
-		form.action="<c:url value='/board/remove_3'/>?page=${page}&pageSize=${pageSize}";
-		form.method="post"
-		form.submit();
-		});
 	</script>
 </body>
 </html>

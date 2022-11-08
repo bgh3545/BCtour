@@ -2,8 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<% pageContext.setAttribute("br","<br/>"); pageContext.setAttribute("cn","\n"); %>
 <c:set var = "mypageLink" value="${sessionScope.id==null? '':'/myPage/myPage_v1_1'}"/>
 <c:set var = "mypage" value="${sessionScope.id==null? '':'마이 페이지'}"/>
 <c:set var = "LoginOutlink" value="${sessionScope.id==null? '/logIn1/logIn1':'/logIn1/logOut1'}"/>
@@ -15,7 +13,7 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
-<link href="../resources/CSS/BCtourStyle.css?asdq" rel="stylesheet"/>
+<link href="../resources/CSS/BCtourStyle.css?asdf" rel="stylesheet"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 </head>
 <body>
@@ -47,66 +45,27 @@
                         <h2><a href="<c:url value='/board/list_v1_1'/>">공지사항</a></h2>
                     </div>
                     <div class="city">
-                        <h2><a href="<c:url value='/board/list_v1_2'/>">여행일지</a></h2>
+                        <h2><a id="select" href="<c:url value='/board/list_v1_2'/>">여행일지</a></h2>
                     </div>
                     <div class="city">
-                        <h2><a id="select" href="<c:url value='/board/list_v1_3'/>">자유게시판</a></h2>
+                        <h2><a href="<c:url value='/board/list_v1_3'/>">자유게시판</a></h2>
                     </div>
                 </div>
                 <form id="form">
                 <div class="column2">
-                	<div class="b_readcontent">
-						<div class="b_readbtn">
-							<input type="hidden" name="comm_num" value="${commDto.comm_num}">
-							<button type="button" id="modifybtn" class="b_btnsize" ${sessionScope.id==commDto.comm_writer?'':'style="display:none;"'}>수정</button>
-							<button type="button" id="removebtn" class="b_btnsize" ${sessionScope.id==commDto.comm_writer?'':'style="display:none;"'}>삭제</button>
-							<button type="button" id="listbtn" class="b_btnsize">목록</button>
+                	<div class="b_writecontent">
+						<div class="b_writebtn">
+							<input type="hidden" name="rec_num" value="${modi.rec_num}" readonly="readonly">
+							<button type="button" id="writebtn" class="b_btnsize">등록</button>
+							<button type="button" id="cancelbtn" class="b_btnsize">취소</button>
 						</div>
-						<div class="b_readtitle" id="title">
-							${commDto.comm_title}
+						<div class="b_writetitlearea">
+							<input class="b_writetitle" type="text" name="rec_title" id="title" value="${modi.rec_title}">
 						</div>
-						<div class="b_readwriter">
-						<fmt:formatDate value="${commDto.comm_reg_date}" pattern="yyyy-MM-dd HH:mm:ss" var="regDate" />
-							작성자: ${commDto.comm_writer},&nbsp;&nbsp; 등록일: ${regDate}
-						</div>
-						<div class="b_readcontentarea" id="content">
-							${fn:replace(commDto.comm_content, cn, br)}
+						<div class="b_writecontentarea">
+							<textarea name="rec_content" class="b_textarea" id="content">${modi.rec_content}</textarea>
 						</div>
 					</div>
-					<div class="b_commentarea">
-					<c:forEach var="i" items="${c_comment}">
-					<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
-					<fmt:formatDate value="${i.comm_comm_date}" pattern="yyyy-MM-dd" var="regDate" />
-					<fmt:formatDate value="${i.comm_comm_date}" pattern="HH:mm:ss" var="regTime" />
-						<c:if test="${i.comm_comm_num != param.cNum }">
-						<div class="b_commentcolumn">
-							<div class="b_commentwriter">${i.comm_comm_writer}</div>
-							<div class="b_commentcontent">${fn:replace(i.comm_comm_content, cn, br)}</div>
-							<div class="b_commentmenu">
-								${today==regDate? regTime:regDate}&nbsp&nbsp&nbsp
-								<c:if test="${sessionScope.id==i.comm_comm_writer}">
-								<a href="<c:url value='/board/modifycomm_3'/>?comm_num=${commDto.comm_num}&comm_comm_num=${i.comm_comm_num}&page=${page}&pageSize=${pageSize}">수정</a>&nbsp&nbsp&nbsp
-								<a href="<c:url value='/board/removecomm_3?comm_num=${commDto.comm_num}&comm_comm_num=${i.comm_comm_num}&page=${page}&pageSize=${pageSize}'/>">삭제</a>
-								</c:if>
-							</div>
-						</div>
-						</c:if>
-						<c:if test="${i.comm_comm_num == param.cNum}">
-						<div class="b_commentflex">
-							<div class="b_commentwritearea">
-								<input type="hidden" name="comm_comm_num" value="${i.comm_comm_num}"><div class="b_commentwritewriter">${sessionScope.id}</div><textarea class="b_commentwritecontent" name="comm_comm_modicontent">${i.comm_comm_content}</textarea>
-							</div>
-							<button type="button" id="modicommbtn" class="b_writecommbtn">수정하기</button>
-                		</div>
-                		</c:if>
-					</c:forEach>
-					</div>
-					<div class="b_commentflex">
-					<div class="b_commentwritearea">
-						<div class="b_commentwritewriter">${sessionScope.id}</div><textarea class="b_commentwritecontent" name="comm_comm_content"></textarea>
-					</div>
-					<button type="button" id="writecommbtn" class="b_writecommbtn">댓글달기</button>
-                	</div>
                 </div>
                 </form>
             </div>
@@ -114,44 +73,16 @@
 	</div>
 	<script>
 		
-		document.getElementById('listbtn').addEventListener('click',e=>{
-		window.location = "<c:url value='/board/list_v1_3'/>?page=${page}&pageSize=${pageSize}";
+		document.getElementById('cancelbtn').addEventListener('click',e=>{
+		window.location = "<c:url value='/board/list_v1_2'/>";
 		});
-		
-		document.getElementById('removebtn').addEventListener('click',e=>{
-		if(!confirm("삭제하시겠습니까?")) return;
+	
+		document.getElementById('writebtn').addEventListener('click',e=>{
 		var form = document.getElementById('form');
-		form.action="<c:url value='/board/remove_3'/>?page=${page}&pageSize=${pageSize}";
+		form.action="<c:url value='/board/modify_2'/>?page=${page}&pageSize=${pageSize}";
 		form.method="post"
 		form.submit();
 		});
-		
-		document.getElementById('modifybtn').addEventListener('click',e=>{
-		window.location = "<c:url value='/board/modify_3'/>?comm_num=${commDto.comm_num}&page=${page}&pageSize=${pageSize}";
-		});
-		
-		document.getElementById('writecommbtn').addEventListener('click',e=>{
-		var form = document.getElementById('form');
-		form.action="<c:url value='/board/read_3'/>?comm_num=${commDto.comm_num}&page=${page}&pageSize=${pageSize}";
-		form.method="post"
-		form.submit();
-		});
-		
-		var modiBtn = document.getElementById('modicommbtn')
-		if( modiBtn != null){
-		document.getElementById('modicommbtn').addEventListener('click',e=>{
-		var form = document.getElementById('form');
-		form.action="<c:url value='/board//modify2comm_3'/>?comm_num=${commDto.comm_num}&page=${page}&pageSize=${pageSize}";
-		form.method="post"
-		form.submit();
-		});
-		}
-		
-		
-		let msg = "${msg}"
-		if(msg == "del") alert("성공적으로 삭제되었습니다.")
-		if(msg == "error") alert("삭제에 실패하였습니다.")
-		
 	</script>
 </body>
 </html>

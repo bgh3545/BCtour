@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<% pageContext.setAttribute("br","<br/>"); pageContext.setAttribute("cn","\n"); %>
 <c:set var = "mypageLink" value="${sessionScope.id==null? '':'/myPage/myPage_v1_1'}"/>
 <c:set var = "mypage" value="${sessionScope.id==null? '':'마이 페이지'}"/>
 <c:set var = "LoginOutlink" value="${sessionScope.id==null? '/logIn1/logIn1':'/logIn1/logOut1'}"/>
@@ -69,26 +71,9 @@
 							작성자: ${boardDto.writer},&nbsp;&nbsp; 등록일: ${regDate}
 						</div>
 						<div class="b_readcontentarea" id="content">
-							${boardDto.content}
+							${fn:replace(boardDto.content, cn, br)}
 						</div>
 					</div>
-					<div class="b_commentarea">
-						<div class="b_commentcolumn">
-							<div class="b_commentwriter">이름</div><div class="b_commentcontent">코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용</div><div class="b_commentmenu"><a>수정</a>&nbsp&nbsp<a>삭제</a></div>
-						</div>
-						<div class="b_commentcolumn">
-							<div class="b_commentwriter">이름</div><div class="b_commentcontent">코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용코멘트내용</div><div class="b_commentmenu"><a>수정</a>&nbsp&nbsp<a>삭제</a></div>
-						</div>
-						<div class="b_commentcolumn">
-							<div class="b_commentwriter">이름</div><div class="b_commentcontent">코멘트</div><div class="b_commentmenu"><a>수정</a>&nbsp&nbsp<a>삭제</a></div>
-						</div>
-					</div>
-					<div class="b_commentflex">
-					<div class="b_commentwritearea">
-						<div class="b_commentwritewriter">${sessionScope.id}</div><textarea class="b_commentwritecontent"></textarea>
-					</div>
-					<button type="button" id="writecommbtn" class="b_writecommbtn">댓글달기</button>
-                	</div>
                 </div>
                 </form>
             </div>

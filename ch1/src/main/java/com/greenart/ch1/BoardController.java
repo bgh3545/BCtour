@@ -33,6 +33,14 @@ public class BoardController {
 	comm_commentDao comm_commDao;
 	@Autowired
 	comm_commentService comm_commService;
+	@Autowired
+	RecommendDao recDao;
+	@Autowired
+	RecommendService recService;
+	@Autowired
+	rec_commentDao rec_commDao;
+	@Autowired
+	rec_commentService rec_commService;
 	
 	@GetMapping("/list_v1_1")
 	public String list_v1_1(HttpServletRequest request,SearchCondition sc, Model m) throws Exception {
@@ -170,7 +178,7 @@ public class BoardController {
 			int rowCnt = boardService.modify(boardDto);
 			if(rowCnt!=1) throw new Exception("modify error");
 			redatt.addFlashAttribute("msg", "modify_ok");
-			return "redirect:/board/list_v1_1?page="+sc.getQueryString();
+			return "redirect:/board/list_v1_1"+sc.getQueryString();
 		}catch(Exception e){
 			e.printStackTrace();
 			m.addAttribute("boardDto", boardDto);
@@ -181,10 +189,314 @@ public class BoardController {
 	}
 	
 	@GetMapping("/list_v1_2")
-	public String list_v1_2(HttpServletRequest request) {
+	public String list_v1_2(HttpServletRequest request, SearchCondition sc, Model m, RecommendDto recDto) throws Exception {
 		if(!loginCheck(request))
 			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+		
+		try {
+			
+			int totalCnt = recService.r_getSearchResultCnt(sc);
+			PageHandler pageHandler = new PageHandler(totalCnt, sc);
+			
+			Map map = new HashMap();
+			map.put("offset", sc.getOffset());
+			map.put("pageSize", sc.getPageSize());
+			
+			List<RecommendDto> rec = recService.r_getSearchResultPage(sc);
+			List<BoardDto> notice = boardService.getNotice(map);
+			
+			m.addAttribute("notice", notice);
+			m.addAttribute("rec",rec);
+			m.addAttribute("ph", pageHandler);
+			m.addAttribute("page", sc.getPage());
+			m.addAttribute("pageSize", sc.getPageSize());
+			
+			Date now = new Date();
+			m.addAttribute("now",now);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 		return "board_v1_2";
+	}
+	
+	@PostMapping("/list_v1_2")
+	public String list_v2_2(HttpServletRequest request, SearchCondition sc, Model m, RecommendDto recDto, String option) throws Exception {
+		if(!loginCheck(request))
+			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+		
+		try {
+			
+			int totalCnt = recService.r_getSearchResultCnt(sc);
+			PageHandler pageHandler = new PageHandler(totalCnt, sc);
+			
+			Map map = new HashMap();
+			map.put("offset", sc.getOffset());
+			map.put("pageSize", sc.getPageSize());
+			
+			List<RecommendDto> rec = recService.r_getSearchResultPage(sc);
+			List<BoardDto> notice = boardService.getNotice(map);
+			
+			m.addAttribute("notice", notice);
+			m.addAttribute("rec",rec);
+			m.addAttribute("ph", pageHandler);
+			m.addAttribute("page", sc.getPage());
+			m.addAttribute("pageSize", sc.getPageSize());
+			
+			Date now = new Date();
+			m.addAttribute("now",now);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "board_v1_2";
+	}
+	
+	@GetMapping("/write_2")
+	public String write_2(HttpServletRequest request,Model m, Integer rec_num, SearchCondition sc) {
+		if(!loginCheck(request))
+			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+		
+		try {
+			RecommendDto recDto = recService.r_read(rec_num);
+			m.addAttribute("recDto", recDto);
+			m.addAttribute("page", sc.getPage());
+			m.addAttribute("pageSize", sc.getPageSize());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "write_2";
+	}
+	
+	@PostMapping("/write_2")
+	public String write_2(HttpServletRequest request,Model m, RecommendDto recDto, HttpSession session, RedirectAttributes redatt) {
+		if(!loginCheck(request))
+			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+		
+		String writer = (String)session.getAttribute("id");
+		recDto.setRec_writer(writer);
+		
+		try {
+			int rowCnt = recService.r_writer(recDto);
+			if(rowCnt!=1) throw new Exception("write error");
+			redatt.addFlashAttribute("msg", "write_ok");
+			return "redirect:/board/list_v1_2";
+		}catch(Exception e) {
+			e.printStackTrace();
+			m.addAttribute("recDto", recDto);
+			m.addAttribute("msg", "write_error");
+			
+			return "write_2";
+		}
+	}
+	
+	@PostMapping("/read_2")
+	public String post_read_2(HttpServletRequest request,Model m,rec_commentDto rec_commDto, Integer rec_num, SearchCondition sc, HttpSession session) {
+		if(!loginCheck(request))
+			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+		
+		try {
+			
+			String rec_writer = (String)session.getAttribute("id");
+			rec_commDto.setRec_comm_writer(rec_writer);
+			
+			
+			int commCnt = recService.r_increaseCommCnt(rec_num);
+			int rowCnt = rec_commService.rm_write(rec_commDto);
+			
+			Date now = new Date();
+			m.addAttribute("now",now);
+			
+			List<rec_commentDto> r_comment = rec_commService.rm_getList(rec_num);
+			RecommendDto recDto = recService.r_read(rec_num);
+			
+			m.addAttribute("r_comment",r_comment);
+			m.addAttribute("recDto", recDto);
+			m.addAttribute("page", sc.getPage());
+			m.addAttribute("pageSize", sc.getPageSize());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "read_2";
+	}
+	
+	@GetMapping("/read_2")
+	public String get_read_2(HttpServletRequest request, Model m, rec_commentDto rec_commDto,RecommendDto recDto, Integer rec_comm_num, Integer rec_num, SearchCondition sc, HttpSession session) {
+		if(!loginCheck(request))
+			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+		
+		String mem_id= (String)session.getAttribute("id");
+		recDto.setMem_id(mem_id);
+		try {
+			RecommendDto recBoolDto = recService.rb_read(rec_num, mem_id);
+			if(recBoolDto==null) {
+				int recBoolCnt = recService.rb_write(recDto);
+			}
+			
+			Date now = new Date();
+			m.addAttribute("now",now);
+			
+			List<rec_commentDto> r_comment = rec_commService.rm_getList(rec_num);
+			recDto = recService.r_read(rec_num);
+			
+			m.addAttribute("r_comment",r_comment);
+			m.addAttribute("recDto", recDto);
+			m.addAttribute("page", sc.getPage());
+			m.addAttribute("pageSize", sc.getPageSize());
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return "read_2";
+	}
+	
+	@PostMapping("/remove_2")
+	public String remove_2(HttpServletRequest request,Model m, Integer rec_num, SearchCondition sc, HttpSession session, RedirectAttributes redatt) {
+		if(!loginCheck(request))
+			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+		
+		m.addAttribute("page", sc.getPage());
+		m.addAttribute("pageSize", sc.getPageSize());
+		
+		try {
+			String writer = (String)session.getAttribute("id");
+			int rowCnt= recService.r_remove(rec_num, writer);
+			if(rowCnt==1) {
+				redatt.addFlashAttribute("msg", "del");
+				return "redirect:/board/list_v1_2";
+			}
+			else {
+				throw new Exception("board remove error");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			redatt.addFlashAttribute("msg", "error");
+		}
+		return "redirect:/board/list_v1_2";
+	}
+	
+	@GetMapping("/removecomm_2")
+	public String removecomm_2(HttpServletRequest request,Model m,Integer rec_comm_num, Integer rec_num, SearchCondition sc, HttpSession session, RedirectAttributes redatt) {
+		if(!loginCheck(request))
+			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+		
+		try {
+			
+			int commCnt = recService.r_decreaseCommCnt(rec_num);
+			String writer = (String)session.getAttribute("id");
+			int rowCnt= rec_commService.rm_remove(rec_comm_num, writer);
+			
+			if(rowCnt==1) {
+				redatt.addFlashAttribute("msg", "del");
+			}
+			
+			else {
+				throw new Exception("comment remove error");
+			}
+		}catch(Exception e){
+			e.printStackTrace();
+			redatt.addFlashAttribute("msg", "error");
+		}
+		return "redirect:/board/read_2?comm_num="+rec_num+"&page="+sc.getPage()+"&pageSize="+sc.getPageSize();
+	}
+	
+	@GetMapping("/modify_2")
+	public String modify_2(HttpServletRequest request,Integer rec_num, SearchCondition sc, Model m) throws Exception {
+		if(!loginCheck(request))
+			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+		RecommendDto modi = recDao.r_select(rec_num);
+		m.addAttribute("modi", modi);
+		m.addAttribute("page", sc.getPage());
+		m.addAttribute("pageSize", sc.getPageSize());
+		return "modify_2";
+	}
+	
+	@PostMapping("/modify_2")
+	public String modify_2(HttpServletRequest request,Model m,Integer rec_num, RecommendDto recDto, HttpSession session, SearchCondition sc, RedirectAttributes redatt) {
+		if(!loginCheck(request))
+			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+		
+		String writer = (String)session.getAttribute("id");
+		recDto.setRec_writer(writer);
+		
+		m.addAttribute("page", sc.getPage());
+		m.addAttribute("pageSize", sc.getPageSize());
+		
+		try {
+			int rowCnt = recService.r_modify(recDto);
+			if(rowCnt!=1) throw new Exception("modify error");
+			redatt.addFlashAttribute("msg", "modify_ok");
+			return "redirect:/board/read_2?rec_num="+rec_num+"&page="+sc.getPage()+"&pageSize="+sc.getPageSize();
+		}catch(Exception e){
+			e.printStackTrace();
+			m.addAttribute("recDto", recDto);
+			m.addAttribute("msg", "modify_error");
+			
+			return "read_2";
+		}
+	}
+	
+	@GetMapping("/modifycomm_2")
+	public String modifycomm_2(HttpServletRequest request,Model m,Integer rec_num, Integer rec_comm_num, rec_commentDto rec_commDto, HttpSession session, SearchCondition sc, RedirectAttributes redatt) {
+		if(!loginCheck(request))
+			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+		
+		String writer = (String)session.getAttribute("id");
+		rec_commDto.setRec_comm_writer(writer);
+		m.addAttribute("cNum", rec_comm_num);
+		m.addAttribute("page", sc.getPage());
+		m.addAttribute("pageSize", sc.getPageSize());
+		
+		try {
+			rec_commentDto commModi = rec_commDao.rm_select(rec_comm_num);
+			m.addAttribute("commModi", commModi);
+			
+			return "redirect:/board/read_2?rec_num="+rec_num+"&page="+sc.getPage()+"&pageSize="+sc.getPageSize()+"&cNum="+rec_comm_num;
+		}catch(Exception e){
+			e.printStackTrace();
+			
+			return "read_2";
+		}
+	}
+	
+	@PostMapping("/modify2comm_2")
+	public String modify2comm_2(HttpServletRequest request,Model m,Integer rec_num, Integer rec_comm_num, rec_commentDto rec_commDto, HttpSession session, SearchCondition sc, RedirectAttributes redatt) {
+		if(!loginCheck(request))
+			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+		
+		String writer = (String)session.getAttribute("id");
+		rec_commDto.setRec_comm_writer(writer);
+		
+		m.addAttribute("page", sc.getPage());
+		m.addAttribute("pageSize", sc.getPageSize());
+		
+		try {
+			int rowCnt = rec_commService.rm_modify(rec_commDto);
+		}catch(Exception e){
+			e.printStackTrace();
+			
+		}
+		return "redirect:/board/read_2?rec_num="+rec_num+"&page="+sc.getPage()+"&pageSize="+sc.getPageSize();
+	}
+	
+	@PostMapping("/recBtn_2")
+	public String incRec_2(HttpServletRequest request,RecommendDto recDto, Integer rec_num, SearchCondition sc, Model m, HttpSession session) throws Exception {
+		if(!loginCheck(request))
+			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+		
+		String recommender = (String)session.getAttribute("id");
+		recDto.setMem_id(recommender);
+		
+		RecommendDto recBool = recService.rb_read(rec_num, recommender);
+		
+		if(recBool.getRecbool()==0) {
+		int recCnt = recService.r_increaseRecCnt(rec_num);
+		int recBoolCnt = recService.r_increaseRecBool(rec_num, recommender);
+		}
+		if(recBool.getRecbool()==1) {
+		int recCnt = recService.r_decreaseRecCnt(rec_num);
+		int recBoolCnt = recService.r_decreaseRecBool(rec_num, recommender);
+		}
+		return "redirect:/board/read_2?rec_num="+rec_num+"&page="+sc.getPage()+"&pageSize="+sc.getPageSize();
 	}
 	
 	@GetMapping("/list_v1_3")
@@ -430,9 +742,7 @@ public class BoardController {
 		m.addAttribute("pageSize", sc.getPageSize());
 		
 		try {
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+comm_commDto);
 			int rowCnt = comm_commService.cm_modify(comm_commDto);
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+rowCnt);
 		}catch(Exception e){
 			e.printStackTrace();
 			

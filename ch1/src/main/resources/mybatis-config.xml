@@ -8,7 +8,8 @@
 		<typeAlias alias="CommunityDto" type="com.greenart.ch1.CommunityDto"/>
 		<typeAlias alias="comm_commentDto" type="com.greenart.ch1.comm_commentDto"/>
 		<typeAlias alias="SearchCondition" type="com.greenart.ch1.SearchCondition"/>
-		<typeAlias alias="c_SearchCondition" type="com.greenart.ch1.SearchCondition"/>
+		<typeAlias alias="RecommendDto" type="com.greenart.ch1.RecommendDto"/>
+		<typeAlias alias="rec_commentDto" type="com.greenart.ch1.rec_commentDto"/>
 	</typeAliases>
 	
 </configuration>

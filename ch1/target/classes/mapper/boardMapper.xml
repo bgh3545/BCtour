@@ -68,10 +68,10 @@
 	
 	<sql id="searchCondition">
 		<choose>
-			<when test="option=='T'">
+			<when test='option=="T"'>
 				and title like concat('%',#{keyword},'%')
 			</when>
-			<when test="option=='W'">
+			<when test='option=="W"'>
 				and writer like concat('%',#{keyword},'%')
 			</when>
 			<otherwise>
