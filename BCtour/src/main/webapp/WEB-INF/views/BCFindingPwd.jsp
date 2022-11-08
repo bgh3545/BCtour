@@ -145,7 +145,7 @@ a {
 				</ul>
 			</div>
 			<div class="h2_box">
-				<h2>등록한 휴대번호로 비밀번호 찾기</h2>
+				<h2>등록한 이메일로 비밀번호 찾기</h2>
 			</div>
 		</div>
 	</div>
@@ -161,7 +161,7 @@ a {
 			</div>
 			<div class="form_container_pwd">
 				<div>
-					<input type="tel" name="tel" placeholder="휴대폰번호"
+					<input type="email" name="email" placeholder="이메일"
 						required="required">
 				</div>
 				<div>

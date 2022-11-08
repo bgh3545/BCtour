@@ -137,7 +137,7 @@
                     <li><a href="<c:url value='/BCFind/BCFindingPwd'/>">비밀번호</a></li>
                 </ul>
             </div>
-            <div class="h2_box"><h2>등록한 휴대번호로 아이디 찾기</h2></div>
+            <div class="h2_box"><h2>등록한 이메일로 아이디 찾기</h2></div>
         </div>
     </div>
     <!-- 아이디 찾기 -->
@@ -149,7 +149,7 @@
             </div>
             <div class="form_container_id">
                 <div>
-                    <input type="tel" name="tel" placeholder="휴대폰번호" required="required">
+                    <input type="email" name="email" placeholder="이메일" required="required">
                 </div>
                 <div>
                     <button type="button" onclick="alert('인증번호가 발송되었습니다.')">인증번호 발송</button>
