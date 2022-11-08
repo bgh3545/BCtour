@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<% pageContext.setAttribute("br","<br/>"); pageContext.setAttribute("cn","\n"); %>
+<% pageContext.setAttribute("br","<br/>"); pageContext.setAttribute("cn","\n"); pageContext.setAttribute("sp"," "); pageContext.setAttribute("nb","&nbsp"); %>
 <c:set var = "mypageLink" value="${sessionScope.id==null? '':'/myPage/myPage_v1_1'}"/>
 <c:set var = "mypage" value="${sessionScope.id==null? '':'마이 페이지'}"/>
 <c:set var = "LoginOutlink" value="${sessionScope.id==null? '/logIn1/logIn1':'/logIn1/logOut1'}"/>
@@ -70,7 +70,7 @@
 							작성자: ${commDto.comm_writer},&nbsp;&nbsp; 등록일: ${regDate}
 						</div>
 						<div class="b_readcontentarea" id="content">
-							${fn:replace(commDto.comm_content, cn, br)}
+							${fn:replace(fn:replace(commDto.comm_content, sp, nb), cn, br)}
 						</div>
 					</div>
 					<div class="b_commentarea">
@@ -81,7 +81,7 @@
 						<c:if test="${i.comm_comm_num != param.cNum }">
 						<div class="b_commentcolumn">
 							<div class="b_commentwriter">${i.comm_comm_writer}</div>
-							<div class="b_commentcontent">${fn:replace(i.comm_comm_content, cn, br)}</div>
+							<div class="b_commentcontent">${fn:replace(fn:replace(i.comm_comm_content, sp, nb), cn, br)}</div>
 							<div class="b_commentmenu">
 								${today==regDate? regTime:regDate}&nbsp&nbsp&nbsp
 								<c:if test="${sessionScope.id==i.comm_comm_writer}">
