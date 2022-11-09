@@ -92,8 +92,9 @@ a {
 			</div>
 		</div>
 		<div id="main_p">
-			<p>고객님의 아이디는</p>
-			<p>${userfindid.id}입니다</p>
+			<p>인증 대기중입니다.</p>
+			<%-- <p>고객님의 아이디는</p>
+			<p>${userfindid.id}입니다</p> --%>
 		</div>
 	</div>
 </body>

@@ -165,7 +165,7 @@ a {
 						required="required">
 				</div>
 				<div>
-					<button type="button" onclick="alert('인증번호가 발송되었습니다.')">인증번호 발송</button>
+					<button type="button" onclick="alert('이메일로 인증확인이 발송되었습니다.')">인증확인</button>
 				</div>
 			</div>
 			<div class="form_container_pwd">

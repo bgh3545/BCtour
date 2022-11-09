@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BC.Tour - °èÁ¤°ü¸®</title>
+    <title>BC.Tour - ê³„ì •ê´€ë¦¬</title>
     <style>
         * {
             box-sizing: border-box;
@@ -125,41 +125,62 @@
 
 <body>
     <header>
-        <div><a href="<c:url value='/'/>"><img src="${path }/resources/img/·Î°í.jpg" width="200px" alt="·Î°í"></a></div>
-        <div><a href="<c:url value='/BClogin/BClogin'/>"><img src="${path }/resources/img/·Î±×ÀÎ.png" width="110px" alt="·Î±×ÀÎ"></a></div>
+        <div><a href="<c:url value='/'/>"><img src="${path }/resources/img/ë¡œê³ .jpg" width="200px" alt="ë¡œê³ "></a></div>
+        <div><a href="<c:url value='/BClogin/BClogin'/>"><img src="${path }/resources/img/ë¡œê·¸ì¸.png" width="110px" alt="ë¡œê·¸ì¸"></a></div>
     </header>
     <div id="vertical">
         <div>
-            <p>¾ÆÀÌµğ/ºñ¹Ğ¹øÈ£ Ã£±â</p>
+            <p>ì•„ì´ë””/ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°</p>
             <div id="container">
                 <ul>
-                    <li><a href="<c:url value='/BCFind/BCFindingId'/>">¾ÆÀÌµğ</a></li>
-                    <li><a href="<c:url value='/BCFind/BCFindingPwd'/>">ºñ¹Ğ¹øÈ£</a></li>
+                    <li><a href="<c:url value='/BCFind/BCFindingId'/>">ì•„ì´ë””</a></li>
+                    <li><a href="<c:url value='/BCFind/BCFindingPwd'/>">ë¹„ë°€ë²ˆí˜¸</a></li>
                 </ul>
             </div>
-            <div class="h2_box"><h2>µî·ÏÇÑ ÀÌ¸ŞÀÏ·Î ¾ÆÀÌµğ Ã£±â</h2></div>
+            <div class="h2_box"><h2>ë“±ë¡í•œ ì´ë©”ì¼ë¡œ ì•„ì´ë”” ì°¾ê¸°</h2></div>
         </div>
     </div>
-    <!-- ¾ÆÀÌµğ Ã£±â -->
-    <form action="<c:url value='/BCFind/BCFindingId'/>" method="post">
+    <!-- ì•„ì´ë”” ì°¾ê¸° -->
+    <form action="<c:url value='/BCFind/BCFindingId'/>" id="idform" method="post">
         <div id="form_container_id">
-            <!-- <p>ÀÌ¸§À¸·Î ¾ÆÀÌµğ Ã£±â</p> -->
+            <!-- <p>ì´ë¦„ìœ¼ë¡œ ì•„ì´ë”” ì°¾ê¸°</p> -->
             <div class="form_container_id">
-                <input type="text" name="name" placeholder="ÀÌ¸§" required="required">
+                <input type="text" name="name" value="${bcDto.name }" placeholder="ì´ë¦„" required="required">
             </div>
             <div class="form_container_id">
                 <div>
-                    <input type="email" name="email" placeholder="ÀÌ¸ŞÀÏ" required="required">
+                    <input type="email" name="email" id="email" value="${bcDto.email }" onkeyup="btnable();"  placeholder="ì´ë©”ì¼" required="required">  
                 </div>
                 <div>
-                    <button type="button" onclick="alert('ÀÎÁõ¹øÈ£°¡ ¹ß¼ÛµÇ¾ú½À´Ï´Ù.')">ÀÎÁõ¹øÈ£ ¹ß¼Û</button>
+                    <button type="button" id="btn" disabled="">ì¸ì¦í™•ì¸</button>
                 </div>
             </div>
             <div class="form_container_id">
-                <input type="submit" value="È®ÀÎ">
+                <input type="submit" value="í™•ì¸">
             </div>
         </div>
     </form>
+    <script>
+    function btnable() {
+    	let email = document.getElementById("email").value;
+    	let btn = document.getElementById("btn");
+    	if(email.length) {
+    		if(email.length > 3) {
+    			btn.disabled = false;
+    		} else {
+    			btn.disabled = true;
+    		}
+    	}
+    }
+    document.getElementById('btn').addEventListener('click',e=>{
+		if(!confirm("ë“±ë¡í•˜ì‹œê² ìŠµë‹ˆê¹Œ?")) return;
+		var form = document.getElementById('idform');
+		var email = document.getElementById("email").value;
+		form.action = "<c:url value='/noticeMail'/>";
+		form.method = "post";
+		form.submit();
+	});
+    </script>
 </body>
 
 </html>

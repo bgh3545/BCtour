@@ -22,20 +22,25 @@ public class BCUserDaoImpl implements BCUserDao  {
 	}
 //	아이디 찾기
 	@Override
-	public BCUserDto idToTelUser(String name, String email) throws Exception {
+	public BCUserDto idToEmail(String name, String email) throws Exception {
 		Map<String, String> map = new HashMap<>();
 		map.put("name", name);
 		map.put("email", email);
-		return session.selectOne(namespace + "idToTelUser", map);
+		return session.selectOne(namespace + "idToEmail", map);
 	}
 //	비밀번호 찾기
 	@Override
-	public BCUserDto pwdToTelUser(String id, String name, String email) throws Exception {
+	public BCUserDto pwdToEmail(String id, String name, String email) throws Exception {
 		Map<String, String> map = new HashMap<>();
 		map.put("id", id);
 		map.put("name", name);
 		map.put("email", email);
-		return session.selectOne(namespace + "pwdToTelUser", map);
+		return session.selectOne(namespace + "pwdToEmail", map);
+	}
+//	이메일 확인
+	@Override
+	public int confirmEmail(String email) throws Exception {
+		return session.selectOne(namespace + "confirmEmail", email);
 	}
 //	고객 정보 찾기
 	@Override

@@ -9,14 +9,19 @@
 		WHERE id = #{id}
 	</select>
 	<!-- 아이디 찾기 -->
-	<select id="idToTelUser" parameterType="map" resultType="BCUserDto">
+	<select id="idToEmail" parameterType="map" resultType="BCUserDto">
 		SELECT * FROM member 
 		WHERE name = #{name} AND email = #{email}
 	</select>
 	<!-- 비밀번호 찾기 -->
-	<select id="pwdToTelUser" parameterType="map" resultType="BCUserDto">
+	<select id="pwdToEmail" parameterType="map" resultType="BCUserDto">
 		SELECT * FROM member 
 		WHERE id=#{id} AND name=#{name} AND email=#{email}
+	</select>
+	<!-- 이메일 인증 -->
+	<select id="confirmEmail" parameterType="String" resultType="int">
+		SELECT count(email) FROM member
+		WHERE email=#{email}
 	</select>
 	<!-- 고객 정보 찾기 -->
 	<select id="selectUser" parameterType="String" resultType="BCUserDto">

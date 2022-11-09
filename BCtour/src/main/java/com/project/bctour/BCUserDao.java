@@ -8,10 +8,13 @@ public interface BCUserDao {
 	int selectIdCount(String id) throws Exception;
 
 	//	아이디 찾기
-	BCUserDto idToTelUser(String id, String tel) throws Exception;
+	BCUserDto idToEmail(String name, String email) throws Exception;
 
 	//	비밀번호 찾기
-	BCUserDto pwdToTelUser(String id, String pwd, String tel) throws Exception;
+	BCUserDto pwdToEmail(String id, String name, String email) throws Exception;
+	
+	//  이메일 확인
+	int confirmEmail(String email) throws Exception;
 
 	//	고객 정보 찾기
 	BCUserDto selectUser(String id) throws Exception;

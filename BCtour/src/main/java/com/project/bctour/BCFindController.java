@@ -28,9 +28,9 @@ public class BCFindController {
 		}
 		return "BCFindingId";
 	}
-	// 
+	
 	private BCUserDto idCheck(String name, String email) throws Exception { // 전화번호 인증번호해서 추가
-		BCUserDto user = bcUserDao.idToTelUser(name, email);
+		BCUserDto user = bcUserDao.idToEmail(name, email);
 		if (user.getName().equals(name) && user.getEmail().equals(email)) {
 			return user;
 		}
@@ -53,7 +53,7 @@ public class BCFindController {
 	}
 
 	private BCUserDto pwdCheck(String id, String name, String email) throws Exception { // 전화번호 인증번호 추가
-		BCUserDto user = bcUserDao.pwdToTelUser(id, name, email);
+		BCUserDto user = bcUserDao.pwdToEmail(id, name, email);
 		if (user.getId().equals(id) && user.getName().equals(name)
 				&& user.getEmail().equals(email)) {
 			return user;
