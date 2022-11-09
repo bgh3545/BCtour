@@ -139,10 +139,14 @@ public class BoardController {
 		boardDto.setWriter(writer);
 		
 		try {
+			if(boardDto.getTitle() !="") {
 			int rowCnt = boardService.writer(boardDto);
 			if(rowCnt!=1) throw new Exception("write error");
 			redatt.addFlashAttribute("msg", "write_ok");
 			return "redirect:/board/list_v1_1";
+			}
+			m.addAttribute("msg", "notitle");
+			return "write_1";
 		}catch(Exception e) {
 			e.printStackTrace();
 			m.addAttribute("boardDto", boardDto);
@@ -220,6 +224,38 @@ public class BoardController {
 		return "board_v1_2";
 	}
 	
+	@GetMapping("/rec10")
+	public String rec10(HttpServletRequest request, SearchCondition sc, Model m, RecommendDto recDto) throws Exception {
+		if(!loginCheck(request))
+			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+		
+		try {
+			
+			int totalCnt = recService.r_getSearchResultRecommendCnt(sc);
+			PageHandler pageHandler = new PageHandler(totalCnt, sc);
+			
+			Map map = new HashMap();
+			map.put("offset", sc.getOffset());
+			map.put("pageSize", sc.getPageSize());
+			
+			List<RecommendDto> rec = recService.r_getSearchResultRecommendPage(sc);
+			List<BoardDto> notice = boardService.getNotice(map);
+			
+			m.addAttribute("notice", notice);
+			m.addAttribute("rec",rec);
+			m.addAttribute("ph", pageHandler);
+			m.addAttribute("page", sc.getPage());
+			m.addAttribute("pageSize", sc.getPageSize());
+			
+			Date now = new Date();
+			m.addAttribute("now",now);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "board_v1_2";
+	}
+	
 	@PostMapping("/list_v1_2")
 	public String list_v2_2(HttpServletRequest request, SearchCondition sc, Model m, RecommendDto recDto, String option) throws Exception {
 		if(!loginCheck(request))
@@ -277,10 +313,14 @@ public class BoardController {
 		recDto.setRec_writer(writer);
 		
 		try {
+			if(recDto.getRec_title()!="") {
 			int rowCnt = recService.r_writer(recDto);
 			if(rowCnt!=1) throw new Exception("write error");
 			redatt.addFlashAttribute("msg", "write_ok");
 			return "redirect:/board/list_v1_2";
+			}
+			m.addAttribute("msg", "notitle");
+			return "write_2";
 		}catch(Exception e) {
 			e.printStackTrace();
 			m.addAttribute("recDto", recDto);
@@ -658,10 +698,14 @@ public class BoardController {
 		commDto.setComm_writer(writer);
 		
 		try {
+			if(commDto.getComm_title() != "") {
 			int rowCnt = commService.c_writer(commDto);
 			if(rowCnt!=1) throw new Exception("write error");
 			redatt.addFlashAttribute("msg", "write_ok");
 			return "redirect:/board/list_v1_3";
+			}
+			m.addAttribute("msg", "notitle");
+			return "write_3";
 		}catch(Exception e) {
 			e.printStackTrace();
 			m.addAttribute("commDto", commDto);

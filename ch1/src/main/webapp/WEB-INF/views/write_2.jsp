@@ -15,6 +15,7 @@
     <title>비씨투어</title>
 <link href="../resources/CSS/BCtourStyle.css?asdf" rel="stylesheet"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
+<script src="https://cdn.ckeditor.com/ckeditor5/35.2.0/classic/ckeditor.js"></script>
 </head>
 <body>
 	<div class="main">
@@ -63,7 +64,7 @@
 							<input class="b_writetitle" type="text" name="rec_title" placeholder="제목을 입력해 주세요">
 						</div>
 						<div class="b_writecontentarea">
-							<textarea name="rec_content" class="b_textarea" placeholder="내용을 입력해 주세요."></textarea>
+							<textarea name="rec_content" id="rec_content" class="b_textarea" placeholder="내용을 입력해 주세요."></textarea>
 						</div>
 					</div>
                 </div>
@@ -83,6 +84,15 @@
 		form.method="post"
 		form.submit();
 		});
+		
+		let msg = "${msg}"
+		if(msg == "notitle") alert("제목을 입력해 주세요")
+			
+		ClassicEditor
+	    .create( document.querySelector( '#rec_content' ),{ckfinder: {uploadUrl : '/image/upload'}})
+	    .catch( error => {
+	     console.error( error );
+	     });
 	</script>
 </body>
 </html>

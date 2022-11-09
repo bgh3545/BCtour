@@ -11,6 +11,10 @@
 		select * from recommend order by rec_reg_date desc, rec_num desc
 	</select>
 	
+	<select id="r_selectTop" resultType="recommendDto">
+		select * from recommend where rec_recommend >=10 order by rec_recommend desc, rec_reg_date desc, rec_num desc limit 3
+	</select>
+	
 	<select id="r_select" parameterType="int" resultType="recommendDto">
 		select * from recommend where rec_num = #{rec_num}
 	</select>
@@ -100,9 +104,23 @@
 		limit #{offset}, #{pageSize}
 	</select>
 	
+	<select id="r_searchSelectRecommendPage" parameterType="SearchCondition" resultType="recommendDto">
+		<include refid="r_selectFromrecommend"/>
+		where rec_recommend >= 10
+		<include refid="r_searchCondition"/>
+		order by rec_reg_date desc, rec_num desc
+		limit #{offset}, #{pageSize}
+	</select>
+	
 	<select id="r_searchResultCnt" parameterType="SearchCondition" resultType="int">
 		select count(*) from recommend
 		where true
+		<include refid="r_searchCondition"/>
+	</select>
+	
+	<select id="r_searchResultRecommendCnt" parameterType="SearchCondition" resultType="int">
+		select count(*) from recommend
+		where rec_recommend >= 10
 		<include refid="r_searchCondition"/>
 	</select>
 	

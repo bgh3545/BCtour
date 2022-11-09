@@ -39,6 +39,11 @@ public class RecommendDaoImpl implements RecommendDao{
 	}
 	
 	@Override
+	public List<RecommendDto> r_selectTop() throws Exception{
+		return session.selectList(namespace+"r_selectTop");
+	}
+	
+	@Override
 	public RecommendDto r_select(Integer rec_num) throws Exception{
 		return session.selectOne(namespace+"r_select",rec_num);
 	}
@@ -118,7 +123,17 @@ public class RecommendDaoImpl implements RecommendDao{
 	}
 	
 	@Override
+	public List<RecommendDto> r_searchSelectRecommendPage(SearchCondition sc) throws Exception{
+		return session.selectList(namespace+"r_searchSelectRecommendPage",sc);
+	}
+	
+	@Override
 	public int r_searchResultCnt(SearchCondition sc) throws Exception{
 		return session.selectOne(namespace+"r_searchResultCnt", sc);
+	}
+	
+	@Override
+	public int r_searchResultRecommendCnt(SearchCondition sc) throws Exception{
+		return session.selectOne(namespace+"r_searchResultRecommendCnt", sc);
 	}
 }

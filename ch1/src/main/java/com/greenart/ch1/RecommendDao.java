@@ -42,4 +42,10 @@ public interface RecommendDao {
 	RecommendDto rb_select(Integer rec_num, String mem_id) throws Exception;
 
 	int rb_insert(RecommendDto recDto) throws Exception;
+
+	List<RecommendDto> r_searchSelectRecommendPage(SearchCondition sc) throws Exception;
+
+	int r_searchResultRecommendCnt(SearchCondition sc) throws Exception;
+
+	List<RecommendDto> r_selectTop() throws Exception;
 }

@@ -13,7 +13,7 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
-<link href="../resources/CSS/BCtourStyle.css?asdasd" rel="stylesheet"/>
+<link href="../resources/CSS/BCtourStyle.css?aas" rel="stylesheet"/>
 </head>
 <body>
 	<div class="main">
@@ -52,7 +52,10 @@
                 </div>
                 <div class="column2">
                     <div class="b_title">커뮤니티</div>
-                    <div class="b_writebtn"><button type="button" id="writebtn" class="b_btnsize">글쓰기</button></div>
+                    	<div class="b_writebtn">
+                    		<button type="button" id="10recbtn" class="b_btnsize">10추</button>
+                    		<button type="button" id="writebtn" class="b_btnsize">글쓰기</button>
+                    	</div>
                     <div class="b_content">
                    		<div class="b_indextitle">
                     		<div class="b_rindexNum">번호</div>
@@ -125,6 +128,10 @@
 	<script>
 		document.getElementById('writebtn').addEventListener('click',e=>{
 		window.location = "<c:url value='/board/write_2'/>";
+		});
+		
+		document.getElementById('10recbtn').addEventListener('click',e=>{
+		window.location = "<c:url value='/board/rec10'/>";
 		});
 	
 		let msg = "${msg}"

@@ -33,6 +33,11 @@ public class RecommendServiceImpl implements RecommendService {
 	}
 	
 	@Override
+	public List<RecommendDto> r_getTopList() throws Exception {
+		return recDao.r_selectTop();
+	}
+	
+	@Override
 	public RecommendDto r_read(Integer rec_num) throws Exception{
 		RecommendDto recommandDto = recDao.r_select(rec_num);
 		recDao.r_increaseViewCnt(rec_num);
@@ -96,7 +101,17 @@ public class RecommendServiceImpl implements RecommendService {
 	}
 	
 	@Override
+	public int r_getSearchResultRecommendCnt(SearchCondition sc) throws Exception{
+		return recDao.r_searchResultRecommendCnt(sc);
+	}
+	
+	@Override
 	public List<RecommendDto> r_getSearchResultPage(SearchCondition sc) throws Exception{
 		return recDao.r_searchSelectPage(sc);
+	}
+	
+	@Override
+	public List<RecommendDto> r_getSearchResultRecommendPage(SearchCondition sc) throws Exception{
+		return recDao.r_searchSelectRecommendPage(sc);
 	}
 }

@@ -266,9 +266,9 @@
                         </div>
                     </div>
                     <div class="column2">
-                        <div class="imgContainer"></div>
-                        <div class="imgContainer"></div>
-                        <div class="imgContainer"></div>
+                        <div class="imgContainer">${topList[0].rec_title}</div>
+                        <div class="imgContainer">${topList[1].rec_title}</div>
+                        <div class="imgContainer">${topList[2].rec_title}</div>
                     </div>
                 </div>
             </div>

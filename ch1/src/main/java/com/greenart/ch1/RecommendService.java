@@ -38,4 +38,10 @@ public interface RecommendService {
 	RecommendDto rb_read(Integer rec_num, String mem_id) throws Exception;
 
 	int rb_write(RecommendDto recDto) throws Exception;
+
+	List<RecommendDto> r_getSearchResultRecommendPage(SearchCondition sc) throws Exception;
+
+	int r_getSearchResultRecommendCnt(SearchCondition sc) throws Exception;
+
+	List<RecommendDto> r_getTopList() throws Exception;
 }

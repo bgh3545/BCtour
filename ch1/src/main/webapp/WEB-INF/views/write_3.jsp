@@ -13,8 +13,9 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
-<link href="../resources/CSS/BCtourStyle.css?asdf" rel="stylesheet"/>
+<link href="../resources/CSS/BCtourStyle.css?asdas" rel="stylesheet"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
+<script src="https://cdn.ckeditor.com/ckeditor5/35.2.0/classic/ckeditor.js"></script>
 </head>
 <body>
 	<div class="main">
@@ -60,10 +61,10 @@
 							<button type="button" id="cancelbtn" class="b_btnsize">취소</button>
 						</div>
 						<div class="b_writetitlearea">
-							<input class="b_writetitle" type="text" name="comm_title" placeholder="제목을 입력해 주세요">
+							<input class="b_writetitle" id="comm_title" type="text" name="comm_title" placeholder="제목을 입력해 주세요">
 						</div>
 						<div class="b_writecontentarea">
-							<textarea name="comm_content" class="b_textarea" placeholder="내용을 입력해 주세요."></textarea>
+							<textarea name="comm_content" id="comm_content" class="b_textarea" placeholder="내용을 입력해 주세요."></textarea>
 						</div>
 					</div>
                 </div>
@@ -83,6 +84,15 @@
 		form.method="post"
 		form.submit();
 		});
+		
+		let msg = "${msg}"
+		if(msg == "notitle") alert("제목을 입력해 주세요")
+		
+		ClassicEditor
+        .create( document.querySelector( '#comm_content' ),{ckfinder: {uploadUrl : '/image/upload'}})
+        .catch( error => {
+            console.error( error );
+        } );
 	</script>
 </body>
 </html>
