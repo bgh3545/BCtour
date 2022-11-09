@@ -94,7 +94,7 @@
 						<c:if test="${i.comm_comm_num == param.cNum}">
 						<div class="b_commentflex">
 							<div class="b_commentwritearea">
-								<input type="hidden" name="comm_comm_num" value="${i.comm_comm_num}"><div class="b_commentwritewriter">${sessionScope.id}</div><textarea class="b_commentwritecontent" name="comm_comm_modicontent">${i.comm_comm_content}</textarea>
+								<input type="hidden" ${i.comm_comm_num == param.cNum? 'name="comm_comm_num"':''} value="${i.comm_comm_num}"><div class="b_commentwritewriter">${sessionScope.id}</div><textarea class="b_commentwritecontent" name="comm_comm_modicontent">${i.comm_comm_content}</textarea>
 							</div>
 							<button type="button" id="modicommbtn" class="b_writecommbtn">수정하기</button>
                 		</div>
@@ -129,6 +129,16 @@
 		document.getElementById('modifybtn').addEventListener('click',e=>{
 		window.location = "<c:url value='/board/modify_3'/>?comm_num=${commDto.comm_num}&page=${page}&pageSize=${pageSize}";
 		});
+		
+		var modiBtn = document.getElementById('modicommbtn')
+		if( modiBtn != null){
+		document.getElementById('modicommbtn').addEventListener('click',e=>{
+		var form = document.getElementById('form');
+		form.action="<c:url value='/board//modify2comm_3'/>?comm_num=${commDto.comm_num}&page=${page}&pageSize=${pageSize}";
+		form.method="post"
+		form.submit();
+		});
+		}
 		
 		document.getElementById('writecommbtn').addEventListener('click',e=>{
 		var form = document.getElementById('form');

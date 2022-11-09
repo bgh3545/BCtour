@@ -31,7 +31,7 @@ public class logInController_v1 {
 		System.out.println("rememberId="+rememberId);
 		
 		if(!loginCheck(id,pwd)) {
-			String msg= URLEncoder.encode("id í˜¹ì€ ë¹„ë°€ë²ˆí˜¸ë¥¼ í™•ì¸í•´ ì£¼ì„¸ìš”","utf-8");
+			String msg= URLEncoder.encode("id ¶Ç´Â ºñ¹Ğ¹øÈ£¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä","utf-8");
 			return "redirect:/logIn1/logIn1?msg="+msg;
 		}
 		
@@ -64,6 +64,7 @@ public class logInController_v1 {
 	
 	private boolean loginCheck(String id, String pwd) throws Exception {
 		User user = userDao.SelectUser(id);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@"+id);
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@"+user);
 		if(user==null) return false;
 		
