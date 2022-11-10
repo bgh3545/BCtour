@@ -21,7 +21,7 @@ public class BCFindController {
 	}
 
 	@PostMapping("/BCFindingId")
-	public String findid2(Model m, String name, String email) throws Exception { // 조건 작성 해야댐 ( 폼에서 들어올 때 조건을 만족 해야 찾음 )
+	public String findid2(Model m, String name, String email) throws Exception {
 		if (idCheck(name, email) != null) {
 			m.addAttribute("userfindid", idCheck(name, email));
 			return "BCFindId";
@@ -29,7 +29,8 @@ public class BCFindController {
 		return "BCFindingId";
 	}
 	
-	private BCUserDto idCheck(String name, String email) throws Exception { // 전화번호 인증번호해서 추가
+	// 아이디 체크
+	private BCUserDto idCheck(String name, String email) throws Exception {
 		BCUserDto user = bcUserDao.idToEmail(name, email);
 		if (user.getName().equals(name) && user.getEmail().equals(email)) {
 			return user;
@@ -52,6 +53,7 @@ public class BCFindController {
 		return "BCFingdingPwd";
 	}
 
+	// 비밀번호 체크
 	private BCUserDto pwdCheck(String id, String name, String email) throws Exception { // 전화번호 인증번호 추가
 		BCUserDto user = bcUserDao.pwdToEmail(id, name, email);
 		if (user.getId().equals(id) && user.getName().equals(name)

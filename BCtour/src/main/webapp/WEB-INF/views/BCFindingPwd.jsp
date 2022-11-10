@@ -1,178 +1,213 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BC.Tour - °èÁ¤°ü¸®</title>
-<style>
-* {
-	box-sizing: border-box;
-}
-
-header {
-	padding: 20px;
-	display: flex;
-	justify-content: space-around;
-}
-
-#vertical {
-	margin: 0px auto;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-content: center;
-	flex-direction: column;
-	text-align: center;
-}
-
-#vertical>div>p {
-	margin: 30px 0;
-	padding-bottom: 30px;
-	font-size: 3em;
-	font-weight: bold;
-	border-bottom: 1px solid black;
-	/* border: 1px solid black; */
-}
-
-ul li {
-	display: inline-block;
-	list-style: none;
-}
-
-#container {
-	display: flex;
-	justify-content: space-around;
-	/* border: 1px solid green; */
-}
-
-#container>ul>li {
-	width: 250px;
-	height: 50px;
-	text-align: center;
-	line-height: 40px;
-	font-size: 2em;
-}
-
-#container>ul>li:hover {
-	border-bottom: 1px solid black;
-	font-weight: bold;
-}
-
-a {
-	text-decoration: none;
-	color: black;
-}
-
-.h2_box {
-	margin: 0 auto;
-	width: 400px;
-	text-align: left;
-}
-
-#form_container_pwd {
-	margin: 50px auto;
-	width: 500px;
-	height: 370px;
-	/* border: 1px solid black; */
-}
-
-.form_container_pwd {
-	margin: 25px;
-	display: flex;
-	justify-content: center;
-	align-content: center;
-}
-
-.form_container_pwd>input {
-	width: 400px;
-	padding: 10px;
-	font-size: 1.5em;
-}
-
-.form_container_pwd>div>input[type="email"] {
-	width: 230px;
-	font-size: 1.5em;
-	padding: 10px;
-	margin-right: 20px;
-}
-
-.form_container_pwd>div>button {
-	width: 150px;
-	height: 52px;
-	font-weight: bold;
-	font-size: 1.2em;
-	padding: 10px;
-}
-
-.form_container_pwd>input[type="submit"] {
-	font-weight: bold;
-}
-
-.form_container_pwd>input[type="submit"]:active {
-	margin-left: 1.5px;
-	margin-top: 1.5px;
-	box-shadow: -1.5px -1.5px -1.5px -1.5px;
-	border: 2px solid #767676;
-	background-color: #e5e5e5;
-}
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BC.Tour - ê³„ì •ê´€ë¦¬</title>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+		
+		header {
+			padding: 20px;
+			display: flex;
+			justify-content: space-around;
+		}
+		
+		#vertical {
+			margin: 0px auto;
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			align-content: center;
+			flex-direction: column;
+			text-align: center;
+		}
+		
+		#vertical>div>p {
+			margin: 30px 0;
+			padding-bottom: 30px;
+			font-size: 3em;
+			font-weight: bold;
+			border-bottom: 1px solid black;
+			/* border: 1px solid black; */
+		}
+		
+		ul li {
+			display: inline-block;
+			list-style: none;
+		}
+		
+		#container {
+			display: flex;
+			justify-content: space-around;
+			/* border: 1px solid green; */
+		}
+		
+		#container>ul>li {
+			width: 250px;
+			height: 50px;
+			text-align: center;
+			line-height: 40px;
+			font-size: 2em;
+		}
+		
+		#container>ul>li:hover {
+			border-bottom: 1px solid black;
+			font-weight: bold;
+		}
+		
+		a {
+			text-decoration: none;
+			color: black;
+		}
+		
+		.h2_box {
+			margin: 0 auto;
+			width: 400px;
+			text-align: left;
+		}
+		
+		#form_container_pwd {
+			margin: 50px auto;
+			width: 500px;
+			height: 370px;
+			/* border: 1px solid black; */
+		}
+		
+		.form_container_pwd {
+			margin: 25px;
+			display: flex;
+			justify-content: center;
+			align-content: center;
+		}
+		
+		.form_container_pwd>input {
+			width: 400px;
+			padding: 10px;
+			font-size: 1.5em;
+		}
+		
+		.form_container_pwd>div>input[type="email"] {
+			width: 230px;
+			font-size: 1.5em;
+			padding: 10px;
+			margin-right: 20px;
+		}
+		
+		.form_container_pwd>div>button {
+			width: 150px;
+			height: 52px;
+			font-weight: bold;
+			font-size: 1.2em;
+			padding: 10px;
+		}
+		
+		.form_container_pwd>input[type="submit"] {
+			font-weight: bold;
+		}
+		
+		.form_container_pwd>input[type="submit"]:active {
+			margin-left: 1.5px;
+			margin-top: 1.5px;
+			box-shadow: -1.5px -1.5px -1.5px -1.5px;
+			border: 2px solid #767676;
+			background-color: #e5e5e5;
+		}
 </style>
 </head>
 
 <body>
 	<header>
-		<div>
-			<a href="<c:url value='/'/>"><img src="${path }/resources/img/·Î°í.jpg"
-				width="200px" alt="·Î°í"></a>
-		</div>
-		<div>
-			<a href="<c:url value='/BClogin/BClogin'/>"><img
-				src="${path }/resources/img/·Î±×ÀÎ.png" width="110px" alt="·Î±×ÀÎ"></a>
-		</div>
+		<div><a href="<c:url value='/'/>"><img src="${path }/resources/img/ë¡œê³ .jpg" width="200px" alt="ë¡œê³ "></a></div>
+		<div><a href="<c:url value='/BClogin/BClogin'/>"><img src="${path }/resources/img/ë¡œê·¸ì¸.png" width="110px" alt="ë¡œê·¸ì¸"></a></div>
 	</header>
 	<div id="vertical">
 		<div>
-			<p>¾ÆÀÌµğ/ºñ¹Ğ¹øÈ£ Ã£±â</p>
+			<p>ì•„ì´ë””/ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°</p>
 			<div id="container">
 				<ul>
-					<li><a href="<c:url value='/BCFind/BCFindingId'/>">¾ÆÀÌµğ</a></li>
-					<li><a href="<c:url value='/BCFind/BCFindingPwd'/>">ºñ¹Ğ¹øÈ£</a></li>
+					<li><a href="<c:url value='/BCFind/BCFindingId'/>">ì•„ì´ë””</a></li>
+					<li><a href="<c:url value='/BCFind/BCFindingPwd'/>">ë¹„ë°€ë²ˆí˜¸</a></li>
 				</ul>
 			</div>
-			<div class="h2_box">
-				<h2>µî·ÏÇÑ ÀÌ¸ŞÀÏ·Î ºñ¹Ğ¹øÈ£ Ã£±â</h2>
-			</div>
+			<div class="h2_box"><h2>ë“±ë¡í•œ ì´ë©”ì¼ë¡œ ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸°</h2></div>
 		</div>
 	</div>
-	<!-- ºñ¹Ğ¹øÈ£ Ã£±â -->
-	<form action="<c:url value='/BCFind/BCFindingPwd'/>" method="post">
-		<div id="form_container_pwd">
-			<!-- <p>¾ÆÀÌµğ ÀÌ¸§À¸·Î ºñ¹Ğ¹øÈ£ Ã£±â</p> -->
-			<div class="form_container_pwd">
-				<input type="text" name="id" placeholder="¾ÆÀÌµğ" required="required">
+	<!-- ë¹„ë°€ë²ˆí˜¸ ì°¾ê¸° -->
+	<form action="<c:url value='/BCFind/BCFindingPwd'/>" id="form" method="post" onsubmit="return ConfirmBtn();">
+        <div id="form_container_pwd">
+        	<div class="form_container_pwd">
+				<input type="text" name="id" id="id" value="${param.id2 }" placeholder="ì•„ì´ë””" required="required">
 			</div>
-			<div class="form_container_pwd">
-				<input type="text" name="name" placeholder="ÀÌ¸§" required="required">
-			</div>
-			<div class="form_container_pwd">
-				<div>
-					<input type="email" name="email" placeholder="ÀÌ¸ŞÀÏ"
-						required="required">
-				</div>
-				<div>
-					<button type="button" onclick="alert('ÀÌ¸ŞÀÏ·Î ÀÎÁõÈ®ÀÎÀÌ ¹ß¼ÛµÇ¾ú½À´Ï´Ù.')">ÀÎÁõÈ®ÀÎ</button>
-				</div>
-			</div>
-			<div class="form_container_pwd">
-				<input type="submit" value="È®ÀÎ">
-			</div>
-		</div>
-	</form>
+            <div class="form_container_pwd">
+                <input type="text" name="name" id="name" value="${param.name2 }" placeholder="ì´ë¦„" required="required">
+            </div>
+        <div class="form_container_pwd">
+            <div>
+            	<input type="email" name="email" id="email" value="${param.email2 }" placeholder="ì´ë©”ì¼" required="required">
+            </div>
+            <div>
+            <c:choose>
+            	<c:when test="${param.email2 != null }">
+            		<button type="button" id="btn" disabled>ì¸ì¦í™•ì¸</button>
+            	</c:when>
+             	<c:otherwise>
+             		<button type="button" id="btn">ì¸ì¦í™•ì¸</button>                		
+             	</c:otherwise>
+            </c:choose>
+            </div>
+        </div>
+            <div class="form_container_pwd">
+                <input type="submit" value="í™•ì¸">
+            </div>
+        </div>
+    </form>
+    <script>    
+    function ConfirmBtn() {
+    	let btn = document.getElementById("btn").disabled;
+    	if (btn == true ) {
+    		return true;
+    	} else {
+    		alert("ì´ë©”ì¼ ì¸ì¦í™•ì¸ì„ í•´ì£¼ì„¸ìš”.");
+    		return false;
+    	}
+    }
+    
+    /* ì¸ì¦í™•ì¸ í´ë¦­ ì‹œ ì£¼ì†Œì— ë§ëŠ” ë©”ì¼í˜ì´ì§€ë¡œ ì´ë™ */
+    document.getElementById('btn').addEventListener('click',e=>{
+    	setTimeout(() => {
+    		let emailAddr = document.getElementById('email').value;
+    		if ( emailAddr.match("naver") ) {
+    			window.location.href = "http://mail.naver.com";
+    		} else if ( emailAddr.match("gmail") ) {
+    			window.location.href = "https://mail.google.com";
+    		} else {
+    			window.location.href = "http://localhost:8080/bctour/BClogin/BClogin";
+    		}
+		}, 4300);
+    
+    	let email = document.getElementById("email").value;
+    	let valid = new RegExp('^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$');
+		if (valid.test(email)==false) {
+ 			alert("ì´ë©”ì¼ í˜•ì‹ì´ ì˜¬ë°”ë¥´ì§€ ì•ŠìŠµë‹ˆë‹¤.\në‹¤ì‹œ ì…ë ¥í•´ì£¼ì„¸ìš”.");
+ 			return false;
+		} else {
+			alert("ì…ë ¥í•˜ì‹  ì´ë©”ì¼ë¡œ ì¸ì¦í™•ì¸ì´ ë°œì†¡ë˜ì—ˆìŠµë‹ˆë‹¤.\në©”ì¼í˜ì´ì§€ë¡œ ì´ë™ë©ë‹ˆë‹¤.");
+			var form = document.getElementById('form');
+			form.action = "<c:url value='/BCFind/emailGetPwd'/>";
+			form.method = "POST";
+			form.submit();
+		}
+	});
+    </script>
 </body>
 
 </html>

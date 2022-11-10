@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <c:set var="path" value="${pageContext.request.contextPath }" />
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -141,44 +143,67 @@
         </div>
     </div>
     <!-- 아이디 찾기 -->
-    <form action="<c:url value='/BCFind/BCFindingId'/>" id="idform" method="post">
+    <form action="<c:url value='/BCFind/BCFindingId'/>" id="form" method="post" onsubmit="return ConfirmBtn();">
         <div id="form_container_id">
-            <!-- <p>이름으로 아이디 찾기</p> -->
             <div class="form_container_id">
-                <input type="text" name="name" value="${bcDto.name }" placeholder="이름" required="required">
+                <input type="text" name="name" value="${param.name2 }" placeholder="이름" required="required">
             </div>
-            <div class="form_container_id">
-                <div>
-                    <input type="email" name="email" id="email" value="${bcDto.email }" onkeyup="btnable();"  placeholder="이메일" required="required">  
-                </div>
-                <div>
-                    <button type="button" id="btn" disabled="">인증확인</button>
-                </div>
+        <div class="form_container_id">
+            <div>
+            	<input type="email" name="email" id="email" value="${param.email2 }" placeholder="이메일" required="required">
             </div>
+            <div>
+            <c:choose>
+            	<c:when test="${param.email2 != null }">
+            		<button type="button" id="btn" disabled>인증확인</button>
+            	</c:when>
+             	<c:otherwise>
+             		<button type="button" id="btn">인증확인</button>                		
+             	</c:otherwise>
+            </c:choose>
+            </div>
+         </div>
             <div class="form_container_id">
                 <input type="submit" value="확인">
             </div>
         </div>
     </form>
     <script>
-    function btnable() {
-    	let email = document.getElementById("email").value;
-    	let btn = document.getElementById("btn");
-    	if(email.length) {
-    		if(email.length > 3) {
-    			btn.disabled = false;
-    		} else {
-    			btn.disabled = true;
-    		}
+    function ConfirmBtn() {
+    	let btn = document.getElementById("btn").disabled;
+    	if (btn == true ) {
+    		return true;
+    	} else {
+    		alert("이메일 인증확인을 해주세요.");
+    		return false;
     	}
     }
+    
+    /* 인증확인 클릭 시 주소에 맞는 메일페이지로 이동 */
     document.getElementById('btn').addEventListener('click',e=>{
-		if(!confirm("등록하시겠습니까?")) return;
-		var form = document.getElementById('idform');
-		var email = document.getElementById("email").value;
-		form.action = "<c:url value='/noticeMail'/>";
-		form.method = "post";
-		form.submit();
+    	setTimeout(() => {
+    		let emailAddr = document.getElementById('email').value;
+    		if ( emailAddr.match("naver") ) {
+    			window.location.href = "http://mail.naver.com";
+    		} else if ( emailAddr.match("gmail") ) {
+    			window.location.href = "https://mail.google.com";
+    		} else {
+    			window.location.href = "http://localhost:8080/bctour/BClogin/BClogin";
+    		}
+		}, 4300);
+    	
+    	let email = document.getElementById("email").value;
+    	let valid = new RegExp('^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$');
+		if (valid.test(email)==false) {
+ 			alert("이메일 형식이 올바르지 않습니다.\n다시 입력해주세요.");
+ 			return false;
+		} else {
+			alert("입력하신 이메일로 인증확인이 발송되었습니다.\n메일페이지로 이동됩니다.");
+			var form = document.getElementById('form');
+			form.action = "<c:url value='/BCFind/emailGetId'/>";
+			form.method = "POST";
+			form.submit();
+		}
 	});
     </script>
 </body>
