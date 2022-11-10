@@ -35,13 +35,13 @@ public class EmailController {
 			
 			
 			String findId = "http://localhost:8080/bctour/BCFind/BCFindingId?name2=" + name + "&email2=" + email;
-			String body = findId; // 내용 ( 인증번호 )
+			String body = findId; // 내용 ( 인증확인 링크 )
 
 			mailService.sendEmail(toAddr, fromAddr, subject, body);
 			
 			mv.setViewName("BCFindingId");
 			System.out.println("실행 끝");
-			m.addAttribute("bcDto", bcDto);
+//			m.addAttribute("bcDto", bcDto);
 			return mv;
 		} else {
 			mv.setViewName("BCFindingId");
@@ -71,7 +71,7 @@ public class EmailController {
 			
 			String findId = "http://localhost:8080/bctour/BCFind/BCFindingPwd?id2=" + id + "&name2=" + name + "&email2=" + email;
 			
-			String body = findId; // 내용 ( 인증번호 )
+			String body = findId; // 내용 ( 인증확인 링크 )
 
 			mailService.sendEmail(toAddr, fromAddr, subject, body);
 			
