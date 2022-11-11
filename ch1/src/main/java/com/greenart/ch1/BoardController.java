@@ -587,6 +587,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/read_3")
+	@ResponseBody
 	public String post_read_3(HttpServletRequest request,Model m,comm_commentDto comm_commDto, Integer comm_num, SearchCondition sc, HttpSession session) {
 		if(!loginCheck(request))
 			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
@@ -613,7 +614,7 @@ public class BoardController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return "read_3";
+		return "ok";
 	}
 	
 	@GetMapping("/read_3")

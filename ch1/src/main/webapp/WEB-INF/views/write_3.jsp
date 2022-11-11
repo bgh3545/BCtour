@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var = "mypageLink" value="${sessionScope.id==null? '':'/myPage/myPage_v1_1'}"/>
+<c:set var = "mypageLink" value="${sessionScope.id==null? '':'/myPage/myPage_main'}"/>
 <c:set var = "mypage" value="${sessionScope.id==null? '':'마이 페이지'}"/>
 <c:set var = "LoginOutlink" value="${sessionScope.id==null? '/logIn1/logIn1':'/logIn1/logOut1'}"/>
 <c:set var = "LoginOut" value="${sessionScope.id==null? 'Login':'Logout'}"/>
@@ -15,7 +15,7 @@
     <title>비씨투어</title>
 <link href="../resources/CSS/BCtourStyle.css?asdas" rel="stylesheet"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
-<script src="https://cdn.ckeditor.com/ckeditor5/35.2.0/classic/ckeditor.js"></script>
+<script src="../resources/ckeditor/ckeditor/ckeditor.js"></script>
 </head>
 <body>
 	<div class="main">
@@ -88,11 +88,11 @@
 		let msg = "${msg}"
 		if(msg == "notitle") alert("제목을 입력해 주세요")
 		
-		ClassicEditor
-        .create( document.querySelector( '#comm_content' ),{ckfinder: {uploadUrl : '/image/upload'}})
-        .catch( error => {
-            console.error( error );
-        } );
+		CKEDITOR.replace( 'comm_content', {
+         width:'100%',
+         height:'400px',
+         filebrowserUploadUrl: "<c:url value='/image/upload?'/>"
+     });
 	</script>
 </body>
 </html>

@@ -15,6 +15,7 @@
     <title>비씨투어</title>
 <link href="../resources/CSS/BCtourStyle.css?asdf" rel="stylesheet"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
+<script src="../resources/ckeditor/ckeditor/ckeditor.js"></script>
 </head>
 <body>
 	<div class="main">
@@ -63,7 +64,7 @@
 							<input class="b_writetitle" type="text" name="comm_title" id="title" value="${modi.comm_title}">
 						</div>
 						<div class="b_writecontentarea">
-							<textarea name="comm_content" class="b_textarea" id="content">${modi.comm_content}</textarea>
+							<textarea name="comm_content" class="b_textarea" id="comm_content">${modi.comm_content}</textarea>
 						</div>
 					</div>
                 </div>
@@ -83,6 +84,13 @@
 		form.method="post"
 		form.submit();
 		});
+		
+		CKEDITOR.replace( 'comm_content', {
+	         width:'100%',
+	         height:'400px',
+	         filebrowserUploadUrl: "<c:url value='/image/upload?'/>"
+	     });
+		
 	</script>
 </body>
 </html>

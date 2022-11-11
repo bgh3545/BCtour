@@ -15,6 +15,7 @@
     <title>비씨투어</title>
 <link href="../resources/CSS/BCtourStyle.css?asdf" rel="stylesheet"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
+<script src="../resources/ckeditor/ckeditor/ckeditor.js"></script>
 </head>
 <body>
 	<div class="main">
@@ -83,6 +84,13 @@
 		form.method="post"
 		form.submit();
 		});
+		
+		CKEDITOR.replace( 'content', {
+	         width:'100%',
+	         height:'400px',
+	         filebrowserUploadUrl: "<c:url value='/image/upload?'/>"
+	     });
+		
 	</script>
 </body>
 </html>

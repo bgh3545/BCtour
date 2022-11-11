@@ -3,8 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<% pageContext.setAttribute("br","<br/>"); pageContext.setAttribute("cn","\n"); pageContext.setAttribute("sp"," "); pageContext.setAttribute("nb","&nbsp"); %>
-<c:set var = "mypageLink" value="${sessionScope.id==null? '':'/myPage/myPage_v1_1'}"/>
+<c:set var = "mypageLink" value="${sessionScope.id==null? '':'/myPage/myPage_main'}"/>
 <c:set var = "mypage" value="${sessionScope.id==null? '':'마이 페이지'}"/>
 <c:set var = "LoginOutlink" value="${sessionScope.id==null? '/logIn1/logIn1':'/logIn1/logOut1'}"/>
 <c:set var = "LoginOut" value="${sessionScope.id==null? 'Login':'Logout'}"/>

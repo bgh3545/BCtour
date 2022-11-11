@@ -3,8 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<% pageContext.setAttribute("br","<br/>"); pageContext.setAttribute("cn","\n"); pageContext.setAttribute("sp"," "); pageContext.setAttribute("nb","&nbsp"); %>
-<c:set var = "mypageLink" value="${sessionScope.id==null? '':'/myPage/myPage_v1_1'}"/>
+<c:set var = "mypageLink" value="${sessionScope.id==null? '':'/myPage/myPage_main'}"/>
 <c:set var = "mypage" value="${sessionScope.id==null? '':'마이 페이지'}"/>
 <c:set var = "LoginOutlink" value="${sessionScope.id==null? '/logIn1/logIn1':'/logIn1/logOut1'}"/>
 <c:set var = "LoginOut" value="${sessionScope.id==null? 'Login':'Logout'}"/>
@@ -17,6 +16,7 @@
     <title>비씨투어</title>
 <link href="../resources/CSS/BCtourStyle.css?asdq" rel="stylesheet"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 	<div class="main">
@@ -57,7 +57,7 @@
                 <div class="column2">
                 	<div class="b_readcontent">
 						<div class="b_readbtn">
-							<input type="hidden" name="rec_num" value="${recDto.rec_num}">
+							<input type="hidden" id="rec_num" name="rec_num" value="${recDto.rec_num}">
 							<button type="button" id="modifybtn" class="b_btnsize" ${sessionScope.id==recDto.rec_writer?'':'style="display:none;"'}>수정</button>
 							<button type="button" id="removebtn" class="b_btnsize" ${sessionScope.id==recDto.rec_writer?'':'style="display:none;"'}>삭제</button>
 							<button type="button" id="recommend" class="b_btnsize" ${sessionScope.id==recDto.rec_writer?'style="display:none;"':''}>추천</button>
@@ -104,7 +104,7 @@
 					</div>
 					<div class="b_commentflex">
 					<div class="b_commentwritearea">
-						<div class="b_commentwritewriter">${sessionScope.id}</div><textarea class="b_commentwritecontent" name="rec_comm_content"></textarea>
+						<div class="b_commentwritewriter">${sessionScope.id}</div><textarea id="rec_comm_content" class="b_commentwritecontent" name="rec_comm_content"></textarea>
 					</div>
 					<button type="button" id="writecommbtn" class="b_writecommbtn">댓글달기</button>
                 	</div>
@@ -131,12 +131,29 @@
 		window.location = "<c:url value='/board/modify_2'/>?rec_num=${recDto.rec_num}&page=${page}&pageSize=${pageSize}";
 		});
 		
-		document.getElementById('writecommbtn').addEventListener('click',e=>{
-		var form = document.getElementById('form');
-		form.action="<c:url value='/board/read_2'/>?rec_num=${recDto.rec_num}&page=${page}&pageSize=${pageSize}";
-		form.method="post"
-		form.submit();
-		});
+		$("#writecommbtn").click(function(){
+			 
+            // json 형식으로 데이터 set
+            var params = {
+                      rec_comm_content: $("#rec_comm_content").val(),
+                      rec_num:$("#rec_num").val(),
+                      page:${page},
+            		  pageSize:${pageSize}
+            }
+		
+            $.ajax({
+                type : "POST",            // HTTP method type(GET, POST) 형식이다.
+                url : "/ch1/board/read_2",      // 컨트롤러에서 대기중인 URL 주소이다.
+                data : params,            // Json 형식의 데이터이다.
+                success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+                    // 응답코드 > 0000
+                    location.reload();
+                },
+                error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+                    alert("댓글 작성에 실패하였습니다.")
+                }
+            });
+        });
 		
 		var modiBtn = document.getElementById('modicommbtn')
 		if( modiBtn != null){
