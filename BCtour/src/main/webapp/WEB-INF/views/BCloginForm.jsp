@@ -11,91 +11,9 @@
     <link rel="icon" href="${path }/resources/img/상단로고.jpg">
     <title>Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-    <style>
-    	@font-face {
-   			 font-family: 'establishRoomNo703OTF';
-    		 src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRoomNo703OTF.woff') format('woff');
-   			 font-weight: normal;
-   			 font-style: normal;
-		}
-    
-    
-       * { box-sizing:border-box; }
-       a {
-            text-decoration: none;
-            color: black;
-            margin-left: 10px;
-        }
-        form {
-            width:400px;
-            height:500px;
-            display : flex;
-            flex-direction: column;
-            align-items:center;
-            position : absolute;
-            top:40%;
-            left:50%;
-            transform: translate(-50%, -50%) ;
-        }
-        input[type='text'], input[type='password'] {
-            width: 300px;
-            height: 40px;
-            padding: 0 10px;
-            margin-bottom: 10px;
-            font-size: 15px;
-        }
-        button {
-            background-color: rgb(152, 218, 59);
-            color : white;
-            width:300px;
-            height:50px;
-            font-size: 20px;
-            font-weight: bold;
-            border : none;
-            border-radius: 10px;
-            margin : 10px 0 10px 0;
-        }
-        button:hover {
-            background-color: rgba(21, 124, 40, 0.9);
-            color: black;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        #title {
-            font-size : 3em;
-            margin: 30px 0 30px 0;
-            <!-- font-family: 'establishRoomNo703OTF'; -->
-        }
-        #msg {
-            height: 30px;
-            text-align:center;
-            font-size:16px;
-            color:red;
-            margin-bottom: 20px;
-        }
-        header {
-            padding: 20px;
-            border-bottom: 1px solid #111;
-            display: flex;
-            justify-content: space-around;
-        }
-        #psize {
-        	width: 300px;
-        	border-top: 0.5px solid black;
-        	margin-top: 10px;
-            text-align:center;
-        	font-size: 12px
-        }
-        .margintop20 {
-        	margin-top: 20px;
-        }
-        .topbox {
-        	width: 140px;
-        	height: 56.02px;
-        	border: 0;
-        }
-    </style>
+    <link rel="stylesheet" href="${path }/resources/css/bcloginform.css">
 </head>
+
 <body>
 	<header>
         <div><a href="<c:url value='/'/>"><img src="${path }/resources/img/로고.jpg" width="200px" alt="로고"></a></div>

@@ -9,119 +9,9 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href="${path }/resources/img/상단로고.jpg">
+	<link rel="stylesheet" href="${path }/resources/css/bcfindingpwd.css">
 	<title>BC.Tour - 계정관리</title>
-	<style>
-		* {
-			box-sizing: border-box;
-		}
-		
-		header {
-			padding: 20px;
-			display: flex;
-			justify-content: space-around;
-		}
-		
-		#vertical {
-			margin: 0px auto;
-			width: 100%;
-			display: flex;
-			justify-content: center;
-			align-content: center;
-			flex-direction: column;
-			text-align: center;
-		}
-		
-		#vertical>div>p {
-			margin: 30px 0;
-			padding-bottom: 30px;
-			font-size: 3em;
-			font-weight: bold;
-			border-bottom: 1px solid black;
-			/* border: 1px solid black; */
-		}
-		
-		ul li {
-			display: inline-block;
-			list-style: none;
-		}
-		
-		#container {
-			display: flex;
-			justify-content: space-around;
-			/* border: 1px solid green; */
-		}
-		
-		#container>ul>li {
-			width: 250px;
-			height: 50px;
-			text-align: center;
-			line-height: 40px;
-			font-size: 2em;
-		}
-		
-		#container>ul>li:hover {
-			border-bottom: 1px solid black;
-			font-weight: bold;
-		}
-		
-		a {
-			text-decoration: none;
-			color: black;
-		}
-		
-		.h2_box {
-			margin: 0 auto;
-			width: 400px;
-			text-align: left;
-		}
-		
-		#form_container_pwd {
-			margin: 50px auto;
-			width: 500px;
-			height: 370px;
-			/* border: 1px solid black; */
-		}
-		
-		.form_container_pwd {
-			margin: 25px;
-			display: flex;
-			justify-content: center;
-			align-content: center;
-		}
-		
-		.form_container_pwd>input {
-			width: 400px;
-			padding: 10px;
-			font-size: 1.5em;
-		}
-		
-		.form_container_pwd>div>input[type="email"] {
-			width: 230px;
-			font-size: 1.5em;
-			padding: 10px;
-			margin-right: 20px;
-		}
-		
-		.form_container_pwd>div>button {
-			width: 150px;
-			height: 52px;
-			font-weight: bold;
-			font-size: 1.2em;
-			padding: 10px;
-		}
-		
-		.form_container_pwd>input[type="submit"] {
-			font-weight: bold;
-		}
-		
-		.form_container_pwd>input[type="submit"]:active {
-			margin-left: 1.5px;
-			margin-top: 1.5px;
-			box-shadow: -1.5px -1.5px -1.5px -1.5px;
-			border: 2px solid #767676;
-			background-color: #e5e5e5;
-		}
-</style>
 </head>
 
 <body>
@@ -143,7 +33,7 @@
 	</div>
 	<!-- 비밀번호 찾기 -->
 	<form action="<c:url value='/BCFind/BCFindingPwd'/>" id="form" method="post" onsubmit="return ConfirmBtn();">
-        <div id="form_container_pwd">
+        <div id="form_container">
         	<div class="form_container_pwd">
 				<input type="text" name="id" id="id" value="${param.id2 }" placeholder="아이디" required="required">
 			</div>
