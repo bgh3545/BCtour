@@ -5,108 +5,14 @@
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="${path }/resources/img/상단로고.jpg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+    <link rel="stylesheet" href="${path }/resources/css/bcsignup.css">
     <title>회원가입</title>
-    <style>
-        * {
-        	box-sizing: border-box;
-            <%-- margin: 0;
-            padding: 0; --%>
-        }
-        
-        form {
-            width:700px;
-            display : flex;
-            flex-direction: column;
-            align-items:center;
-            position : absolute;
-            top:49%;
-            left:50%;
-            transform: translate(-50%, -50%) ;
-        }
-
-        input {
-            width: 400px;
-            font-size: 20px;
-            margin-top: 30px;
-            margin-left: 30px;
-            padding: 10px;
-            border: 1px solid black;
-            <%-- border-radius: 10px; --%>
-
-        }
-        input[name="id"] {
-			width: 300px;
-		}
-		button[type="button"] {
-			margin-top: 30px;
-			margin-left: 20px;
-			width: 80px; height: 45px;
-		}
-
-        .box {
-            width: 700px;
-            height: 80px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        #title {
-            font-size : 3em;
-            margin: 30px 0 30px 0;
-            <!-- font-family: 'establishRoomNo703OTF'; -->
-        }
-
-        #submit {
-            width: 400px;
-            height: 45px;
-            padding: 10px;
-            margin-top: 30px;
-            margin-left: 30px;
-            background-color: rgb(145, 210, 57);
-            border: 1px solid rgb(145, 210, 57);
-            border-radius: 10px;
-            font-size: 20px;
-            font-weight: bold;
-            color: white;
-        }
-
-        #submit:hover {
-            background-color: rgb(72, 202, 96, 0.9);
-            color: black;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        
-        header {
-            padding: 20px;
-            border-bottom: 1px solid #111;
-            display: flex;
-            justify-content: space-around;
-        }
-        #id_msg {
-        	display: none;
-        	width: 400px; height: 5px;
-        	margin-left: 50px; margin-top: 5px;
-        }
-        #pwd_msg {
-        	display: none;
-        	width: 400px; height: 5px;
-        	margin-left: 50px; margin-top: 5px;
-        }
-    </style>
 </head>
 
 <body>
@@ -114,8 +20,8 @@
         <div><a href="<c:url value='/'/>"><img src="${path }/resources/img/로고.jpg" width="200px" alt="로고"></a></div>
         <div><a href="<c:url value='/BClogin/BClogin'/>"><img src="${path }/resources/img/로그인.png" width="110px" alt="로그인"></a></div>
     </header>
-    <form:form modelAttribute="user">
-        <div class="center"><h1 id="title">회 원 가 입</h1></div>
+    <form:form modelAttribute="user" onsubmit="return signAlert();">
+        <div class="center"><p id="title">회 원 가 입</p></div>
         <div class="box">
             <input type="text" name="id" id="id" placeholder="아이디" required="required">
             <button type="button" id="id_check">중복체크</button>
@@ -137,13 +43,19 @@
             <input type="text" name="name" id="name" placeholder="이름">
         </div>
         <div class="box">
-            <input type="email" name="email" id="email" placeholder="이메일">
+            <input type="email" name="email" id="email" placeholder="이메일" required="required">
         </div>
         <div class="box">
-            <input type="tel" name="tel" id="tel" placeholder="휴대번호" required="required">
+            <input type="tel" name="tel" id="tel" placeholder="휴대번호">
+        </div>
+        <div class="checkbox">
+        	<input type="checkbox" id="identify" name="identify">
+            <label for="identify">(필수) 개인정보 수집/이용에 동의합니다.</label>
+            <input type="checkbox" id="privacy" name="privacy">
+            <label for="privacy">(필수) 고유식별 수집/이용에 동의합니다.</label>
         </div>
         <div class="box">
-            <button id="submit" type="submit" onclick="return signAlert();">가입하기</button> <!-- 기본타입 submit -->
+            <button id="submit" type="submit">가입하기</button> <!-- 기본타입 submit -->
         </div>
     </form:form>
     <script src="http://code.jquery.com/jquery-latest.js" charset="UTF-8"></script>
@@ -190,23 +102,34 @@
 		
         // 가입하기 
         function signAlert() {
-        	var pwd = document.getElementById("pwd").value;
-        	var pwd_check = document.getElementById("pwd_check").value;
         	var id_check = document.getElementById("id_check").disabled;
         	
+        	var identity = document.getElementById("identify").checked;
+        	var privacy = document.getElementById("privacy").checked;
+        	
+        	var pwd = document.getElementById("pwd").value;
+        	var pwd_check = document.getElementById("pwd_check").value;
+        	
+        	var email = document.getElementById("email").value;
+        	var valid = new RegExp('^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$');
+     			
         	if(id_check != true) {
         		alert("중복체크를 눌러주세요.");
         		return false;
         	} else if(pwd != pwd_check) {
         		alert("비밀번호가 일치하지 않습니다.");
         		return false;
+        	} else if (valid.test(email)==false) {
+         		alert("이메일 형식이 올바르지 않습니다.\n다시 입력해주세요.");
+         		return false;
+        	} else if ( identity != true || privacy != true ) {
+        		alert("개인정보 및 고유식별 수집/이용에 체크해주세요.");
+        		return false;
         	} else {
         		alert("성공적으로 가입되었습니다.");
         		return true;
         	}
-        	
         }
-    
     
  // 실시간 비밀번호 검사
     function Password() {
