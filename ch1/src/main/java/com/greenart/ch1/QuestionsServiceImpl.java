@@ -13,8 +13,8 @@ public class QuestionsServiceImpl implements QuestionsService {
 	QuestionsDao quesDao;
 	
 	@Override
-	public int q_getCount() throws Exception{
-		return quesDao.q_count();
+	public int q_getCount(String ques_writer) throws Exception{
+		return quesDao.q_count(ques_writer);
 	}
 	
 	@Override
@@ -28,14 +28,30 @@ public class QuestionsServiceImpl implements QuestionsService {
 	}
 	
 	@Override
+	public int a_write(AnswerDto ansDto) throws Exception {
+		return quesDao.a_insert(ansDto);
+	}
+	
+	@Override
 	public List<QuestionsDto> q_getList() throws Exception {
 		return quesDao.q_selectAll();
+	}
+	
+	@Override
+	public List<AnswerDto> a_getList() throws Exception {
+		return quesDao.a_selectAll();
 	}
 	
 	@Override
 	public QuestionsDto q_read(Integer ques_num) throws Exception{
 		QuestionsDto quesDto = quesDao.q_select(ques_num);
 		return quesDto;
+	}
+	
+	@Override
+	public AnswerDto a_read(Integer ans_num) throws Exception{
+		AnswerDto ansDto = quesDao.a_select(ans_num);
+		return ansDto;
 	}
 	
 	@Override
@@ -64,8 +80,8 @@ public class QuestionsServiceImpl implements QuestionsService {
 	}
 	
 	@Override
-	public int q_getSearchResultNoAnsManagerCnt(SearchCondition sc, Integer ansbool) throws Exception{
-		return quesDao.q_searchResultNoAnsManagerCnt(sc,ansbool);
+	public int q_getSearchResultNoAnsManagerCnt(SearchCondition sc) throws Exception{
+		return quesDao.q_searchResultNoAnsManagerCnt(sc);
 	}
 	
 	@Override
@@ -80,7 +96,7 @@ public class QuestionsServiceImpl implements QuestionsService {
 	}
 	
 	@Override
-	public List<QuestionsDto> q_getSearchResultNoAnsManagerPage(SearchCondition sc, Integer ansbool) throws Exception{
-		return quesDao.q_searchSelectNoAnsManagerPage(sc,ansbool);
+	public List<QuestionsDto> q_getSearchResultNoAnsManagerPage(SearchCondition sc) throws Exception{
+		return quesDao.q_searchSelectNoAnsManagerPage(sc);
 	}
 }

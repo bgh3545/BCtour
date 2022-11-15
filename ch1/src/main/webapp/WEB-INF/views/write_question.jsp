@@ -9,6 +9,7 @@
 <c:set var = "LoginOut" value="${sessionScope.id==null? 'Login':'Logout'}"/>
 <c:set var = "LoginOutlinkMypage" value="${sessionScope.id==null? '/register/add':''}"/>
 <c:set var = "LoginMypage" value="${sessionScope.id==null? '회원가입':''}"/>
+<c:set var = "myPagePwd" value="${sessionScope.pwd==null? '/myPage/myPage_pwdCheck':'/myPage/myPage_personalInfo'}"/>
 <!DOCTYPE html>
 <html>
 <head>

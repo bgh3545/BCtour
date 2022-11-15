@@ -34,8 +34,18 @@ public class QuestionsDaoImpl implements QuestionsDao{
 	}
 	
 	@Override
+	public int a_insert(AnswerDto ansDto) throws Exception{
+		return session.insert(namespace+"a_insert",ansDto);
+	}
+	
+	@Override
 	public List<QuestionsDto> q_selectAll() throws Exception{
 		return session.selectList(namespace+"q_selectAll");
+	}
+	
+	@Override
+	public List<AnswerDto> a_selectAll() throws Exception{
+		return session.selectList(namespace+"a_selectAll");
 	}
 	
 	@Override
@@ -54,6 +64,11 @@ public class QuestionsDaoImpl implements QuestionsDao{
 	}
 	
 	@Override
+	public AnswerDto a_select(Integer ans_num) throws Exception{
+		return session.selectOne(namespace+"a_select",ans_num);
+	}
+	
+	@Override
 	public int q_ansBool( Integer ques_num) throws Exception{
 		return session.update(namespace+"q_ansBool",ques_num);
 	}
@@ -64,8 +79,8 @@ public class QuestionsDaoImpl implements QuestionsDao{
 	}
 	
 	@Override
-	public int q_count() throws Exception{
-		return session.selectOne(namespace+"q_count");
+	public int q_count(String ques_writer) throws Exception{
+		return session.selectOne(namespace+"q_count",ques_writer);
 	}
 	
 	@Override
@@ -88,12 +103,8 @@ public class QuestionsDaoImpl implements QuestionsDao{
 	}
 	
 	@Override
-	public List<QuestionsDto> q_searchSelectNoAnsManagerPage(SearchCondition sc, Integer ansbool) throws Exception{
-		Map map= new HashMap();
-		map.put("offset", sc.getOffset());
-		map.put("pageSize", sc.getPageSize());
-		map.put("ansbool", ansbool);
-		return session.selectList(namespace+"q_searchSelectNoAnsManagerPage",map);
+	public List<QuestionsDto> q_searchSelectNoAnsManagerPage(SearchCondition sc) throws Exception{
+		return session.selectList(namespace+"q_searchSelectNoAnsManagerPage",sc);
 	}
 	
 	@Override
@@ -111,11 +122,7 @@ public class QuestionsDaoImpl implements QuestionsDao{
 	}
 	
 	@Override
-	public int q_searchResultNoAnsManagerCnt(SearchCondition sc,Integer ansbool) throws Exception{
-		Map map= new HashMap();
-		map.put("offset", sc.getOffset());
-		map.put("pageSize", sc.getPageSize());
-		map.put("ansbool", ansbool);
-		return session.selectOne(namespace+"q_searchResultNoAnsManagerCnt", map);
+	public int q_searchResultNoAnsManagerCnt(SearchCondition sc) throws Exception{
+		return session.selectOne(namespace+"q_searchResultNoAnsManagerCnt", sc);
 	}
 }

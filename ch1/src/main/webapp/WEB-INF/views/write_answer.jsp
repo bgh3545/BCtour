@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="java.net.URLDecoder" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var = "mypageLink" value="${sessionScope.id==null? '':'/myPage/myPage_main'}"/>
 <c:set var = "mypage" value="${sessionScope.id==null? '':'마이 페이지'}"/>
 <c:set var = "LoginOutlink" value="${sessionScope.id==null? '/logIn1/logIn1':'/logIn1/logOut1'}"/>
@@ -14,8 +15,10 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
-<link href="../resources/CSS/BCtourStyle.css?after" rel="stylesheet"/>
-<script src="https://kit.fontawesome.com/9eda133edb.js" crossorigin="anonymous"></script>
+<link href="../resources/CSS/BCtourStyle.css?asdq" rel="stylesheet"/>
+<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="../resources/ckeditor/ckeditor/ckeditor.js"></script>
 </head>
 <body>
 	<div class="main">
@@ -43,7 +46,7 @@
             <div class ="nav">
                 <div id="column">
                     <div class="city">
-                        <h2><a id="select" href="<c:url value='${myPagePwd}'/>">개인정보</a></h2>
+                        <h2><a href="<c:url value='${myPagePwd}'/>">개인정보</a></h2>
                     </div>
                     <div class="city">
                         <h2><a href="<c:url value='/myPage/myPage_reservation'/>">예약/취소 내역</a></h2>
@@ -52,46 +55,50 @@
                         <h2><a href="<c:url value='/myPage/myPage_wishList'/>">찜 목록</a></h2>
                     </div>
                     <div class="city">
-                        <h2><a href="<c:url value='/myPage/myPage_questions'/>">고객문의</a></h2>
+                        <h2><a id="select" href="<c:url value='/myPage/myPage_questions'/>">고객문의</a></h2>
                     </div>
                 </div>
+                <form id="form">
                 <div class="column2">
-                    <div id="b_column2upside">
-       					비밀번호 확인
-                    </div>
-                    <div id="b_column2center">
-                    <form action="<c:url value='/myPage/myPage_personalInfo'/>" Method="Post" onsubmit="return formCheck(this);">
-						<div id="msg" class="msg redcolor">
-							<c:if test="${not empty msg }">
-								<i class="fa-solid fa-triangle-exclamation">${msg}</i>
-							</c:if>
+                	<div class="b_writecontent">
+						<div class="b_writebtn">
+							<input type="hidden" name="ans_num" value="${ques_num}" readonly="readonly">
+							<button type="button" id="writebtn" class="b_btnsize">등록</button>
+							<button type="button" id="cancelbtn" class="b_btnsize">취소</button>
 						</div>
-						<div class="personalDiv">
-						<input id="personalInfo" type="password" name="pwd" placeholder="비밀번호">
-						<input id="personalInfoButton" type="submit" value="입력"></input>
+						<div class="b_writetitlearea">
+							<input class="b_writetitle" id="ans_title" type="text" name="ans_title" placeholder="제목을 입력해 주세요" value="re:${ques_title}">
 						</div>
-						<script src="https://kit.fontawesome.com/9eda133edb.js" crossorigin="anonymous"></script>
-						<script>
-							function formCheck(frm){
-								let msg='';
-								if(frm.pwd.value.length==0){
-									setMessage('비밀번호를 입력해주세요',frm.pwd);
-									return false;
-								}
-								return true	
-							}
-							function setMessage(msg,element){
-								document.getElementById("msg").innerHTML = `<i class="fa-solid fa-triangle-exclamation">${'${msg}'}</i>`;
-								if(element){
-									element.select();
-								}
-							}
-						</script>
-					</form>
-                    </div>
+						<div class="b_writecontentarea">
+							<textarea name="ans_content" id="ans_content" class="b_textarea" placeholder="내용을 입력해 주세요."></textarea>
+						</div>
+					</div>
                 </div>
+                </form>
             </div>
         </div>
 	</div>
+	<script>
+	
+	document.getElementById('cancelbtn').addEventListener('click',e=>{
+	window.location = "<c:url value='/myPage/myPage_questions'/>";
+	});
+
+	document.getElementById('writebtn').addEventListener('click',e=>{
+	var form = document.getElementById('form');
+	form.action="<c:url value='/myPage/write_answer'/>";
+	form.method="post"
+	form.submit();
+	});
+	
+	let msg = "${msg}"
+	if(msg == "notitle") alert("제목을 입력해 주세요")
+	
+	CKEDITOR.replace( 'ans_content', {
+     width:'100%',
+     height:'400px',
+     filebrowserUploadUrl: "<c:url value='/image/upload?'/>"
+ });
+	</script>
 </body>
 </html>

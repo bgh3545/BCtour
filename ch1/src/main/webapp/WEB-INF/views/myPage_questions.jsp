@@ -14,7 +14,7 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
-<link href="../resources/CSS/BCtourStyle.css?aa11asd" rel="stylesheet"/>
+<link href="../resources/CSS/BCtourStyle.css?a" rel="stylesheet"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 </head>
 <body>
@@ -56,8 +56,10 @@
                     </div>
                 </div>
                 <div class="column2">
+                <form id="form">
                     <div class="b_title">문의사항</div>
-                    <div class="b_writebtn"><button type="button" id="writebtn" class="b_btnsize">글쓰기</button></div>
+                    <div class="b_writebtn"><button type="button" id="writebtn" class="b_btnsize" ${sessionScope.id=="admin"?'style="display:none;"':''}>글쓰기</button></div>
+                    <div class="b_writebtn"><button type="button" id="noAnsbtn" class="b_btnsize" ${sessionScope.id=="admin"?'':'style="display:none;"'}>미답</button></div>
                     <div class="b_content">
              	       <div class="b_indextitle">
                     		<div class="b_indexNum">번호</div>
@@ -65,41 +67,74 @@
                     		<div class="b_indexNum">작성자</div>
                     		<div class="b_indexDate">등록일</div>
                     	</div>
+                    	<c:if test="${sessionScope.id !='admin'}">
                     	<c:forEach var="i" items="${ques}">
                     		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 							<fmt:formatDate value="${i.ques_date}" pattern="yyyy-MM-dd" var="regDate" />
 							<fmt:formatDate value="${i.ques_date}" pattern="HH:mm" var="regTime" />
 	                    	<div class="b_indextitle">
-	                    		<div class="b_contentNum">${i.ques_num}</div>
+	                    		<div class="b_contentNum">문의</div>
 	                    		<div class="b_contentName"><a href="<c:url value='/myPage/read_question?ques_num=${i.ques_num}&page=${page}&pageSize=${pageSize}'/>">${i.ques_title}</a></div>
 	                    		<div class="b_contentNum">${i.ques_writer}</div>
 	                    		<div class="b_contentDate">${today==regDate? regTime:regDate}</div>
 	                    	</div>
+	                    	<c:forEach var = "j" items = "${ans}">
+	                    	<c:if test="${j.ans_num == i.ques_num}">
+	                    	<fmt:formatDate value="${j.ans_date}" pattern="yyyy-MM-dd" var="ansRegDate" />
+							<fmt:formatDate value="${j.ans_date}" pattern="HH:mm" var="ansRegTime" />
 	                    	<div class="b_indextitle">
-	                    		<div class="b_contentNum">${i.ques_num}</div>
+	                    		<div class="b_contentNum">답변</div>
+	                    		<div class="b_contentName"><a href="<c:url value='/myPage/read_answer?ans_num=${j.ans_num}&page=${page}&pageSize=${pageSize}'/>">└ ${j.ans_title}</a></div>
+	                    		<div class="b_contentNum">${j.ans_writer}</div>
+	                    		<div class="b_contentDate">${today==ansRegDate? ansRegTime:ansRegDate}</div>
+	                    	</div>
+	                    	</c:if>
+	                    	</c:forEach>
+                    	</c:forEach>
+                    	</c:if>
+                    	<c:if test="${sessionScope.id=='admin'}">
+                    	<c:forEach var="i" items="${mQues}">
+                    		<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
+							<fmt:formatDate value="${i.ques_date}" pattern="yyyy-MM-dd" var="regDate" />
+							<fmt:formatDate value="${i.ques_date}" pattern="HH:mm" var="regTime" />
+	                    	<div class="b_indextitle">
+	                    		<div class="b_contentNum">문의</div>
 	                    		<div class="b_contentName"><a href="<c:url value='/myPage/read_question?ques_num=${i.ques_num}&page=${page}&pageSize=${pageSize}'/>">${i.ques_title}</a></div>
 	                    		<div class="b_contentNum">${i.ques_writer}</div>
 	                    		<div class="b_contentDate">${today==regDate? regTime:regDate}</div>
 	                    	</div>
+	                    	<c:forEach var = "j" items = "${ans}">
+	                    	<c:if test="${j.ans_num == i.ques_num}">
+	                    	<fmt:formatDate value="${j.ans_date}" pattern="yyyy-MM-dd" var="ansRegDate" />
+							<fmt:formatDate value="${j.ans_date}" pattern="HH:mm" var="ansRegTime" />
+	                    	<div class="b_indextitle">
+	                    		<div class="b_contentNum">답변</div>
+	                    		<div class="b_contentName"><a href="<c:url value='/myPage/read_answer?ans_num=${j.ans_num}&page=${page}&pageSize=${pageSize}'/>">└ ${j.ans_title}</a></div>
+	                    		<div class="b_contentNum">${j.ans_writer}</div>
+	                    		<div class="b_contentDate">${today==ansRegDate? ansRegTime:ansRegDate}</div>
+	                    	</div>
+	                    	</c:if>
+	                    	</c:forEach>
                     	</c:forEach>
+                    	</c:if>
                     	<div class="b_pageNavi">
                     		<c:if test="${ph.showPrev}">
-                    		<a href="<c:url value='/board/list_v1_3${ph.sc.getQueryString(ph.beginPage-1)}'/>"><div class="b_preNext">이전</div></a>
+                    		<a href="<c:url value='/myPage/myPage_questions${ph.sc.getQueryString(ph.beginPage-1)}'/>"><div class="b_preNext">이전</div></a>
                     		</c:if>
                     		<c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
                     		<c:if test="${i == page}">
-                    		<a href="<c:url value='/board/list_v1_3${ph.sc.getQueryString(i)}'/>"><div id="select" class="b_pageNum">${i}</div></a>
+                    		<a href="<c:url value='/myPage/myPage_questions${ph.sc.getQueryString(i)}'/>"><div id="select" class="b_pageNum">${i}</div></a>
                     		</c:if>
                     		<c:if test="${i != page}">
-                    		<a href="<c:url value='/board/list_v1_3${ph.sc.getQueryString(i)}'/>"><div class="b_pageNum">${i}</div></a>
+                    		<a href="<c:url value='/myPage/myPage_questions${ph.sc.getQueryString(i)}'/>"><div class="b_pageNum">${i}</div></a>
                     		</c:if>
                     		</c:forEach>
                     		<c:if test="${ph.showNext}">
-                    		<a href="<c:url value='/board/list_v1_3${ph.sc.getQueryString(ph.endPage+1)}'/>"><div class="b_preNext">다음</div></a>
+                    		<a href="<c:url value='/myPage/myPage_questions${ph.sc.getQueryString(ph.endPage+1)}'/>"><div class="b_preNext">다음</div></a>
                     		</c:if>
                     	</div>
                     </div>
-                    <div></div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -107,6 +142,13 @@
 	<script>
 		document.getElementById('writebtn').addEventListener('click',e=>{
 		window.location = "<c:url value='/myPage/write_question'/>";
+		});
+		
+		document.getElementById('noAnsbtn').addEventListener('click',e=>{
+		var form = document.getElementById('form');
+		form.action="<c:url value='/myPage/myPage_questions'/>?page=${page}&pageSize=${pageSize}";
+		form.method="post"
+		form.submit();
 		});
 		
 		let msg = "${msg}"

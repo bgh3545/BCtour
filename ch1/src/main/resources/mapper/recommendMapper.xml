@@ -12,7 +12,7 @@
 	</select>
 	
 	<select id="r_selectTop" resultType="recommendDto">
-		select * from recommend where rec_recommend >=10 order by rec_recommend desc, rec_reg_date desc, rec_num desc limit 3
+		select * from recommend where month(rec_reg_date) = month(now()) order by rec_recommend desc, rec_reg_date desc, rec_num desc limit 3
 	</select>
 	
 	<select id="r_select" parameterType="int" resultType="recommendDto">

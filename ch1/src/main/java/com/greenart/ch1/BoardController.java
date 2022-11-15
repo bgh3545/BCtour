@@ -114,7 +114,14 @@ public class BoardController {
 		m.addAttribute("pageSize", sc.getPageSize());
 		
 		try {
-			String writer = (String)session.getAttribute("id");
+			String writer;
+			if(session.getAttribute("id").equals("admin")) {
+				BoardDto boardDto = boardService.read(bno);
+				writer = boardDto.getWriter();
+			}
+			else {
+				writer = (String)session.getAttribute("id");
+			}
 			int rowCnt= boardService.remove(bno, writer);
 			if(rowCnt==1) {
 				redatt.addFlashAttribute("msg", "del");
@@ -398,7 +405,15 @@ public class BoardController {
 		m.addAttribute("pageSize", sc.getPageSize());
 		
 		try {
-			String writer = (String)session.getAttribute("id");
+			String writer;
+			if(session.getAttribute("id").equals("admin")) {
+				RecommendDto recDto = recService.r_read(rec_num);
+				writer = recDto.getRec_writer();
+			}
+			else {
+				writer = (String)session.getAttribute("id");
+			}
+			
 			int rowCnt= recService.r_remove(rec_num, writer);
 			if(rowCnt==1) {
 				redatt.addFlashAttribute("msg", "del");
@@ -420,9 +435,16 @@ public class BoardController {
 			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
 		
 		try {
+			String writer;
+			if(session.getAttribute("id").equals("admin")) {
+				rec_commentDto rec_commDto = rec_commService.rm_read(rec_comm_num);
+				writer = rec_commDto.getRec_comm_writer();
+			}
+			else {
+				writer = (String)session.getAttribute("id");
+			}
 			
 			int commCnt = recService.r_decreaseCommCnt(rec_num);
-			String writer = (String)session.getAttribute("id");
 			int rowCnt= rec_commService.rm_remove(rec_comm_num, writer);
 			
 			if(rowCnt==1) {
@@ -436,7 +458,7 @@ public class BoardController {
 			e.printStackTrace();
 			redatt.addFlashAttribute("msg", "error");
 		}
-		return "redirect:/board/read_2?comm_num="+rec_num+"&page="+sc.getPage()+"&pageSize="+sc.getPageSize();
+		return "redirect:/board/read_2?rec_num="+rec_num+"&page="+sc.getPage()+"&pageSize="+sc.getPageSize();
 	}
 	
 	@GetMapping("/modify_2")
@@ -649,7 +671,15 @@ public class BoardController {
 		m.addAttribute("pageSize", sc.getPageSize());
 		
 		try {
-			String writer = (String)session.getAttribute("id");
+			String writer;
+			if(session.getAttribute("id").equals("admin")) {
+				CommunityDto commDto = commService.c_read(comm_num);
+				writer = commDto.getComm_writer();
+			}
+			else {
+				writer = (String)session.getAttribute("id");
+			}
+			
 			int rowCnt= commService.c_remove(comm_num, writer);
 			if(rowCnt==1) {
 				redatt.addFlashAttribute("msg", "del");
@@ -671,9 +701,16 @@ public class BoardController {
 			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
 		
 		try {
+			String writer;
+			if(session.getAttribute("id").equals("admin")) {
+				comm_commentDto comm_commDto = comm_commService.cm_read(comm_comm_num);
+				writer = comm_commDto.getComm_comm_writer();
+			}
+			else {
+				writer = (String)session.getAttribute("id");
+			}
 			
 			int commCnt = commService.c_decreaseCommCnt(comm_num);
-			String writer = (String)session.getAttribute("id");
 			int rowCnt= comm_commService.cm_remove(comm_comm_num, writer);
 			
 			if(rowCnt==1) {

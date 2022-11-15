@@ -53,7 +53,7 @@
                 </div>
                 <div class="column2">
                     <div class="b_title">공지사항</div>
-                    ${sessionScope.id=="asdf"?
+                    ${sessionScope.id=="admin"?
                     '<div class="b_writebtn"><button type="button" id="writebtn" class="b_btnsize">글쓰기</button></div>':''}
                     <div class="b_content">
                     	<div class="b_indextitle">

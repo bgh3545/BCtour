@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page import="java.net.URLDecoder" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var = "mypageLink" value="${sessionScope.id==null? '':'/myPage/myPage_main'}"/>
 <c:set var = "mypage" value="${sessionScope.id==null? '':'마이 페이지'}"/>
 <c:set var = "LoginOutlink" value="${sessionScope.id==null? '/logIn1/logIn1':'/logIn1/logOut1'}"/>
@@ -14,8 +15,9 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
-<link href="../resources/CSS/BCtourStyle.css?after" rel="stylesheet"/>
-<script src="https://kit.fontawesome.com/9eda133edb.js" crossorigin="anonymous"></script>
+<link href="../resources/CSS/BCtourStyle.css?asdq" rel="stylesheet"/>
+<fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 	<div class="main">
@@ -43,7 +45,7 @@
             <div class ="nav">
                 <div id="column">
                     <div class="city">
-                        <h2><a id="select" href="<c:url value='${myPagePwd}'/>">개인정보</a></h2>
+                        <h2><a href="<c:url value='${myPagePwd}'/>">개인정보</a></h2>
                     </div>
                     <div class="city">
                         <h2><a href="<c:url value='/myPage/myPage_reservation'/>">예약/취소 내역</a></h2>
@@ -52,46 +54,37 @@
                         <h2><a href="<c:url value='/myPage/myPage_wishList'/>">찜 목록</a></h2>
                     </div>
                     <div class="city">
-                        <h2><a href="<c:url value='/myPage/myPage_questions'/>">고객문의</a></h2>
+                        <h2><a id="select" href="<c:url value='/myPage/myPage_questions'/>">고객문의</a></h2>
                     </div>
                 </div>
+                <form id="form">
                 <div class="column2">
-                    <div id="b_column2upside">
-       					비밀번호 확인
-                    </div>
-                    <div id="b_column2center">
-                    <form action="<c:url value='/myPage/myPage_personalInfo'/>" Method="Post" onsubmit="return formCheck(this);">
-						<div id="msg" class="msg redcolor">
-							<c:if test="${not empty msg }">
-								<i class="fa-solid fa-triangle-exclamation">${msg}</i>
-							</c:if>
+                	<div class="b_readcontent">
+						<div class="b_readbtn">
+							<input type="hidden" name="ans_num" id="ans_num" value="${ansDto.ans_num}">
+							<button type="button" id="listbtn" class="b_btnsize">목록</button>
 						</div>
-						<div class="personalDiv">
-						<input id="personalInfo" type="password" name="pwd" placeholder="비밀번호">
-						<input id="personalInfoButton" type="submit" value="입력"></input>
+						<div class="b_readtitle" id="title">
+							${ansDto.ans_title}
 						</div>
-						<script src="https://kit.fontawesome.com/9eda133edb.js" crossorigin="anonymous"></script>
-						<script>
-							function formCheck(frm){
-								let msg='';
-								if(frm.pwd.value.length==0){
-									setMessage('비밀번호를 입력해주세요',frm.pwd);
-									return false;
-								}
-								return true	
-							}
-							function setMessage(msg,element){
-								document.getElementById("msg").innerHTML = `<i class="fa-solid fa-triangle-exclamation">${'${msg}'}</i>`;
-								if(element){
-									element.select();
-								}
-							}
-						</script>
-					</form>
-                    </div>
+						<div class="b_readwriter">
+						<fmt:formatDate value="${ansDto.ans_date}" pattern="yyyy-MM-dd HH:mm:ss" var="regDate" />
+							작성자: ${ansDto.ans_writer},&nbsp;&nbsp; 등록일: ${regDate}
+						</div>
+						<div class="b_readcontentarea" id="content">
+							${ansDto.ans_content}
+						</div>
+					</div>
                 </div>
+                </form>
             </div>
         </div>
 	</div>
+	<script>
+		
+		document.getElementById('listbtn').addEventListener('click',e=>{
+		window.location = "<c:url value='/myPage/myPage_questions'/>?page=${page}&pageSize=${pageSize}";
+		});
+	</script>
 </body>
 </html>

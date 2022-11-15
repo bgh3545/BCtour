@@ -5,7 +5,7 @@ import java.util.Map;
 
 public interface QuestionsService {
 
-	int q_getCount() throws Exception;
+	int q_getCount(String ques_writer) throws Exception;
 
 	int q_remove(Integer ques_num, String ques_writer) throws Exception;
 
@@ -25,13 +25,19 @@ public interface QuestionsService {
 
 	int q_getSearchResultManagerCnt(SearchCondition sc) throws Exception;
 
-	int q_getSearchResultNoAnsManagerCnt(SearchCondition sc, Integer ansbool) throws Exception;
+	int q_getSearchResultNoAnsManagerCnt(SearchCondition sc) throws Exception;
 
 	List<QuestionsDto> q_getSearchResultManagerPage(SearchCondition sc) throws Exception;
 
-	List<QuestionsDto> q_getSearchResultNoAnsManagerPage(SearchCondition sc, Integer ansbool) throws Exception;
+	List<QuestionsDto> q_getSearchResultNoAnsManagerPage(SearchCondition sc) throws Exception;
 
 	QuestionsDto q_read(Integer ques_num) throws Exception;
+
+	List<AnswerDto> a_getList() throws Exception;
+
+	int a_write(AnswerDto ansDto) throws Exception;
+
+	AnswerDto a_read(Integer ans_num) throws Exception;
 
 	
 }

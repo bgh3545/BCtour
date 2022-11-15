@@ -11,6 +11,7 @@
 		<typeAlias alias="RecommendDto" type="com.greenart.ch1.RecommendDto"/>
 		<typeAlias alias="rec_commentDto" type="com.greenart.ch1.rec_commentDto"/>
 		<typeAlias alias="QuestionsDto" type="com.greenart.ch1.QuestionsDto"/>
+		<typeAlias alias="AnswerDto" type="com.greenart.ch1.AnswerDto"/>
 	</typeAliases>
 	
 </configuration>

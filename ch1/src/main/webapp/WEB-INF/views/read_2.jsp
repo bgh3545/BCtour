@@ -59,7 +59,7 @@
 						<div class="b_readbtn">
 							<input type="hidden" id="rec_num" name="rec_num" value="${recDto.rec_num}">
 							<button type="button" id="modifybtn" class="b_btnsize" ${sessionScope.id==recDto.rec_writer?'':'style="display:none;"'}>수정</button>
-							<button type="button" id="removebtn" class="b_btnsize" ${sessionScope.id==recDto.rec_writer?'':'style="display:none;"'}>삭제</button>
+							<button type="button" id="removebtn" class="b_btnsize" ${sessionScope.id==recDto.rec_writer or sessionScope.id=="admin"?'':'style="display:none;"'}>삭제</button>
 							<button type="button" id="recommend" class="b_btnsize" ${sessionScope.id==recDto.rec_writer?'style="display:none;"':''}>추천</button>
 							<button type="button" id="listbtn" class="b_btnsize">목록</button>
 						</div>
@@ -84,9 +84,11 @@
 							<div class="b_commentwriter">${i.rec_comm_writer}</div>
 							<div class="b_commentcontent">${fn:replace(fn:replace(i.rec_comm_content, sp, nb), cn, br)}</div>
 							<div class="b_commentmenu">
-								${today==regDate? regTime:regDate}&nbsp&nbsp&nbsp
+								${today==regDate? regTime:regDate}&nbs;p&nbsp;&nbsp;
 								<c:if test="${sessionScope.id==i.rec_comm_writer}">
-								<a href="<c:url value='/board/modifycomm_2'/>?rec_num=${recDto.rec_num}&rec_comm_num=${i.rec_comm_num}&page=${page}&pageSize=${pageSize}">수정</a>&nbsp&nbsp&nbsp
+								<a href="<c:url value='/board/modifycomm_2'/>?rec_num=${recDto.rec_num}&rec_comm_num=${i.rec_comm_num}&page=${page}&pageSize=${pageSize}">수정</a>&nbsp;&nbsp;&nbsp;
+								</c:if>
+								<c:if test="${sessionScope.id==i.rec_comm_writer or sessionScope.id=='admin'}">
 								<a href="<c:url value='/board/removecomm_2?rec_num=${recDto.rec_num}&rec_comm_num=${i.rec_comm_num}&page=${page}&pageSize=${pageSize}'/>">삭제</a>
 								</c:if>
 							</div>

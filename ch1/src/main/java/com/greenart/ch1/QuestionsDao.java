@@ -23,7 +23,7 @@ public interface QuestionsDao {
 
 	int q_delAnsBool(Integer ques_num) throws Exception;
 
-	int q_count() throws Exception;
+	int q_count(String ques_writer) throws Exception;
 
 	List<QuestionsDto> q_selectPage(Map map) throws Exception;
 
@@ -33,10 +33,16 @@ public interface QuestionsDao {
 
 	List<QuestionsDto> q_searchSelectManagerPage(SearchCondition sc) throws Exception;
 
-	List<QuestionsDto> q_searchSelectNoAnsManagerPage(SearchCondition sc, Integer ansbool) throws Exception;
+	List<QuestionsDto> q_searchSelectNoAnsManagerPage(SearchCondition sc) throws Exception;
 
 	int q_searchResultManagerCnt(SearchCondition sc) throws Exception;
 
-	int q_searchResultNoAnsManagerCnt(SearchCondition sc, Integer ansbool) throws Exception;
+	int q_searchResultNoAnsManagerCnt(SearchCondition sc) throws Exception;
+
+	int a_insert(AnswerDto ansDto) throws Exception;
+
+	List<AnswerDto> a_selectAll() throws Exception;
+
+	AnswerDto a_select(Integer ans_num) throws Exception;
 
 }

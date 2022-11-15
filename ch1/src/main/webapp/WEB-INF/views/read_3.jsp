@@ -59,7 +59,7 @@
 						<div class="b_readbtn">
 							<input type="hidden" name="comm_num" id="comm_num" value="${commDto.comm_num}">
 							<button type="button" id="modifybtn" class="b_btnsize" ${sessionScope.id==commDto.comm_writer?'':'style="display:none;"'}>수정</button>
-							<button type="button" id="removebtn" class="b_btnsize" ${sessionScope.id==commDto.comm_writer?'':'style="display:none;"'}>삭제</button>
+							<button type="button" id="removebtn" class="b_btnsize" ${sessionScope.id==commDto.comm_writer or sessionScope.id=="admin"?'':'style="display:none;"'}>삭제</button>
 							<button type="button" id="listbtn" class="b_btnsize">목록</button>
 						</div>
 						<div class="b_readtitle" id="title">
@@ -83,9 +83,11 @@
 							<div class="b_commentwriter">${i.comm_comm_writer}</div>
 							<div class="b_commentcontent">${fn:replace(fn:replace(i.comm_comm_content, sp, nb), cn, br)}</div>
 							<div class="b_commentmenu">
-								${today==regDate? regTime:regDate}&nbsp&nbsp&nbsp
+								${today==regDate? regTime:regDate}&nbsp;&nbsp;&nbsp;
 								<c:if test="${sessionScope.id==i.comm_comm_writer}">
-								<a href="<c:url value='/board/modifycomm_3'/>?comm_num=${commDto.comm_num}&comm_comm_num=${i.comm_comm_num}&page=${page}&pageSize=${pageSize}">수정</a>&nbsp&nbsp&nbsp
+								<a href="<c:url value='/board/modifycomm_3'/>?comm_num=${commDto.comm_num}&comm_comm_num=${i.comm_comm_num}&page=${page}&pageSize=${pageSize}">수정</a>&nbsp;&nbsp;&nbsp;
+								</c:if>
+								<c:if test="${sessionScope.id==i.comm_comm_writer or sessionScope.id=='admin'}">
 								<a href="<c:url value='/board/removecomm_3?comm_num=${commDto.comm_num}&comm_comm_num=${i.comm_comm_num}&page=${page}&pageSize=${pageSize}'/>">삭제</a>
 								</c:if>
 							</div>

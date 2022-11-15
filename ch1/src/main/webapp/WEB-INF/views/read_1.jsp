@@ -58,8 +58,9 @@
 						<div class="b_readbtn">
 							<input type="hidden" name="bno" value="${boardDto.bno}" readonly="readonly">
 							${sessionScope.id==boardDto.writer?
-							'<button type="button" id="modifybtn" class="b_btnsize">수정</button>
-							<button type="button" id="removebtn" class="b_btnsize">삭제</button>':''}
+							'<button type="button" id="modifybtn" class="b_btnsize">수정</button>':''}
+							${sessionScope.id==boardDto.writer or sessionScope.id=="admin"?
+							'<button type="button" id="removebtn" class="b_btnsize">삭제</button>':''}
 							<button type="button" id="listbtn" class="b_btnsize">목록</button>
 						</div>
 						<div class="b_readtitle" id="title">

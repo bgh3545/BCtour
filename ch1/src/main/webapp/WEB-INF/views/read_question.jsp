@@ -9,6 +9,7 @@
 <c:set var = "LoginOut" value="${sessionScope.id==null? 'Login':'Logout'}"/>
 <c:set var = "LoginOutlinkMypage" value="${sessionScope.id==null? '/register/add':''}"/>
 <c:set var = "LoginMypage" value="${sessionScope.id==null? '회원가입':''}"/>
+<c:set var = "myPagePwd" value="${sessionScope.pwd==null? '/myPage/myPage_pwdCheck':'/myPage/myPage_personalInfo'}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,7 +62,7 @@
                 	<div class="b_readcontent">
 						<div class="b_readbtn">
 							<input type="hidden" name="ques_num" id="ques_num" value="${quesDto.ques_num}">
-							<button type="button" id="ansbtn" class="b_btnsize" ${sessionScope.id=="asdf"?'':'style="display:none;"'}>답글</button>
+							<button type="button" id="ansbtn" class="b_btnsize" ${sessionScope.id=="admin"?'':'style="display:none;"'}>답변</button>
 							<button type="button" id="removebtn" class="b_btnsize" ${sessionScope.id==quesDto.ques_writer?'':'style="display:none;"'}>삭제</button>
 							<button type="button" id="listbtn" class="b_btnsize">목록</button>
 						</div>
@@ -85,6 +86,10 @@
 		
 		document.getElementById('listbtn').addEventListener('click',e=>{
 		window.location = "<c:url value='/myPage/myPage_questions'/>?page=${page}&pageSize=${pageSize}";
+		});
+		
+		document.getElementById('ansbtn').addEventListener('click',e=>{
+		window.location = "<c:url value='/myPage/write_answer'/>?page=${page}&pageSize=${pageSize}&ques_num=${quesDto.ques_num}&ques_title=${quesDto.ques_title}";
 		});
 		
 		document.getElementById('removebtn').addEventListener('click',e=>{

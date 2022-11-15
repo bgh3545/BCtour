@@ -5,7 +5,7 @@
 <mapper namespace = "com.greenart.ch1">
 
 	<select id="q_count" resultType="int">
-		select count(*) from questions
+		select count(*) from questions where ques_writer = #{ques_writer}
 	</select>
 	
 	<select id="q_selectAll" resultType="QuestionsDto">
@@ -24,6 +24,14 @@
 		select ques_num, ques_title, ques_content, ques_writer, ques_date, ansbool from questions where ques_num = #{ques_num}
 	</select>
 	
+	<select id="a_select" parameterType="int" resultType="AnswerDto">
+		select ans_num, ans_title, ans_content, ans_writer, ans_date from answer where ans_num = #{ans_num}
+	</select>
+	
+	<select id="a_selectAll" resultType="AnswerDto">
+		select ans_num, ans_title, ans_content, ans_writer, ans_date from answer 
+	</select>
+	
 	<delete id="q_deleteAll">
 		delete from questions
 	</delete>
@@ -34,6 +42,10 @@
 	
 	<insert id="q_insert" parameterType="QuestionsDto">
 		insert into questions (ques_title, ques_content, ques_writer) values(#{ques_title}, #{ques_content}, #{ques_writer})
+	</insert>
+	
+	<insert id="a_insert" parameterType="QuestionsDto">
+		insert into answer (ans_num, ans_title, ans_content, ans_writer) values(#{ans_num}, #{ans_title}, #{ans_content}, #{ans_writer})
 	</insert>
 	
 	<update id="q_ansBool" parameterType="int">
@@ -71,7 +83,7 @@
 		limit #{offset}, #{pageSize}
 	</select>
 	
-	<select id="q_searchSelectNoAnsManagerPage" parameterType="map" resultType="QuestionsDto">
+	<select id="q_searchSelectNoAnsManagerPage" parameterType="SearchCondition" resultType="QuestionsDto">
 		<include refid="selectFromQuestions"/>
 		where ansbool = 0
 		order by ques_date desc, ques_num desc
@@ -87,7 +99,7 @@
 		select count(*) from questions
 	</select>
 	
-	<select id="q_searchResultNoAnsManagerCnt" parameterType="map" resultType="int">
+	<select id="q_searchResultNoAnsManagerCnt" parameterType="SearchCondition" resultType="int">
 		select count(*) from questions
 		where ansbool = 0
 	</select>
