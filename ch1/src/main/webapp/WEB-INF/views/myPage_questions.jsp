@@ -62,7 +62,7 @@
                     <div class="b_writebtn"><button type="button" id="noAnsbtn" class="b_btnsize" ${sessionScope.id=="admin"?'':'style="display:none;"'}>미답</button></div>
                     <div class="b_content">
              	       <div class="b_indextitle">
-                    		<div class="b_indexNum">번호</div>
+                    		<div class="b_indexNum">분류</div>
                     		<div class="b_indexName">제목</div>
                     		<div class="b_indexNum">작성자</div>
                     		<div class="b_indexDate">등록일</div>
@@ -91,6 +91,22 @@
 	                    	</c:if>
 	                    	</c:forEach>
                     	</c:forEach>
+                    	<div class="b_pageNavi">
+                    		<c:if test="${ph.showPrev}">
+                    		<a href="<c:url value='/myPage/myPage_questions${ph.sc.getQueryString(ph.beginPage-1)}'/>"><div class="b_preNext">이전</div></a>
+                    		</c:if>
+                    		<c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
+                    		<c:if test="${i == page}">
+                    		<a href="<c:url value='/myPage/myPage_questions${ph.sc.getQueryString(i)}'/>"><div id="select" class="b_pageNum">${i}</div></a>
+                    		</c:if>
+                    		<c:if test="${i != page}">
+                    		<a href="<c:url value='/myPage/myPage_questions${ph.sc.getQueryString(i)}'/>"><div class="b_pageNum">${i}</div></a>
+                    		</c:if>
+                    		</c:forEach>
+                    		<c:if test="${ph.showNext}">
+                    		<a href="<c:url value='/myPage/myPage_questions${ph.sc.getQueryString(ph.endPage+1)}'/>"><div class="b_preNext">다음</div></a>
+                    		</c:if>
+                    	</div>
                     	</c:if>
                     	<c:if test="${sessionScope.id=='admin'}">
                     	<c:forEach var="i" items="${mQues}">
@@ -116,23 +132,23 @@
 	                    	</c:if>
 	                    	</c:forEach>
                     	</c:forEach>
-                    	</c:if>
                     	<div class="b_pageNavi">
-                    		<c:if test="${ph.showPrev}">
-                    		<a href="<c:url value='/myPage/myPage_questions${ph.sc.getQueryString(ph.beginPage-1)}'/>"><div class="b_preNext">이전</div></a>
+                    		<c:if test="${mph.showPrev}">
+                    		<a href="<c:url value='/myPage/myPage_questions${mph.sc.getQueryString(ph.beginPage-1)}'/>"><div class="b_preNext">이전</div></a>
                     		</c:if>
-                    		<c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
+                    		<c:forEach var="i" begin="${mph.beginPage}" end="${mph.endPage}">
                     		<c:if test="${i == page}">
-                    		<a href="<c:url value='/myPage/myPage_questions${ph.sc.getQueryString(i)}'/>"><div id="select" class="b_pageNum">${i}</div></a>
+                    		<a href="<c:url value='/myPage/myPage_questions${mph.sc.getQueryString(i)}'/>"><div id="select" class="b_pageNum">${i}</div></a>
                     		</c:if>
                     		<c:if test="${i != page}">
-                    		<a href="<c:url value='/myPage/myPage_questions${ph.sc.getQueryString(i)}'/>"><div class="b_pageNum">${i}</div></a>
+                    		<a href="<c:url value='/myPage/myPage_questions${mph.sc.getQueryString(i)}'/>"><div class="b_pageNum">${i}</div></a>
                     		</c:if>
                     		</c:forEach>
-                    		<c:if test="${ph.showNext}">
-                    		<a href="<c:url value='/myPage/myPage_questions${ph.sc.getQueryString(ph.endPage+1)}'/>"><div class="b_preNext">다음</div></a>
+                    		<c:if test="${mph.showNext}">
+                    		<a href="<c:url value='/myPage/myPage_questions${mph.sc.getQueryString(ph.endPage+1)}'/>"><div class="b_preNext">다음</div></a>
                     		</c:if>
                     	</div>
+                    	</c:if>
                     </div>
                     </form>
                 </div>

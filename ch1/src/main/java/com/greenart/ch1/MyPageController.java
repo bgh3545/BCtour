@@ -91,10 +91,10 @@ public class MyPageController {
 		try {
 			String writer = (String)session.getAttribute("id");
 			
-			int mNATotalCnt = quesService.q_getSearchResultNoAnsManagerCnt(sc);
 			int mTotalCnt = quesService.q_getSearchResultManagerCnt(sc);
 			int totalCnt = quesService.q_getSearchResultCnt(sc, writer);
 			PageHandler pageHandler = new PageHandler(totalCnt, sc);
+			PageHandler mPageHandler = new PageHandler(mTotalCnt, sc);
 			
 			List<QuestionsDto> mNAQues = quesService.q_getSearchResultNoAnsManagerPage(sc);
 			List<QuestionsDto> mQues = quesService.q_getSearchResultManagerPage(sc);
@@ -106,6 +106,7 @@ public class MyPageController {
 			m.addAttribute("mQues",mQues);
 			m.addAttribute("mNAQues",mNAQues);
 			m.addAttribute("ph", pageHandler);
+			m.addAttribute("mph", mPageHandler);
 			m.addAttribute("page", sc.getPage());
 			m.addAttribute("pageSize", sc.getPageSize());
 			
@@ -128,9 +129,7 @@ public class MyPageController {
 			String writer = (String)session.getAttribute("id");
 			
 			int mNATotalCnt = quesService.q_getSearchResultNoAnsManagerCnt(sc);
-			int mTotalCnt = quesService.q_getSearchResultManagerCnt(sc);
-			int totalCnt = quesService.q_getSearchResultCnt(sc, writer);
-			PageHandler pageHandler = new PageHandler(totalCnt, sc);
+			PageHandler pageHandler = new PageHandler(mNATotalCnt, sc);
 			
 			List<QuestionsDto> mQues = quesService.q_getSearchResultNoAnsManagerPage(sc);
 			List<QuestionsDto> ques = quesService.q_getSearchResultPage(sc,writer);
@@ -223,14 +222,20 @@ public class MyPageController {
 		quesDto.setQues_writer(writer);
 		
 		try {
-			if(quesDto.getQues_title()!="") {
-				int rowCnt = quesService.q_write(quesDto);
-				if(rowCnt!=1) throw new Exception("write error");
-				redatt.addFlashAttribute("msg", "write_ok");
-				return "redirect:/myPage/myPage_questions";
+			
+			if(quesDto.getQues_content()=="") {
+				m.addAttribute("msg", "nocontent");
+				return "write_question";
 				}
+			
+			if(quesDto.getQues_title()=="") {
 				m.addAttribute("msg", "notitle");
 				return "write_question";
+				}
+			int rowCnt = quesService.q_write(quesDto);
+			if(rowCnt!=1) throw new Exception("write error");
+			redatt.addFlashAttribute("msg", "write_ok");
+			return "redirect:/myPage/myPage_questions";
 		}catch(Exception e){
 			e.printStackTrace();
 		}

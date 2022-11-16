@@ -62,7 +62,7 @@
                 	<div class="b_readcontent">
 						<div class="b_readbtn">
 							<input type="hidden" name="ques_num" id="ques_num" value="${quesDto.ques_num}">
-							<button type="button" id="ansbtn" class="b_btnsize" ${sessionScope.id=="admin"?'':'style="display:none;"'}>답변</button>
+							<button type="button" id="ansbtn" class="b_btnsize" ${sessionScope.id=="admin" and quesDto.ansbool ==0 ?'':'style="display:none;"'}>답변</button>
 							<button type="button" id="removebtn" class="b_btnsize" ${sessionScope.id==quesDto.ques_writer?'':'style="display:none;"'}>삭제</button>
 							<button type="button" id="listbtn" class="b_btnsize">목록</button>
 						</div>

@@ -87,6 +87,7 @@
 		
 		let msg = "${msg}"
 		if(msg == "notitle") alert("제목을 입력해 주세요")
+		if(msg == "nocontent") alert("내용을 입력해 주세요")
 		
 		CKEDITOR.replace( 'comm_content', {
          width:'100%',
