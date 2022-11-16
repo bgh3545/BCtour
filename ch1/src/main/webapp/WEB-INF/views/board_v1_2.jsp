@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var = "mypageLink" value="${sessionScope.id==null? '':'/myPage/myPage_main'}"/>
-<c:set var = "mypage" value="${sessionScope.id==null? '':'마이 페이지'}"/>
+<c:set var = "mypage" value="${sessionScope.id==null? '':'마이페이지'}"/>
 <c:set var = "LoginOutlink" value="${sessionScope.id==null? '/logIn1/logIn1':'/logIn1/logOut1'}"/>
 <c:set var = "LoginOut" value="${sessionScope.id==null? 'Login':'Logout'}"/>
 <c:set var = "LoginOutlinkMypage" value="${sessionScope.id==null? '/register/add':''}"/>
@@ -95,18 +95,18 @@
                     	</c:forEach>
                     	<div class="b_pageNavi">
                     		<c:if test="${ph.showPrev}">
-                    		<a href="<c:url value='/board/list_v1_2${ph.sc.getQueryString(ph.beginPage-1)}'/>"><div class="b_preNext">이전</div></a>
+                    		<a href="<c:url value='/board/${addr}${ph.sc.getQueryString(ph.beginPage-1)}'/>"><div class="b_preNext">이전</div></a>
                     		</c:if>
                     		<c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
                     		<c:if test="${i == page}">
-                    		<a href="<c:url value='/board/list_v1_2${ph.sc.getQueryString(i)}'/>"><div id="select" class="b_pageNum">${i}</div></a>
+                    		<a href="<c:url value='/board/${addr}${ph.sc.getQueryString(i)}'/>"><div id="select" class="b_pageNum">${i}</div></a>
                     		</c:if>
                     		<c:if test="${i != page}">
-                    		<a href="<c:url value='/board/list_v1_2${ph.sc.getQueryString(i)}'/>"><div class="b_pageNum">${i}</div></a>
+                    		<a href="<c:url value='/board/${addr}${ph.sc.getQueryString(i)}'/>"><div class="b_pageNum">${i}</div></a>
                     		</c:if>
                     		</c:forEach>
                     		<c:if test="${ph.showNext}">
-                    		<a href="<c:url value='/board/list_v1_2${ph.sc.getQueryString(ph.endPage+1)}'/>"><div class="b_preNext">다음</div></a>
+                    		<a href="<c:url value='/board/${addr}${ph.sc.getQueryString(ph.endPage+1)}'/>"><div class="b_preNext">다음</div></a>
                     		</c:if>
                     	</div>
                     	<div class="b_searchboardarea">

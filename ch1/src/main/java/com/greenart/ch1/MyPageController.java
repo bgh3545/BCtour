@@ -138,7 +138,7 @@ public class MyPageController {
 			m.addAttribute("ans",ans);
 			m.addAttribute("ques",ques);
 			m.addAttribute("mQues",mQues);
-			m.addAttribute("ph", pageHandler);
+			m.addAttribute("mph", pageHandler);
 			m.addAttribute("page", sc.getPage());
 			m.addAttribute("pageSize", sc.getPageSize());
 			

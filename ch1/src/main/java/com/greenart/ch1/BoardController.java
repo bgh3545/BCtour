@@ -224,6 +224,7 @@ public class BoardController {
 			List<RecommendDto> rec = recService.r_getSearchResultPage(sc);
 			List<BoardDto> notice = boardService.getNotice(map);
 			
+			m.addAttribute("addr", "list_v1_2");
 			m.addAttribute("notice", notice);
 			m.addAttribute("rec",rec);
 			m.addAttribute("ph", pageHandler);
@@ -260,6 +261,7 @@ public class BoardController {
 			List<RecommendDto> rec = recService.r_getSearchResultRecommendPage(sc);
 			List<BoardDto> notice = boardService.getNotice(map);
 			
+			m.addAttribute("addr", "rec10");
 			m.addAttribute("notice", notice);
 			m.addAttribute("rec",rec);
 			m.addAttribute("ph", pageHandler);
