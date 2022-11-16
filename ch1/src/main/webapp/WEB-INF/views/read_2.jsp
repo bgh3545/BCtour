@@ -14,7 +14,7 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
-<link href="../resources/CSS/BCtourStyle.css?asdq" rel="stylesheet"/>
+<link href="../resources/CSS/BCtourStyle.css?asd" rel="stylesheet"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
@@ -84,7 +84,7 @@
 							<div class="b_commentwriter">${i.rec_comm_writer}</div>
 							<div class="b_commentcontent">${fn:replace(fn:replace(i.rec_comm_content, sp, nb), cn, br)}</div>
 							<div class="b_commentmenu">
-								${today==regDate? regTime:regDate}&nbs;p&nbsp;&nbsp;
+								${today==regDate? regTime:regDate}&nbsp;&nbsp;&nbsp;
 								<c:if test="${sessionScope.id==i.rec_comm_writer}">
 								<a href="<c:url value='/board/modifycomm_2'/>?rec_num=${recDto.rec_num}&rec_comm_num=${i.rec_comm_num}&page=${page}&pageSize=${pageSize}">수정</a>&nbsp;&nbsp;&nbsp;
 								</c:if>

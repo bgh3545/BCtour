@@ -266,12 +266,49 @@
                         </div>
                     </div>
                     <div class="column2">
-                        <div class="imgContainer">${topList[0].rec_title}</div>
-                        <div class="imgContainer">${topList[1].rec_title}</div>
-                        <div class="imgContainer">${topList[2].rec_title}</div>
+                        <div class="imgContainer" id="tl1"></div>
+                        <div class="imgContainer" id="tl2"></div>
+                        <div class="imgContainer" id="tl3"></div>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+        	let img1 = `${topList[0].rec_content}`;
+        	let ext1 = /<img[^>]+src[^>]*>/;
+        	let res1 = ext1.exec(img1);
+        	if(res1 !=null){
+        	re1 = res1.toString();
+        	let thum1 = re1.replace(/style="[^"]+"/,'');
+        	document.getElementById("tl1").innerHTML=thum1;
+        	}
+        	else{
+        	document.getElementById("tl1").innerHTML='<img src="/ch1/resources/img/noImg.jpg">';
+        	}
+        	
+        	let img2 = `${topList[1].rec_content}`;
+        	let ext2 = /<img[^>]+src[^>]*>/;
+        	let res2 = ext2.exec(img2);
+        	if(res2 !=null){
+        	re2 = res2.toString();
+        	let thum2 = re2.replace(/style="[^"]+"/,'');
+        	document.getElementById("tl2").innerHTML=thum2;
+        	}
+        	else{
+            document.getElementById("tl2").innerHTML='<img src="/ch1/resources/img/noImg.jpg">';
+            }
+        	
+        	let img3 = `${topList[2].rec_content}`;
+        	let ext3 = /<img[^>]+src[^>]*>/;
+        	let res3 = ext3.exec(img3);
+        	if(res3 !=null){
+        	re3 = res3.toString();
+        	let thum3 = re3.replace(/style="[^"]+"/,'');
+        	document.getElementById("tl3").innerHTML=thum3;
+        	}
+        	else{
+            document.getElementById("tl3").innerHTML='<img src="/ch1/resources/img/noImg.jpg">';
+            }
+        </script>
 </body>
 </html>

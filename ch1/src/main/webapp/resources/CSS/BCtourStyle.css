@@ -460,7 +460,7 @@
 		outline:none;
 	}
 	.b_writecommbtn{
-		margin-left:20px;
+		margin-left:50px;
 		width:80px;
 		height:50px;
 		font-size:20px;
@@ -469,6 +469,7 @@
 	.b_commentflex{
 		display:flex;
 		align-items:center;
+		width:970px;
 	}
 	.b_commentmenu{
 		display:flex;
