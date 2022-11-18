@@ -34,18 +34,6 @@ public class MyPageController {
 	@Autowired
 	UserDao userDao;
 	
-	@GetMapping("/myPage_pwdCheck")
-	public String myPage_pwdCheck() throws Exception {
-	
-		return "myPage_pwdCheck";
-	}
-	
-	@GetMapping("/manage_pwdCheck")
-	public String manage_pwdCheck(HttpSession session) throws Exception {
-		
-		return "manage_pwdCheck";
-	}
-	
 	@GetMapping("/myPage_main")
 	public String myPage_main(HttpServletRequest request, HttpSession session, Model m) throws Exception {
 		if(!loginCheck(request))
@@ -56,7 +44,7 @@ public class MyPageController {
 		
 		m.addAttribute("quesCnt", quesCnt);
 		
-		return "myPage_main";
+		return "myPageMain/myPage_main";
 	}
 	
 	@GetMapping("/manage")
@@ -69,7 +57,19 @@ public class MyPageController {
 		
 		m.addAttribute("quesCnt", quesCnt);
 		
-		return "manage_main";
+		return "myPageMain/manage_main";
+	}
+	
+	@GetMapping("/myPage_pwdCheck")
+	public String myPage_pwdCheck() throws Exception {
+	
+		return "personalInfo/myPage_pwdCheck";
+	}
+	
+	@GetMapping("/manage_pwdCheck")
+	public String manage_pwdCheck(HttpSession session) throws Exception {
+		
+		return "personalInfo/manage_pwdCheck";
 	}
 	
 	@PostMapping("/myPage_personalInfo")
@@ -82,10 +82,10 @@ public class MyPageController {
 		if(!pwdCheck(pwd,id)) {
 			String msg= "비밀번호가 틀렸습니다. 다시 입력해주세요";
 			m.addAttribute("msg", msg);
-			return "myPage_pwdCheck";
+			return "personalInfo/myPage_pwdCheck";
 		}
 		
-		return "myPage_personalInfo";
+		return "personalInfo/myPage_personalInfo";
 	}
 	
 	@GetMapping("/manage_managerInfo")
@@ -93,7 +93,7 @@ public class MyPageController {
 		if(!loginCheck(request))
 			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
 		
-		return "manage_managerInfo";
+		return "personalInfo/manage_managerInfo";
 	}
 	
 	@PostMapping("/manage_managerInfo")
@@ -106,13 +106,13 @@ public class MyPageController {
 		if(!pwdCheck(pwd, id)) {
 			String msg= "비밀번호가 틀렸습니다. 다시 입력해주세요";
 			m.addAttribute("msg", msg);
-			return "manage_pwdCheck";
+			return "personalInfo/manage_pwdCheck";
 		}
 		
 		session = request.getSession();
 		session.setAttribute("pwd",pwd);
 		
-		return "manage_managerInfo";
+		return "personalInfo/manage_managerInfo";
 	}
 	
 	private boolean pwdCheck(String pwd, String id) {
@@ -124,21 +124,21 @@ public class MyPageController {
 	public String myPage_reservation(HttpServletRequest request) {
 		if(!loginCheck(request))
 			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
-		return "myPage_reservation";
+		return "reservation/myPage_reservation";
 	}
 	
 	@GetMapping("/manage_reservation")
 	public String manage_reservation(HttpServletRequest request) {
 		if(!loginCheck(request))
 			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
-		return "manage_reservation";
+		return "reservation/manage_reservation";
 	}
 	
 	@GetMapping("/myPage_wishList")
 	public String myPage_wishList(HttpServletRequest request) {
 		if(!loginCheck(request))
 			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
-		return "myPage_wishList";
+		return "wishList/myPage_wishList";
 	}
 	
 	@GetMapping("/myPage_questions")
@@ -175,7 +175,7 @@ public class MyPageController {
 			e.printStackTrace();
 		}
 		
-		return "myPage_questions";
+		return "questionsAndAnswers/myPage_questions";
 	}
 	
 	@GetMapping("/manage_questions")
@@ -211,7 +211,7 @@ public class MyPageController {
 			e.printStackTrace();
 		}
 		
-		return "manage_questions";
+		return "questionsAndAnswers/manage_questions";
 	}
 	
 	@GetMapping("/manage_noAns")
@@ -244,7 +244,7 @@ public class MyPageController {
 			e.printStackTrace();
 		}
 		
-		return "manage_questions";
+		return "questionsAndAnswers/manage_questions";
 	}
 	
 	@GetMapping("/read_question")
@@ -264,7 +264,7 @@ public class MyPageController {
 			return "redirect:/myPage/myPage_questions"+sc.getQueryString();
 		}
 		
-		return "read_question";
+		return "questionsAndAnswers/read_question";
 	}
 	
 	@GetMapping("/manage_read_question")
@@ -284,7 +284,7 @@ public class MyPageController {
 			return "redirect:/myPage/manage_questions"+sc.getQueryString();
 		}
 		
-		return "manage_read_question";
+		return "questionsAndAnswers/manage_read_question";
 	}
 	
 	@PostMapping("/remove_question")
@@ -325,7 +325,7 @@ public class MyPageController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return "write_question";
+		return "questionsAndAnswers/write_question";
 	}
 	
 	@PostMapping("/write_question")
@@ -340,12 +340,12 @@ public class MyPageController {
 			
 			if(quesDto.getQues_content()=="") {
 				m.addAttribute("msg", "nocontent");
-				return "write_question";
+				return "questionsAndAnswers/write_question";
 				}
 			
 			if(quesDto.getQues_title()=="") {
 				m.addAttribute("msg", "notitle");
-				return "write_question";
+				return "questionsAndAnswers/write_question";
 				}
 			int rowCnt = quesService.q_write(quesDto);
 			if(rowCnt!=1) throw new Exception("write error");
@@ -354,7 +354,7 @@ public class MyPageController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return "write_question";
+		return "questionsAndAnswers/write_question";
 	}
 	
 	@GetMapping("/write_answer")
@@ -370,7 +370,7 @@ public class MyPageController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return "manage_write_answer";
+		return "questionsAndAnswers/manage_write_answer";
 	}
 	
 	@PostMapping("/write_answer")
@@ -390,11 +390,11 @@ public class MyPageController {
 			return "redirect:/myPage/manager_questions";
 			}
 			m.addAttribute("msg", "notitle");
-			return "manage_write_answer";
+			return "questionsAndAnswers/manage_write_answer";
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return "manage_write_answer";
+		return "questionsAndAnswers/manage_write_answer";
 	}
 	
 	@GetMapping("/read_answer")
@@ -413,7 +413,7 @@ public class MyPageController {
 			return "redirect:/myPage/myPage_questions"+sc.getQueryString();
 		}
 		
-		return "read_answer";
+		return "questionsAndAnswers/read_answer";
 	}
 	
 	@GetMapping("/manage_read_answer")
@@ -432,7 +432,7 @@ public class MyPageController {
 			return "redirect:/myPage/manage_questions"+sc.getQueryString();
 		}
 		
-		return "manage_read_answer";
+		return "questionsAndAnswers/manage_read_answer";
 	}
 	
 	private boolean loginCheck(HttpServletRequest request) {

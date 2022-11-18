@@ -21,12 +21,14 @@ import com.greenart.ch1.User.UserDao;
 
 @Controller
 public class RegisterController {
-	@GetMapping("/register/add")
-	public String register() {
-		return"registerForm";
-    }
+	
 	@Autowired
 	UserDao userDao;
+	
+	@GetMapping("/register/add")
+	public String register() {
+		return"loginAndRegist/registerForm";
+    }
 	
 	@InitBinder
 	public void toDate(WebDataBinder binder) {
@@ -55,10 +57,10 @@ public class RegisterController {
 		
 		if(!result.hasErrors()) {
 			int rowCnt=userDao.insertUser(user);
-			return "registerInfo";
+			return "loginAndRegist/registerInfo";
 		}
 		
-		return "registerForm";
+		return "loginAndRegist/registerForm";
 	}
 
 	private boolean isValid(User user) {

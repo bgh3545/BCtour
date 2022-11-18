@@ -21,10 +21,10 @@ public class HomeController {
 	public String home(Model m) throws Exception{
 		List<RecommendDto> topList = recService.r_getTopList();
 		m.addAttribute("topList", topList);
-		return "homepage";
+		return "home/homepage";
 	}
 	@RequestMapping(value="/1", method= RequestMethod.GET)
 	public String home1(Model m) throws Exception{
-		return "homepage_v1";
+		return "home/homepage_v1";
 	}
 }

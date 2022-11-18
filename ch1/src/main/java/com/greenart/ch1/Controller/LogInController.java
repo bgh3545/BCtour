@@ -24,7 +24,7 @@ public class LogInController {
 	
 	@GetMapping("/logIn")
 	public String logInForm() {
-		return"logInForm";
+		return"loginAndRegist/logInForm";
 	}
 	@PostMapping("/logIn")
 	public String login(String id, String pwd, boolean rememberId, HttpServletResponse response, HttpServletRequest request, String toURL) throws Exception {

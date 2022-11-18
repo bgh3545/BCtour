@@ -93,7 +93,7 @@ public class BoardController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return "board_1";
+		return "notice/board_1";
 	}
 	
 	@GetMapping("/write_1")
@@ -109,7 +109,7 @@ public class BoardController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return "write_1";
+		return "notice/write_1";
 	}
 	
 	@PostMapping("/write_1")
@@ -138,7 +138,7 @@ public class BoardController {
 			m.addAttribute("boardDto", boardDto);
 			m.addAttribute("msg", "write_error");
 			
-			return "write_1";
+			return "notice/write_1";
 		}
 	}
 	
@@ -156,7 +156,7 @@ public class BoardController {
 			e.printStackTrace();
 			return "redirect:/board/list_1"+sc.getQueryString();
 		}
-		return "read_1";
+		return "notice/read_1";
 	}
 	
 	@PostMapping("/remove_1")
@@ -199,7 +199,7 @@ public class BoardController {
 		m.addAttribute("modi", modi);
 		m.addAttribute("page", sc.getPage());
 		m.addAttribute("pageSize", sc.getPageSize());
-		return "modify_1";
+		return "notice/modify_1";
 	}
 	
 	@PostMapping("/modify_1") 
@@ -223,7 +223,7 @@ public class BoardController {
 			m.addAttribute("boardDto", boardDto);
 			m.addAttribute("msg", "modify_error");
 			
-			return "read_1";
+			return "notice/read_1";
 		}
 	}
 	
@@ -257,7 +257,7 @@ public class BoardController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return "board_2";
+		return "recommend/board_2";
 	}
 	
 	@GetMapping("/rec10")
@@ -294,7 +294,7 @@ public class BoardController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return "board_2";
+		return "recommend/board_2";
 	}
 	
 	@GetMapping("/write_2")
@@ -310,7 +310,7 @@ public class BoardController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return "write_2";
+		return "recommend/write_2";
 	}
 	
 	@PostMapping("/write_2")
@@ -328,7 +328,7 @@ public class BoardController {
 			}
 			if(recDto.getRec_content()=="") {
 				m.addAttribute("msg", "nocontent");
-				return "write_2";
+				return "recommend/write_2";
 			}
 			int rowCnt = recService.r_writer(recDto);
 			if(rowCnt!=1) throw new Exception("write error");
@@ -339,7 +339,7 @@ public class BoardController {
 			m.addAttribute("recDto", recDto);
 			m.addAttribute("msg", "write_error");
 			
-			return "write_2";
+			return "recommend/write_2";
 		}
 	}
 	
@@ -372,7 +372,7 @@ public class BoardController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return "read_2";
+		return "recommend/read_2";
 	}
 	
 	@GetMapping("/read_2")
@@ -407,7 +407,7 @@ public class BoardController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return "read_2";
+		return "recommend/read_2";
 	}
 	
 	@PostMapping("/remove_2")
@@ -483,7 +483,7 @@ public class BoardController {
 		m.addAttribute("modi", modi);
 		m.addAttribute("page", sc.getPage());
 		m.addAttribute("pageSize", sc.getPageSize());
-		return "modify_2";
+		return "recommend/modify_2";
 	}
 	
 	@PostMapping("/modify_2")
@@ -507,7 +507,7 @@ public class BoardController {
 			m.addAttribute("recDto", recDto);
 			m.addAttribute("msg", "modify_error");
 			
-			return "read_2";
+			return "recommend/read_2";
 		}
 	}
 	
@@ -530,7 +530,7 @@ public class BoardController {
 		}catch(Exception e){
 			e.printStackTrace();
 			
-			return "read_2";
+			return "recommend/read_2";
 		}
 	}
 	
@@ -608,7 +608,7 @@ public class BoardController {
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
-		return "board_3";
+		return "community/board_3";
 	}
 	
 	@GetMapping("/write_3")
@@ -624,7 +624,7 @@ public class BoardController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return "write_3";
+		return "community/write_3";
 	}
 	
 	@PostMapping("/write_3")
@@ -638,11 +638,11 @@ public class BoardController {
 		try {
 			if(commDto.getComm_title() == "") {
 				m.addAttribute("msg", "notitle");
-				return "write_3";
+				return "community/write_3";
 			}
 			if(commDto.getComm_content() == "") {
 				m.addAttribute("msg", "nocontent");
-				return "write_3";
+				return "community/write_3";
 			}
 			int rowCnt = commService.c_writer(commDto);
 			if(rowCnt!=1) throw new Exception("write error");
@@ -653,7 +653,7 @@ public class BoardController {
 			m.addAttribute("commDto", commDto);
 			m.addAttribute("msg", "write_error");
 			
-			return "write_3";
+			return "community/write_3";
 		}
 	}
 	
@@ -708,7 +708,7 @@ public class BoardController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
-		return "read_3";
+		return "community/read_3";
 	}
 	
 	@PostMapping("/remove_3")
@@ -784,7 +784,7 @@ public class BoardController {
 		m.addAttribute("modi", modi);
 		m.addAttribute("page", sc.getPage());
 		m.addAttribute("pageSize", sc.getPageSize());
-		return "modify_3";
+		return "community/modify_3";
 	}
 	
 	@PostMapping("/modify_3")
@@ -831,7 +831,7 @@ public class BoardController {
 		}catch(Exception e){
 			e.printStackTrace();
 			
-			return "read_3";
+			return "community/read_3";
 		}
 	}
 	
