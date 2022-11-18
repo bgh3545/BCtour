@@ -3,12 +3,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
 <mapper namespace = "com.greenart.ch1">
-	<select id="rm_count" resultType="int">
+	<select id="rm_count" parameterType="int" resultType="int">
 		select count(*) from rec_comment where rec_num=#{rec_num}
 	</select>
 	
-	<select id="rm_selectAll" resultType="rec_commentDto">
-		select * from rec_comment where rec_num= #{rec_num} order by rec_comm_date asc, rec_comm_num asc
+	<select id="rm_selectAll" parameterType="map" resultType="rec_commentDto">
+		select * from rec_comment where rec_num= #{rec_num} order by rec_comm_date asc, rec_comm_num asc 
+		limit #{offset},#{pageSize}
 	</select>
 	
 	<select id="rm_select" parameterType="int" resultType="rec_commentDto">

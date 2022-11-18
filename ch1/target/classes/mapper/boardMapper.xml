@@ -8,11 +8,11 @@
 	</select>
 	
 	<select id="selectAll" resultType="BoardDto">
-		select bno, title, content,  writer, view_cnt, comment_cnt, reg_date, up_date from board order by reg_date desc, bno desc
+		select bno, title, content,  writer, view_cnt, reg_date, up_date from board order by reg_date desc, bno desc
 	</select>
 	
 	<select id="select" parameterType="int" resultType="BoardDto">
-		select bno, title, content, writer, view_cnt, comment_cnt, reg_date, up_date from board where bno = #{bno}
+		select bno, title, content, writer, view_cnt, reg_date, up_date from board where bno = #{bno}
 	</select>
 	<delete id="deleteAll">
 		delete from board
@@ -39,7 +39,7 @@
 	</update>
 	
 	<sql id="selectFromBoard">
-		select bno, title, content, writer, view_cnt, comment_cnt, reg_date from board
+		select bno, title, content, writer, view_cnt, reg_date from board
 	</sql>
 	
 	<select id="selectPage" parameterType="map" resultType="BoardDto">

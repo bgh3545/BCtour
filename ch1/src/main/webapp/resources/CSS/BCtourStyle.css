@@ -434,6 +434,7 @@
     	width:600px;
     	line-height:45px;
     	border-left:1px solid rgba(44, 44, 44, 0.3);
+    	word-wrap:break-word;
     }
     .b_commentwritearea{
     	display:flex;

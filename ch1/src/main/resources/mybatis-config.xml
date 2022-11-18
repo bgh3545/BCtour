@@ -4,14 +4,15 @@
 		"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias alias="BoardDto" type="com.greenart.ch1.BoardDto"/>
-		<typeAlias alias="CommunityDto" type="com.greenart.ch1.CommunityDto"/>
-		<typeAlias alias="comm_commentDto" type="com.greenart.ch1.comm_commentDto"/>
-		<typeAlias alias="SearchCondition" type="com.greenart.ch1.SearchCondition"/>
-		<typeAlias alias="RecommendDto" type="com.greenart.ch1.RecommendDto"/>
-		<typeAlias alias="rec_commentDto" type="com.greenart.ch1.rec_commentDto"/>
-		<typeAlias alias="QuestionsDto" type="com.greenart.ch1.QuestionsDto"/>
-		<typeAlias alias="AnswerDto" type="com.greenart.ch1.AnswerDto"/>
+		<typeAlias alias="BoardDto" type="com.greenart.ch1.Board.BoardDto"/>
+		<typeAlias alias="CommunityDto" type="com.greenart.ch1.Community.CommunityDto"/>
+		<typeAlias alias="comm_commentDto" type="com.greenart.ch1.Community.comm_commentDto"/>
+		<typeAlias alias="SearchCondition" type="com.greenart.ch1.PageHandlerAndSearchCondition.SearchCondition"/>
+		<typeAlias alias="CommSearchCondition" type="com.greenart.ch1.PageHandlerAndSearchCondition.CommSearchCondition"/>
+		<typeAlias alias="RecommendDto" type="com.greenart.ch1.Recommend.RecommendDto"/>
+		<typeAlias alias="rec_commentDto" type="com.greenart.ch1.Recommend.rec_commentDto"/>
+		<typeAlias alias="QuestionsDto" type="com.greenart.ch1.QuestionsAndAnswers.QuestionsDto"/>
+		<typeAlias alias="AnswerDto" type="com.greenart.ch1.QuestionsAndAnswers.AnswerDto"/>
 	</typeAliases>
 	
 </configuration>
