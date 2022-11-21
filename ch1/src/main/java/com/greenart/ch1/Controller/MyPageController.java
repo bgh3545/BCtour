@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greenart.ch1.PageHandlerAndSearchCondition.PageHandler;
@@ -73,11 +75,12 @@ public class MyPageController {
 	}
 	
 	@PostMapping("/myPage_personalInfo")
-	public String myPage_personalInfo(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
+	public String myPage_personalInfo(HttpServletRequest request, HttpSession session, BCUserDto userDto, Model m) throws Exception {
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String id = (String)session.getAttribute("id");
+		String pwd = userDto.getPwd();
 		
 		if(!pwdCheck(pwd,id)) {
 			String msg= "비밀번호가 틀렸습니다. 다시 입력해주세요";
@@ -85,7 +88,21 @@ public class MyPageController {
 			return "personalInfo/myPage_pwdCheck";
 		}
 		
+		BCUserDto myPageUser = userDao.selectUser(id);
+		m.addAttribute("myPageUser", myPageUser);
+		
 		return "personalInfo/myPage_personalInfo";
+	}
+	
+	@GetMapping("/modifyPwd")
+	@ResponseBody
+	public String modifyPwd(HttpSession session, @RequestParam String pwd, Model m) throws Exception {
+		String id = (String)session.getAttribute("id");
+		int cnt = userDao.updateUserPwd(id, pwd);
+		if(cnt!=0) {
+			return "true";
+		}
+		return "false";
 	}
 	
 	@GetMapping("/manage_managerInfo")

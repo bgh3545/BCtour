@@ -16,9 +16,35 @@
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">  
-​
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<!-- 아이콘 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
 <link href="../resources/CSS/BCStyle.css" rel="stylesheet"/>
+<link href="../resources/CSS/BCtourStyle.css?aas" rel="stylesheet"/>
+
+<style type="text/css">
+	.column2>.column2_container>ul>li>div {
+        display: flex;
+        justify-content: space-between;
+        width: 500px;
+        height: 30px;
+  	    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        margin-bottom: 2em;
+    }
+    .column2>.column2_container>ul>li>div>i {
+    	font-size: 1.5em;
+    }
+    .column2>.column2_container>ul>li>div>i>input {
+    	border: none;
+    	height: 20px;
+    }
+	.column2>.column2_container>div>h1 {
+		margin-bottom: 2em;
+	}
+                
+</style>
 </head>
 <body>
 	<div class="main">
@@ -59,12 +85,69 @@
                     </div>
                 </div>
                 <div class="column2">
-                    <div>
-                    	개인정보
-                    </div>
-                </div>
-            </div>
-        </div>
-	</div>
+                	<div class="column2_container">
+      	            	<div>
+        	              	<h1>개인정보</h1>
+            	      	</div>
+                	       	<ul>
+                    	   		<li>
+                       				<div>
+                       					<i class="bi bi-person"> ${myPageUser.id }</i>
+                       				</div>
+	                           	</li>
+    	                       	<li>
+        	                    	<div>
+        	                    		<i class="bi bi-key"> <input type="text" id="pwd" value="${myPageUser.pwd }" readonly="readonly"></i>
+            	                       	<button id="pwdBtn">수정</button>
+            	                       	<button id="pwdBtn2" style="display:none;">확인</button>
+                	               	</div>
+                    	       	</li>
+                        	   	<li>
+	                            	<div>
+	                            		<i class="bi bi-person-badge"> ${myPageUser.name }</i>
+        	                       	</div>
+            	               	</li>
+                	           	<li>
+                    	        	<div>
+                    	        		<i class="bi bi-envelope"> <input type="text" id="email" value="${myPageUser.email }" readonly="readonly"></i>
+                        	           	<button id="emailBtn">수정</button>
+	                               	</div>
+    	                       	</li>
+        	                   	<li>
+            	                   	<div>
+            	                   		<i class="bi bi-phone"> <input type="text" id="tel" value="${myPageUser.tel }" readonly="readonly"></i>
+                	                   	<button id="telBtn">수정</button>
+                    	          	</div>
+                        	  	</li>
+	                      	</ul>
+    	   	        	</div>
+        	      </div>
+           	</div>
+       </div>
+      </div>
+      <script src="http://code.jquery.com/jquery-latest.js" charset="UTF-8"></script>
+      <script>
+      var pwd = document.getElementById("pwd");
+      var pwdBtn = document.getElementById("pwdBtn");
+      var pwdBtn2 = document.getElementById("pwdBtn2");
+      pwdBtn.addEventListener('click',e=>{
+    	  pwd.focus();
+    	  pwd.value = ""; 
+    	  pwd.readOnly = "";
+    	  pwdBtn.style.display = "none";
+    	  pwdBtn2.style.display = "block";
+      });
+      
+      	$("#pwdBtn2").click(function() {
+      		$.ajax({
+      			type:'GET',
+      			url: '/ch1/modifyPwd',
+      			success : function(result) {
+      				
+      			},
+      			error: function() { alert("수정이 취소되었습니다.") }
+      		});
+      	});
+      </script>
 </body>
 </html>

@@ -26,7 +26,9 @@ public interface BCUserDao {
 	int insertUser(BCUserDto bcuserDto) throws Exception;
 
 	//	고객 정보 업데이트
-	int updateUser(String id, String pwd) throws Exception;
+	int updateUserPwd(String id, String pwd) throws Exception;
+	int updateUserEmail(String id, String email) throws Exception;
+	int updateUserTel(String id, String tel) throws Exception;
 
 	//	고객 정보 전체 삭제
 	int deleteAll();
