@@ -3,17 +3,17 @@ package com.greenart.ch1.GlobalValidator;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.greenart.ch1.User.User;
+import com.greenart.ch1.User.BCUserDto;
 
 public class GlobalValidator implements Validator{
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return User.class.isAssignableFrom(clazz);
+		return BCUserDto.class.isAssignableFrom(clazz);
 	}
 	@Override
 	public void validate(Object target, org.springframework.validation.Errors errors) {
 		System.out.println("GlobalValidator.validat() is called");
-		User user = (User)target;
+		BCUserDto user = (BCUserDto)target;
 		String id = user.getId();
 		String pwd = user.getPwd();
 		

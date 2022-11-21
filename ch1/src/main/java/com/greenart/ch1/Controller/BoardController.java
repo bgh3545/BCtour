@@ -65,7 +65,7 @@ public class BoardController {
 	@GetMapping("/list_1")
 	public String list_1(HttpServletRequest request,SearchCondition sc, Model m,String keyword) throws Exception {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			if(keyword == null) {
@@ -99,7 +99,7 @@ public class BoardController {
 	@GetMapping("/write_1")
 	public String write_1(HttpServletRequest request,Model m, Integer bno, SearchCondition sc) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			BoardDto boardDto = boardService.read(bno);
@@ -115,7 +115,7 @@ public class BoardController {
 	@PostMapping("/write_1")
 	public String write_1(HttpServletRequest request,Model m, BoardDto boardDto, HttpSession session, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String writer = (String)session.getAttribute("id");
 		boardDto.setWriter(writer);
@@ -145,7 +145,7 @@ public class BoardController {
 	@GetMapping("/read_1")
 	public String read_1(HttpServletRequest request,Model m, Integer bno, SearchCondition sc) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			BoardDto boardDto = boardService.read(bno);
@@ -162,7 +162,7 @@ public class BoardController {
 	@PostMapping("/remove_1")
 	public String remove_1(HttpServletRequest request,Model m, Integer bno, SearchCondition sc, HttpSession session, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		m.addAttribute("page", sc.getPage());
 		m.addAttribute("pageSize", sc.getPageSize());
@@ -194,7 +194,7 @@ public class BoardController {
 	@GetMapping("/modify_1")
 	public String modify_1(HttpServletRequest request,Integer bno,SearchCondition sc, Model m) throws Exception {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		BoardDto modi = boardDao.select(bno);
 		m.addAttribute("modi", modi);
 		m.addAttribute("page", sc.getPage());
@@ -205,7 +205,7 @@ public class BoardController {
 	@PostMapping("/modify_1") 
 	public String modify_1(HttpServletRequest request,Model m, BoardDto boardDto, HttpSession session, SearchCondition sc, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String writer = (String)session.getAttribute("id");
 		boardDto.setWriter(writer);
@@ -230,7 +230,7 @@ public class BoardController {
 	@GetMapping("/list_2")
 	public String list_2(HttpServletRequest request, SearchCondition sc, Model m, RecommendDto recDto) throws Exception {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			
@@ -263,7 +263,7 @@ public class BoardController {
 	@GetMapping("/rec10")
 	public String rec10(HttpServletRequest request, SearchCondition sc, Model m, RecommendDto recDto, String keyword) throws Exception {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			if(keyword == null) {
@@ -300,7 +300,7 @@ public class BoardController {
 	@GetMapping("/write_2")
 	public String write_2(HttpServletRequest request,Model m, Integer rec_num, SearchCondition sc) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			RecommendDto recDto = recService.r_read(rec_num);
@@ -316,7 +316,7 @@ public class BoardController {
 	@PostMapping("/write_2")
 	public String write_2(HttpServletRequest request,Model m, RecommendDto recDto, HttpSession session, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String writer = (String)session.getAttribute("id");
 		recDto.setRec_writer(writer);
@@ -346,7 +346,7 @@ public class BoardController {
 	@PostMapping("/read_2")
 	public String post_read_2(HttpServletRequest request,Model m,rec_commentDto rec_commDto, Integer rec_num, SearchCondition sc, CommSearchCondition csc, HttpSession session) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			
@@ -378,7 +378,7 @@ public class BoardController {
 	@GetMapping("/read_2")
 	public String get_read_2(HttpServletRequest request, Model m, rec_commentDto rec_commDto,RecommendDto recDto, Integer rec_comm_num, Integer rec_num, SearchCondition sc, CommSearchCondition csc, HttpSession session) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String mem_id= (String)session.getAttribute("id");
 		recDto.setMem_id(mem_id);
@@ -413,7 +413,7 @@ public class BoardController {
 	@PostMapping("/remove_2")
 	public String remove_2(HttpServletRequest request,Model m, Integer rec_num, SearchCondition sc, HttpSession session, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		m.addAttribute("page", sc.getPage());
 		m.addAttribute("pageSize", sc.getPageSize());
@@ -446,7 +446,7 @@ public class BoardController {
 	@GetMapping("/removecomm_2")
 	public String removecomm_2(HttpServletRequest request,Model m,Integer rec_comm_num, Integer rec_num, SearchCondition sc, HttpSession session, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			String writer;
@@ -478,7 +478,7 @@ public class BoardController {
 	@GetMapping("/modify_2")
 	public String modify_2(HttpServletRequest request,Integer rec_num, SearchCondition sc, Model m) throws Exception {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		RecommendDto modi = recDao.r_select(rec_num);
 		m.addAttribute("modi", modi);
 		m.addAttribute("page", sc.getPage());
@@ -489,7 +489,7 @@ public class BoardController {
 	@PostMapping("/modify_2")
 	public String modify_2(HttpServletRequest request,Model m,Integer rec_num, RecommendDto recDto, HttpSession session, SearchCondition sc, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String writer = (String)session.getAttribute("id");
 		recDto.setRec_writer(writer);
@@ -514,7 +514,7 @@ public class BoardController {
 	@GetMapping("/modifycomm_2")
 	public String modifycomm_2(HttpServletRequest request,Model m,Integer rec_num, Integer rec_comm_num, rec_commentDto rec_commDto, HttpSession session, SearchCondition sc, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String writer = (String)session.getAttribute("id");
 		rec_commDto.setRec_comm_writer(writer);
@@ -537,7 +537,7 @@ public class BoardController {
 	@PostMapping("/modify2comm_2")
 	public String modify2comm_2(HttpServletRequest request,Model m,Integer rec_num, Integer rec_comm_num, rec_commentDto rec_commDto, HttpSession session, SearchCondition sc, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String writer = (String)session.getAttribute("id");
 		rec_commDto.setRec_comm_writer(writer);
@@ -557,7 +557,7 @@ public class BoardController {
 	@PostMapping("/recBtn_2")
 	public String incRec_2(HttpServletRequest request,RecommendDto recDto, Integer rec_num, SearchCondition sc, Model m, HttpSession session) throws Exception {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String recommender = (String)session.getAttribute("id");
 		recDto.setMem_id(recommender);
@@ -578,7 +578,7 @@ public class BoardController {
 	@GetMapping("/list_3")
 	public String list_3(HttpServletRequest request, SearchCondition sc, Model m, CommunityDto commDto, String keyword) throws Exception {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			if(keyword == null) {
@@ -614,7 +614,7 @@ public class BoardController {
 	@GetMapping("/write_3")
 	public String write_3(HttpServletRequest request,Model m, Integer comm_num, SearchCondition sc) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			CommunityDto commDto = commService.c_read(comm_num);
@@ -630,7 +630,7 @@ public class BoardController {
 	@PostMapping("/write_3")
 	public String write_3(HttpServletRequest request,Model m, CommunityDto commDto, HttpSession session, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String writer = (String)session.getAttribute("id");
 		commDto.setComm_writer(writer);
@@ -661,7 +661,7 @@ public class BoardController {
 	@ResponseBody
 	public String post_read_3(HttpServletRequest request,Model m,comm_commentDto comm_commDto, Integer comm_num, SearchCondition sc, HttpSession session) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			
@@ -691,7 +691,7 @@ public class BoardController {
 	@GetMapping("/read_3")
 	public String get_read_3(HttpServletRequest request,Model m,comm_commentDto comm_commDto,Integer comm_comm_num, Integer comm_num, SearchCondition sc, HttpSession session) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			
@@ -714,7 +714,7 @@ public class BoardController {
 	@PostMapping("/remove_3")
 	public String remove_3(HttpServletRequest request,Model m, Integer comm_num, SearchCondition sc, HttpSession session, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		m.addAttribute("page", sc.getPage());
 		m.addAttribute("pageSize", sc.getPageSize());
@@ -747,7 +747,7 @@ public class BoardController {
 	@GetMapping("/removecomm_3")
 	public String removecomm_3(HttpServletRequest request,Model m,Integer comm_comm_num, Integer comm_num, SearchCondition sc, HttpSession session, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			String writer;
@@ -779,7 +779,7 @@ public class BoardController {
 	@GetMapping("/modify_3")
 	public String modify_3(HttpServletRequest request,Integer comm_num, SearchCondition sc, Model m) throws Exception {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		CommunityDto modi = commDao.c_select(comm_num);
 		m.addAttribute("modi", modi);
 		m.addAttribute("page", sc.getPage());
@@ -790,7 +790,7 @@ public class BoardController {
 	@PostMapping("/modify_3")
 	public String modify_3(HttpServletRequest request,Model m,Integer comm_num, CommunityDto commDto, HttpSession session, SearchCondition sc, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String writer = (String)session.getAttribute("id");
 		commDto.setComm_writer(writer);
@@ -815,7 +815,7 @@ public class BoardController {
 	@GetMapping("/modifycomm_3")
 	public String modifycomm_3(HttpServletRequest request,Model m,Integer comm_num, Integer comm_comm_num, comm_commentDto comm_commDto, HttpSession session, SearchCondition sc, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String writer = (String)session.getAttribute("id");
 		comm_commDto.setComm_comm_writer(writer);
@@ -838,7 +838,7 @@ public class BoardController {
 	@PostMapping("/modify2comm_3")
 	public String modify2comm_3(HttpServletRequest request,Model m,Integer comm_num, Integer comm_comm_num, comm_commentDto comm_commDto, HttpSession session, SearchCondition sc, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String writer = (String)session.getAttribute("id");
 		comm_commDto.setComm_comm_writer(writer);

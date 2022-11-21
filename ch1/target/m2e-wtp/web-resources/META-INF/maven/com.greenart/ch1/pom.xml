@@ -15,6 +15,22 @@
 	</properties>
 	<dependencies>
 		
+		<!-- email -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>5.0.7.RELEASE</version>
+		</dependency>
+		
+		<!--javax.mail.Internet.MimeMessage를 사용하기 위한 Dependency -->
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+		<!-- /email -->
+		
+		
 		<!-- https://mvnrepository.com/artifact/com.jfinal/cos -->
 		<dependency>
     		<groupId>com.jfinal</groupId>

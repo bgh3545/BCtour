@@ -23,8 +23,4 @@ public class HomeController {
 		m.addAttribute("topList", topList);
 		return "home/homepage";
 	}
-	@RequestMapping(value="/1", method= RequestMethod.GET)
-	public String home1(Model m) throws Exception{
-		return "home/homepage_v1";
-	}
 }

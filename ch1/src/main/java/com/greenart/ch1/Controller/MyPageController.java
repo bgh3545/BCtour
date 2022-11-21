@@ -20,8 +20,8 @@ import com.greenart.ch1.QuestionsAndAnswers.AnswerDto;
 import com.greenart.ch1.QuestionsAndAnswers.QuestionsDao;
 import com.greenart.ch1.QuestionsAndAnswers.QuestionsDto;
 import com.greenart.ch1.QuestionsAndAnswers.QuestionsService;
-import com.greenart.ch1.User.User;
-import com.greenart.ch1.User.UserDao;
+import com.greenart.ch1.User.BCUserDao;
+import com.greenart.ch1.User.BCUserDto;
 
 @Controller
 @RequestMapping("/myPage")
@@ -32,12 +32,12 @@ public class MyPageController {
 	@Autowired
 	QuestionsService quesService;
 	@Autowired
-	UserDao userDao;
+	BCUserDao userDao;
 	
 	@GetMapping("/myPage_main")
 	public String myPage_main(HttpServletRequest request, HttpSession session, Model m) throws Exception {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String writer = (String)session.getAttribute("id");
 		int quesCnt = quesService.q_getCount(writer);
@@ -50,7 +50,7 @@ public class MyPageController {
 	@GetMapping("/manage")
 	public String myPage_manage(HttpServletRequest request, HttpSession session, Model m) throws Exception {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String writer = (String)session.getAttribute("id");
 		int quesCnt = quesService.q_getCount(writer);
@@ -75,7 +75,7 @@ public class MyPageController {
 	@PostMapping("/myPage_personalInfo")
 	public String myPage_personalInfo(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String id = (String)session.getAttribute("id");
 		
@@ -91,7 +91,7 @@ public class MyPageController {
 	@GetMapping("/manage_managerInfo")
 	public String manage_managerInfo1(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		return "personalInfo/manage_managerInfo";
 	}
@@ -99,7 +99,7 @@ public class MyPageController {
 	@PostMapping("/manage_managerInfo")
 	public String manage_managerInfo2(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String id = (String)session.getAttribute("id");
 		
@@ -115,36 +115,36 @@ public class MyPageController {
 		return "personalInfo/manage_managerInfo";
 	}
 	
-	private boolean pwdCheck(String pwd, String id) {
-		User user = userDao.SelectUser(id);
+	private boolean pwdCheck(String pwd, String id) throws Exception {
+		BCUserDto user = userDao.selectUser(id);
 		return user.getPwd().equals(pwd);
 	}
 	
 	@GetMapping("/myPage_reservation")
 	public String myPage_reservation(HttpServletRequest request) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		return "reservation/myPage_reservation";
 	}
 	
 	@GetMapping("/manage_reservation")
 	public String manage_reservation(HttpServletRequest request) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		return "reservation/manage_reservation";
 	}
 	
 	@GetMapping("/myPage_wishList")
 	public String myPage_wishList(HttpServletRequest request) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		return "wishList/myPage_wishList";
 	}
 	
 	@GetMapping("/myPage_questions")
 	public String myPage_questions1(HttpServletRequest request, HttpSession session, SearchCondition sc, Model m, QuestionsDto quesDto) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			String writer = (String)session.getAttribute("id");
@@ -181,7 +181,7 @@ public class MyPageController {
 	@GetMapping("/manage_questions")
 	public String manage_questions(HttpServletRequest request, HttpSession session, SearchCondition sc, Model m, QuestionsDto quesDto) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			String writer = (String)session.getAttribute("id");
@@ -217,7 +217,7 @@ public class MyPageController {
 	@GetMapping("/manage_noAns")
 	public String manage_questions2(HttpServletRequest request, HttpSession session, SearchCondition sc, Model m, QuestionsDto quesDto) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			String writer = (String)session.getAttribute("id");
@@ -250,7 +250,7 @@ public class MyPageController {
 	@GetMapping("/read_question")
 	public String read_question(HttpServletRequest request, SearchCondition sc, HttpSession session, Model m, Integer ques_num) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			String writer = (String)session.getAttribute("id");
@@ -270,7 +270,7 @@ public class MyPageController {
 	@GetMapping("/manage_read_question")
 	public String read_manage_question(HttpServletRequest request, SearchCondition sc, HttpSession session, Model m, Integer ques_num) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			String writer = (String)session.getAttribute("id");
@@ -290,7 +290,7 @@ public class MyPageController {
 	@PostMapping("/remove_question")
 	public String remove_question(HttpServletRequest request,Model m, Integer ques_num, SearchCondition sc, HttpSession session, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		m.addAttribute("page", sc.getPage());
 		m.addAttribute("pageSize", sc.getPageSize());
@@ -315,7 +315,7 @@ public class MyPageController {
 	@GetMapping("/write_question")
 	public String write_question(HttpServletRequest request,Model m, Integer ques_num, SearchCondition sc) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			QuestionsDto quesDto = quesService.q_read(ques_num);
@@ -331,7 +331,7 @@ public class MyPageController {
 	@PostMapping("/write_question")
 	public String write_question(HttpServletRequest request,Model m, QuestionsDto quesDto, HttpSession session, Integer ques_num, SearchCondition sc, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String writer = (String)session.getAttribute("id");
 		quesDto.setQues_writer(writer);
@@ -360,7 +360,7 @@ public class MyPageController {
 	@GetMapping("/write_answer")
 	public String write_answer1(HttpServletRequest request,Model m, Integer ques_num, SearchCondition sc, String ques_title) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			m.addAttribute("ques_title", ques_title);
@@ -376,7 +376,7 @@ public class MyPageController {
 	@PostMapping("/write_answer")
 	public String write_answer2(HttpServletRequest request,Model m, Integer ans_num, SearchCondition sc, AnswerDto ansDto, HttpSession session, RedirectAttributes redatt) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		String writer = (String)session.getAttribute("id");
 		ansDto.setAns_writer(writer);
@@ -400,7 +400,7 @@ public class MyPageController {
 	@GetMapping("/read_answer")
 	public String read_answer(HttpServletRequest request, SearchCondition sc, HttpSession session, Model m, Integer ans_num) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			AnswerDto ansDto = quesService.a_read(ans_num);
@@ -419,7 +419,7 @@ public class MyPageController {
 	@GetMapping("/manage_read_answer")
 	public String read_manage_answer(HttpServletRequest request, SearchCondition sc, HttpSession session, Model m, Integer ans_num) {
 		if(!loginCheck(request))
-			return "redirect:/logIn1/logIn1?toURL="+request.getRequestURL();
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
 			AnswerDto ansDto = quesService.a_read(ans_num);

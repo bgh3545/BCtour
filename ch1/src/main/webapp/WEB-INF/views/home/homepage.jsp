@@ -1,20 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var = "mypageLink" value="${sessionScope.id==null? '':'/myPage/myPage_main'}"/>
 <c:set var = "mypage" value="${sessionScope.id==null? '':'마이 페이지'}"/>
 <c:set var = "LoginOutlink" value="${sessionScope.id==null? '/logIn/logIn':'/logIn/logOut'}"/>
 <c:set var = "LoginOut" value="${sessionScope.id==null? 'Login':'Logout'}"/>
-<c:set var = "LoginOutlinkMypage" value="${sessionScope.id==null? '/register/add':''}"/>
+<c:set var = "LoginOutlinkMypage" value="${sessionScope.id==null? '/BCsignup':''}"/>
 <c:set var = "LoginMypage" value="${sessionScope.id==null? '회원가입':''}"/>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
+
    <meta charset="UTF-8">
     <title>비씨투어</title>
-    <link href="./resources/CSS/BCtourStyle.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css">
 </head>
 <body>
+    <body>
         <div class="main">
             <div class="allDiv">
                 <div class="header">
@@ -32,12 +36,7 @@
                     </div>
                     <div class="mypageDiv">
                         <ul class="mypage">
-                        	<c:if test="${sessionScope.id != 'admin'}">
                             <li><a href="<c:url value='${mypageLink}'/>">${mypage}</a></li>
-                            </c:if>
-                            <c:if test="${sessionScope.id == 'admin'}">
-                            <li><a href="<c:url value='/myPage/manage'/>">고객 관리</a></li>
-                            </c:if>
                             <li><a href="<c:url value='/board/list_2'/>">여행일지</a></li>
                         </ul>
                     </div>
@@ -45,7 +44,7 @@
                 <div class ="nav">
                     <div id="column">
                         <div class="city">
-                            <h2 class="do">수도권</h2>
+                            <a href='<c:url value="/capital"/>?pd_city=seoul'><h2 class="do">수도권</h2></a>
                             <ul class="chungnam_city">
                                 <l1>천안</l1>
                                 <li>청주</li>
@@ -110,49 +109,173 @@
                         </div>
                     </div>
                     <div class="column2">
-                        <div class="imgContainer" id="tl1"></div>
-                        <div class="imgContainer" id="tl2"></div>
-                        <div class="imgContainer" id="tl3"></div>
+                        <div class="imgContainer">
+                            <img src="" alt=""> 
+                            <img src="" alt="">
+                            <img src="" alt="">
+                            <button id="prev">&lang;</button>
+                            <button id="next">&rang;</button>
+                        </div>
                     </div>
                 </div>
+                <div class="column3">
+                    <div class ="column3title">
+                        <h1>인기 급상승 여행지</h1>
+                    </div> 
+                    
+                    <div class="boardLink">
+                    	<c:forEach var="list" items="${mainList }">
+                        <div class ="board">
+                            <img src=${list.pd_img }>
+                            <p>${list.pd_title }</p>
+                            <p>${list.pd_subtitle }</p>
+                        </div>
+                        </c:forEach>
+                    </div>
+                </div>
+                <div class ="review">
+                    <div class="reviewTitle">
+                        <h1>여행일지</h1>
+                    </div>
+                    
+                    <div class ="reviewMain">
+                        <div class ="review1">
+                            <div class ="reviewMainTitle">
+                                <h3>제주도에서 생긴 일</h3>
+                            </div>
+                            <div class="reviewContent">
+                                <p>오늘의 날씨는 쾌창하고 좋은 날씨다. 오늘 보드 준내 힘든데 어우 따라가기 어렵구먼. 저거 분명히 중요한 부분인데 집중 안해도 괜찮을까 슈발
+                                    <br>어우 근데 배고파 디지겄다. 오늘 맛있는거 먹어야겟구먼.
+                                </p> 
+                            </div>
+                        </div>
+                        <div class="reviewImg">
+                            <img>
+                            <img>
+                        </div>
+                        <div class ="review2">
+                            <div class ="reviewMainTitle">
+                                <h3>제주도에서 생긴 일</h3>
+                            </div>
+                            <div class="reviewContent">
+                                <p>내일의 날씨는 쾌창하고 좋은 날씨다. 오늘 보드 준내 힘든데 어우 따라가기 어렵구먼. 저거 분명히 중요한 부분인데 집중 안해도 괜찮을까 슈발
+                                    <br>어우 근데 배고파 디지겄다. 오늘 맛있는거 먹어야겟구먼.
+                                </p> 
+                            </div>
+                        </div>
+                        <div class ="review3">
+                            <div class ="reviewMainTitle">
+                                <h3>제주도에서 생긴 일</h3>
+                            </div>
+                            <div class="reviewContent">
+                                <p>모레의 날씨는 쾌창하고 좋은 날씨다. 오늘 보드 준내 힘든데 어우 따라가기 어렵구먼. 저거 분명히 중요한 부분인데 집중 안해도 괜찮을까 슈발
+                                    <br>어우 근데 배고파 디지겄다. 오늘 맛있는거 먹어야겟구먼.
+                                </p> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="height: 1000px"></div>
             </div>
+            
         </div>
+
+
+
+
         <script>
-        	let img1 = `${topList[0].rec_content}`;
-        	let ext1 = /<img[^>]+src[^>]*>/;
-        	let res1 = ext1.exec(img1);
-        	if(res1 !=null){
-        	re1 = res1.toString();
-        	let thum1 = re1.replace(/style="[^"]+"/,'');
-        	document.getElementById("tl1").innerHTML=thum1;
-        	}
-        	else{
-        	document.getElementById("tl1").innerHTML='<img src="/ch1/resources/img/noImg.jpg">';
-        	}
-        	
-        	let img2 = `${topList[1].rec_content}`;
-        	let ext2 = /<img[^>]+src[^>]*>/;
-        	let res2 = ext2.exec(img2);
-        	if(res2 !=null){
-        	re2 = res2.toString();
-        	let thum2 = re2.replace(/style="[^"]+"/,'');
-        	document.getElementById("tl2").innerHTML=thum2;
-        	}
-        	else{
-            document.getElementById("tl2").innerHTML='<img src="/ch1/resources/img/noImg.jpg">';
+            let prev = document.getElementById("prev");
+            let next = document.getElementById("next");
+            let imgs = document.querySelectorAll(".imgContainer img");
+    
+            let img_num = 0;
+    
+            showing(img_num);
+    
+            /** prev버튼을 클릭 했을 때의 함수
+             *  img_num값 하나씩 뺌
+             *  만약 0보다 작다면 img_num값을 imgs.length-1로 정함
+             *  showing함수의 매개변수로 (img_num) */
+            prev.addEventListener('click', function() {
+                img_num--;
+                if(img_num < 0) {
+                    img_num = imgs.length-1;
+                }
+                showing(img_num);
+            });
+            // p.onclick = function () {
+            //     img_num--;
+            //     if(img_num < 0) {
+            //         img_num = imgs.length-1;
+            //     }
+            //     showing(img_num);
+            // }
+            
+            /** next버튼을 클릭 했을 때의 함수
+             *  img_num값 하나씩 더함
+             *  만약 imgs.length-1보다 크다면 img_num값 0
+             *  showing함수의 매개변수로 (img_num) */
+            next.addEventListener('click', function() {
+                img_num++;
+                if(img_num > imgs.length-1) {
+                    img_num = 0;
+                }
+                showing(img_num);
+            });
+            // n.onclick = function () {
+            //     img_num++;
+            //     if(img_num > imgs.length-1) {
+            //         img_num = 0;
+            //     }
+            //     showing(img_num);
+            // }
+    
+    
+            function showing(a) { 
+                for(let i = 0 ; i < imgs.length ; i++){
+                    imgs[i].style.display = "none"; // 일단 다 안보이게 만듬
+                }
+                imgs[a].style.display = "inline"; // a값을 넣으면 보이게 만듬
             }
-        	
-        	let img3 = `${topList[2].rec_content}`;
-        	let ext3 = /<img[^>]+src[^>]*>/;
-        	let res3 = ext3.exec(img3);
-        	if(res3 !=null){
-        	re3 = res3.toString();
-        	let thum3 = re3.replace(/style="[^"]+"/,'');
-        	document.getElementById("tl3").innerHTML=thum3;
-        	}
-        	else{
-            document.getElementById("tl3").innerHTML='<img src="/ch1/resources/img/noImg.jpg">';
-            }
+    
+    
+    
+    
+    
+            // let prev_bttn = document.getElementById("prev");
+            // let next_bttn = document.getElementById("next");
+            // // let imgs = document.querySelectorAll("#slides img");
+            // console.log(imgs);
+            // let img_num = 0;
+    
+            // showing(img_num);
+            
+            // prev_bttn.onclick = function () {
+            //     img_num--;
+            //     if(img_num < 0) { 
+            //         img_num = imgs.length-1;
+            //     }
+    
+            //     showing(img_num);
+            //     console.log(img_num);
+            // };
+    
+            // next_bttn.onclick = function () {
+            //     img_num++;
+            //     if(img_num > imgs.length-1) {
+            //         img_num = 0;
+            //     }
+            //         showing(img_num);
+            //         console.log(img_num);
+            // };
+    
+            // function showing(n) {
+            //     for (let i = 0 ; i < imgs.length ; i++) {
+            //         imgs[i].style.display = "none";
+            //     }
+            //     imgs[n].style.display = "block";
+            // }
+    
         </script>
 </body>
 </html>
