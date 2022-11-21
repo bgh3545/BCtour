@@ -18,7 +18,7 @@ public class EmailController {
 	@Autowired
 	private BCUserDao dao;
 
-	// ï¿½ï¿½ï¿½Ìµï¿½ Email
+	// ¾ÆÀÌµð Email
 	@RequestMapping("/emailGetId")
 	public ModelAndView idsendEmail(BCUserDto bcDto, Model m) throws Exception {
 		ModelAndView mv = new ModelAndView();
@@ -28,22 +28,22 @@ public class EmailController {
 			String email = bcDto.getEmail();
 			String name = bcDto.getName();
 			
-			System.out.println("ï¿½ï¿½ï¿½ï¿½");
+			System.out.println("½ÇÇà");
 
-			String toAddr = bcDto.getEmail(); // ï¿½Þ´Â»ï¿½ï¿½
+			String toAddr = bcDto.getEmail(); // ¹Þ´Â»ç¶÷
 
-			String fromAddr = "bctour88@gmail.com"; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+			String fromAddr = "bctour88@gmail.com"; // º¸³»´Â »ç¶÷
 
-			String subject = "BCtour ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È®ï¿½ï¿½ï¿½Ô´Ï´ï¿½."; // ï¿½ï¿½ï¿½ï¿½
+			String subject = "BCtour ÀÌ¸ÞÀÏ ÀÎÁõÈ®ÀÎÀÔ´Ï´Ù."; // Á¦¸ñ
 			
 			
-			String findId = "http://localhost:8080/bctour/BCFind/BCFindingId?name2=" + name + "&email2=" + email;
-			String body = findId; // ï¿½ï¿½ï¿½ï¿½ ( ï¿½ï¿½ï¿½ï¿½È®ï¿½ï¿½ ï¿½ï¿½Å© )
+			String findId = "http://localhost:8080/ch1/BCFind/BCFindingId?name2=" + name + "&email2=" + email;
+			String body = findId; // ³»¿ë ( ÀÎÁõÈ®ÀÎ ¸µÅ© )
 
 			mailService.sendEmail(toAddr, fromAddr, subject, body);
 			
 			mv.setViewName("BCFindingId");
-			System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½");
+			System.out.println("½ÇÇà ³¡");
 //			m.addAttribute("bcDto", bcDto);
 			return mv;
 		} else {
@@ -52,7 +52,7 @@ public class EmailController {
 		}
 	}
 	
-	// ï¿½Ð½ï¿½ï¿½ï¿½ï¿½ï¿½ Email
+	// ÆÐ½º¿öµå Email
 	@RequestMapping("/emailGetPwd")
 	public ModelAndView pwdsendEmail(BCUserDto bcDto, Model m) throws Exception {
 		ModelAndView mv = new ModelAndView();
@@ -64,26 +64,26 @@ public class EmailController {
 			String email = bcDto.getEmail();
 			
 			
-			System.out.println("ï¿½ï¿½ï¿½ï¿½");
+			System.out.println("½ÇÇà");
 
-			String toAddr = bcDto.getEmail(); // ï¿½Þ´Â»ï¿½ï¿½
+			String toAddr = bcDto.getEmail(); // ¹Þ´Â»ç¶÷
 
-			String fromAddr = "bctour88@gmail.com"; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+			String fromAddr = "bctour88@gmail.com"; // º¸³»´Â »ç¶÷
 
-			String subject = "BCtour ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È®ï¿½ï¿½ï¿½Ô´Ï´ï¿½."; // ï¿½ï¿½ï¿½ï¿½
+			String subject = "BCtour ÀÌ¸ÞÀÏ ÀÎÁõÈ®ÀÎÀÔ´Ï´Ù."; // Á¦¸ñ
 			
-			String findId = "http://localhost:8080/bctour/BCFind/BCFindingPwd?id2=" + id + "&name2=" + name + "&email2=" + email;
+			String findId = "http://localhost:8080/ch1/BCFind/BCFindingPwd?id2=" + id + "&name2=" + name + "&email2=" + email;
 			
-			String body = findId; // ï¿½ï¿½ï¿½ï¿½ ( ï¿½ï¿½ï¿½ï¿½È®ï¿½ï¿½ ï¿½ï¿½Å© )
+			String body = findId; // ³»¿ë ( ÀÎÁõÈ®ÀÎ ¸µÅ© )
 
 			mailService.sendEmail(toAddr, fromAddr, subject, body);
 			
 			mv.setViewName("BCFindingPwd");
-			System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½");
-//			System.out.println("ï¿½ï¿½ï¿½Úµï¿½ : "); 
+			System.out.println("½ÇÇà ³¡");
+//			System.out.println("ÀÎÄÚµù : "); 
 //			System.out.println(java.net.URLEncoder.encode(findId));
 //			String de = java.net.URLEncoder.encode(findId);
-//			System.out.println("ï¿½ï¿½ï¿½Úµï¿½ : ");
+//			System.out.println("µðÄÚµù : ");
 //			System.out.println(java.net.URLDecoder.decode( de ));
 			return mv;
 		} else {

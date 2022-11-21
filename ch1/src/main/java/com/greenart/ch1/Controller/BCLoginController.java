@@ -35,7 +35,7 @@ public class BCLoginController {
 		System.out.println("pwd=" + pwd);
 		System.out.println("rememberId=" + rememberId);
 		if(!loginCheck(id,pwd)) {
-			String msg = URLEncoder.encode("IDí˜¹ì€ ë¹„ë°€ë²ˆí˜¸ë¥¼ í™•ì¸í•´ ì£¼ì„¸ìš”", "utf-8");
+			String msg = URLEncoder.encode("id¶Ç´Â pwd°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.", "utf-8");
 			return "redirect:/logIn/logIn?msg=" + msg;
 		}
 		HttpSession session = request.getSession();

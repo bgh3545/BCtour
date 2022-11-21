@@ -8,19 +8,19 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-@Repository // ï¿½Ï´ï¿½ DBï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+@Repository // ÀÏ´Ü DB¿ë ÄÄÆ÷³ÍÆ®¶ó »ý°¢
 public class BCUserDaoImpl implements BCUserDao  {
 	@Autowired
-	SqlSession session; // session ï¿½ï¿½ï¿½ï¿½, sqlï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´Âµï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	SqlSession session; // session ÁÖÀÔ, sql¸í·ÉÀ» ¼öÇàÇÏ´Âµ¥ ÇÊ¿äÇÑ ¸Þ¼­µå Á¦°ø
 	
 	String namespace = "com.greenart.BCUserMapper.";
 	
-//	ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
+//	¾ÆÀÌµð °³¼ö
 	@Override
 	public int selectIdCount(String id) throws Exception {
 		return session.selectOne(namespace + "selectIdCount",id);
 	}
-//	ï¿½ï¿½ï¿½Ìµï¿½ Ã£ï¿½ï¿½
+//	¾ÆÀÌµð Ã£±â
 	@Override
 	public BCUserDto idToEmail(String name, String email) throws Exception {
 		Map<String, String> map = new HashMap<>();
@@ -28,7 +28,7 @@ public class BCUserDaoImpl implements BCUserDao  {
 		map.put("email", email);
 		return session.selectOne(namespace + "idToEmail", map);
 	}
-//	ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½
+//	ºñ¹Ð¹øÈ£ Ã£±â
 	@Override
 	public BCUserDto pwdToEmail(String id, String name, String email) throws Exception {
 		Map<String, String> map = new HashMap<>();
@@ -37,17 +37,17 @@ public class BCUserDaoImpl implements BCUserDao  {
 		map.put("email", email);
 		return session.selectOne(namespace + "pwdToEmail", map);
 	}
-//	ï¿½Ì¸ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+//	ÀÌ¸ÞÀÏ È®ÀÎ
 	@Override
 	public int confirmEmail(String email) throws Exception {
 		return session.selectOne(namespace + "confirmEmail", email);
 	}
-//	ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
+//	°í°´ Á¤º¸ Ã£±â
 	@Override
 	public BCUserDto selectUser(String id) throws Exception {
 		return session.selectOne(namespace + "selectUser", id);
 	}
-// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+// °í°´ Á¤º¸ »èÁ¦
 	@Override
 	public int deleteUser (String id, String pwd) throws Exception {
 		Map<String, String> map = new HashMap<>();
@@ -55,12 +55,12 @@ public class BCUserDaoImpl implements BCUserDao  {
 		map.put("pwd", pwd);
 		return session.delete(namespace + "deleteUser", map);
 	}
-//	ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+//	°í°´ Á¤º¸ µî·Ï
 	@Override
 	public int insertUser(BCUserDto bcuserDto) throws Exception {
 		return session.insert(namespace + "insertUser", bcuserDto);
 	}
-//	ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+//	°í°´ Á¤º¸ ¾÷µ¥ÀÌÆ®
 	@Override
 	public int updateUser(String id, String pwd) throws Exception {
 		Map<String, String> map = new HashMap<>();
@@ -68,12 +68,12 @@ public class BCUserDaoImpl implements BCUserDao  {
 		map.put("pwd", pwd);
 		return session.update(namespace + "updateUser", map);
 	}
-//	ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
+//	°í°´ Á¤º¸ ÀüÃ¼ »èÁ¦
 	@Override
 	public int deleteAll() {
 		return session.delete(namespace + "deleteAll");
 	}
-//	ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½Ë»ï¿½
+//	°í°´ Á¤º¸ ÀüÃ¼ °Ë»ö
 	@Override
 	public List<BCUserDto> selectAll() throws Exception {
 		return session.selectList(namespace + "selectAll");

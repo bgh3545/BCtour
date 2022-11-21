@@ -17,7 +17,7 @@ public class BCFindController {
 	@Autowired
 	BCUserDao bcUserDao;
 
-	// ï¿½ï¿½ï¿½Ìµï¿½ Ã£ï¿½ï¿½
+	// ¾ÆÀÌµð Ã£±â
 	@GetMapping("/BCFindingId")
 	public String findid() {
 		return "loginAndRegist/BCFindingId";
@@ -32,7 +32,7 @@ public class BCFindController {
 		return "loginAndRegist/BCFindingId";
 	}
 	
-	// ï¿½ï¿½ï¿½Ìµï¿½ Ã¼Å©
+	// ¾ÆÀÌµð Ã¼Å©
 	private BCUserDto idCheck(String name, String email) throws Exception {
 		BCUserDto user = bcUserDao.idToEmail(name, email);
 		if (user.getName().equals(name) && user.getEmail().equals(email)) {
@@ -41,14 +41,14 @@ public class BCFindController {
 		return null;
 	}
 
-	// ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½
+	// ºñ¹Ð¹øÈ£ Ã£±â
 	@GetMapping("/BCFindingPwd")
 	public String findpwd() {
 		return "loginAndRegist/BCFindingPwd";
 	}
 
 	@PostMapping("/BCFindingPwd")
-	public String findpwd2(Model m, String id, String name, String email) throws Exception { // ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½
+	public String findpwd2(Model m, String id, String name, String email) throws Exception { 
 		if (pwdCheck(id, name, email) != null) {
 			m.addAttribute("userfindpwd", pwdCheck(id, name, email));
 			return "loginAndRegist/BCFindPwd";
@@ -56,8 +56,8 @@ public class BCFindController {
 		return "loginAndRegist/BCFingdingPwd";
 	}
 
-	// ï¿½ï¿½Ð¹ï¿½È£ Ã¼Å©
-	private BCUserDto pwdCheck(String id, String name, String email) throws Exception { // ï¿½ï¿½È­ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ ï¿½ß°ï¿½
+	// ºñ¹Ð¹øÈ£ Ã¼Å©
+	private BCUserDto pwdCheck(String id, String name, String email) throws Exception {
 		BCUserDto user = bcUserDao.pwdToEmail(id, name, email);
 		if (user.getId().equals(id) && user.getName().equals(name)
 				&& user.getEmail().equals(email)) {

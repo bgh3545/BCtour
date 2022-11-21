@@ -4,34 +4,34 @@ import java.util.List;
 
 public interface BCUserDao {
 
-	//	ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½
+	//	¾ÆÀÌµð °³¼ö
 	int selectIdCount(String id) throws Exception;
 
-	//	ï¿½ï¿½ï¿½Ìµï¿½ Ã£ï¿½ï¿½
+	//	¾ÆÀÌµð Ã£±â
 	BCUserDto idToEmail(String name, String email) throws Exception;
 
-	//	ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½
+	//	ºñ¹Ð¹øÈ£ Ã£±â
 	BCUserDto pwdToEmail(String id, String name, String email) throws Exception;
 	
-	//  ï¿½Ì¸ï¿½ï¿½ï¿½ È®ï¿½ï¿½
+	//  ÀÌ¸ÞÀÏ È®ÀÎ
 	int confirmEmail(String email) throws Exception;
 
-	//	ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½
+	//	°í°´ Á¤º¸ Ã£±â
 	BCUserDto selectUser(String id) throws Exception;
 
-	// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	// °í°´ Á¤º¸ »èÁ¦
 	int deleteUser(String id, String pwd) throws Exception;
 
-	//	ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+	//	°í°´ Á¤º¸ µî·Ï
 	int insertUser(BCUserDto bcuserDto) throws Exception;
 
-	//	ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
+	//	°í°´ Á¤º¸ ¾÷µ¥ÀÌÆ®
 	int updateUser(String id, String pwd) throws Exception;
 
-	//	ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
+	//	°í°´ Á¤º¸ ÀüÃ¼ »èÁ¦
 	int deleteAll();
 
-	//	ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½Ë»ï¿½
+	//	°í°´ Á¤º¸ ÀüÃ¼ °Ë»ö
 	List<BCUserDto> selectAll() throws Exception;
 
 }
