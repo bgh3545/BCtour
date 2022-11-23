@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace = "com.greenart.ch1">
+	<select id="c_count" resultType="int">
+		select count(*) from community
+	</select>
+	
+	<select id="c_selectAll" resultType="CommunityDto">
+		select * from community order by comm_reg_date desc, comm_num desc
+	</select>
+	
+	<select id="c_select" parameterType="int" resultType="CommunityDto">
+		select * from community where comm_num = #{comm_num}
+	</select>
+	<delete id="c_deleteAll">
+		delete from community
+	</delete>
+	
+	<delete id="c_delete" parameterType="map">
+		delete from community where comm_num= #{comm_num} and comm_writer= #{comm_writer}
+	</delete>
+	
+	<insert id="c_insert" parameterType="CommunityDto">
+		insert into community (comm_title, comm_content,comm_writer) values(#{comm_title}, #{comm_content}, #{comm_writer})
+	</insert>
+	
+	<update id="c_update" parameterType="CommunityDto">
+		update community
+		set comm_title= #{comm_title}, comm_content= #{comm_content}, comm_up_date= now()
+		where comm_num= #{comm_num}
+	</update>
+	
+	<update id="c_increaseViewCnt" parameterType="int">
+		update community
+		set comm_view= comm_view+1
+		where comm_num= #{comm_num}
+	</update>
+	
+	<update id="c_increaseCommCnt" parameterType="int">
+		update community
+		set comm_comment= comm_comment+1
+		where comm_num= #{comm_num}
+	</update>
+	
+	<update id="c_decreaseCommCnt" parameterType="int">
+		update community
+		set comm_comment= comm_comment-1
+		where comm_num= #{comm_num}
+	</update>
+	
+	<sql id="c_selectFromCommunity">
+		select comm_num, comm_title, comm_content, comm_writer, comm_view, comm_comment, comm_reg_date from community
+	</sql>
+	
+	<select id="c_selectPage" parameterType="map" resultType="CommunityDto">
+		<include refid="c_selectFromCommunity"/>
+		order by comm_reg_date desc, comm_num desc limit #{offset},#{pageSize}
+	</select>
+	
+	<select id="c_searchSelectPage" parameterType="SearchCondition" resultType="CommunityDto">
+		<include refid="c_selectFromCommunity"/>
+		where true
+		<include refid="c_searchCondition"/>
+		order by comm_reg_date desc, comm_num desc
+		limit #{offset}, #{pageSize}
+	</select>
+	
+	<select id="c_searchResultCnt" parameterType="SearchCondition" resultType="int">
+		select count(*) from community
+		where true
+		<include refid="c_searchCondition"/>
+	</select>
+	
+	<sql id="c_searchCondition">
+		<choose>
+			<when test='option=="T"'>
+				and comm_title like concat('%',#{keyword},'%')
+			</when>
+			<when test='option=="W"'>
+				and comm_writer like concat('%',#{keyword},'%')
+			</when>
+			<otherwise>
+				and (comm_title like concat('%',#{keyword},'%')
+				or comm_content
+				like concat('%',#{keyword},'%'))
+			</otherwise>
+		</choose>
+	</sql>
+	
+</mapper>

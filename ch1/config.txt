@@ -1,2 +1,0 @@
-car = com.greenart.ch1.SportsCar
-engine = com.greenart.ch1.Engine

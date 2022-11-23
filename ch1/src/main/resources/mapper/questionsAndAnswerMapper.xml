@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace = "com.greenart.ch1">
+
+	<select id="q_count" resultType="int">
+		select count(*) from questions where ques_writer = #{ques_writer}
+	</select>
+	
+	<select id="q_selectAll" resultType="QuestionsDto">
+		select ques_num, ques_title, ques_content,  ques_writer, ques_date, ansbool from questions where ques_writer = #{ques_writer} order by reg_date desc, ques_num desc
+	</select>
+	
+	<select id="q_selectAllManager" resultType="QuestionsDto">
+		select ques_num, ques_title, ques_content,  ques_writer, ques_date, ansbool from questions order by reg_date desc, ques_num desc
+	</select>
+	
+	<select id="q_selectNoAnsManager" resultType="QuestionsDto">
+		select ques_num, ques_title, ques_content,  ques_writer, ques_date, ansbool from questions where ansbool = 0 order by reg_date desc, ques_num desc
+	</select>
+	
+	<select id="q_select" parameterType="int" resultType="QuestionsDto">
+		select ques_num, ques_title, ques_content, ques_writer, ques_date, ansbool from questions where ques_num = #{ques_num}
+	</select>
+	
+	<select id="a_select" parameterType="int" resultType="AnswerDto">
+		select ans_num, ans_title, ans_content, ans_writer, ans_date from answer where ans_num = #{ans_num}
+	</select>
+	
+	<select id="a_selectAll" resultType="AnswerDto">
+		select ans_num, ans_title, ans_content, ans_writer, ans_date from answer 
+	</select>
+	
+	<delete id="q_deleteAll">
+		delete from questions
+	</delete>
+	
+	<delete id="q_delete" parameterType="map">
+		delete from questions where ques_num= #{ques_num} and ques_writer= #{ques_writer}
+	</delete>
+	
+	<insert id="q_insert" parameterType="QuestionsDto">
+		insert into questions (ques_title, ques_content, ques_writer) values(#{ques_title}, #{ques_content}, #{ques_writer})
+	</insert>
+	
+	<insert id="a_insert" parameterType="QuestionsDto">
+		insert into answer (ans_num, ans_title, ans_content, ans_writer) values(#{ans_num}, #{ans_title}, #{ans_content}, #{ans_writer})
+	</insert>
+	
+	<update id="q_ansBool" parameterType="int">
+		update questions
+		set ansbool= 1
+		where ques_num= #{ques_num}
+	</update>
+	
+	<update id="q_delAnsBool" parameterType="int">
+		update questions
+		set ansbool= 0
+		where ques_num= #{ques_num}
+	</update>
+	
+	<sql id="selectFromQuestions">
+		select * from questions
+	</sql>
+	
+	<select id="q_selectPage" parameterType="map" resultType="QuestionsDto">
+		<include refid="selectFromQuestions"/>
+		where ques_writer = #{ques_writer}
+		order by ques_date desc, ques_num desc limit #{offset},#{pageSize}
+	</select>
+	
+	<select id="q_searchSelectPage" parameterType="map" resultType="QuestionsDto">
+		<include refid="selectFromQuestions"/>
+		where ques_writer = #{ques_writer}
+		order by ques_date desc, ques_num desc
+		limit #{offset}, #{pageSize}
+	</select>
+	
+	<select id="q_searchSelectManagerPage" parameterType="SearchCondition" resultType="QuestionsDto">
+		<include refid="selectFromQuestions"/>
+		order by ques_date desc, ques_num desc
+		limit #{offset}, #{pageSize}
+	</select>
+	
+	<select id="q_searchSelectNoAnsManagerPage" parameterType="SearchCondition" resultType="QuestionsDto">
+		<include refid="selectFromQuestions"/>
+		where ansbool = 0
+		order by ques_date desc, ques_num desc
+		limit #{offset}, #{pageSize}
+	</select>
+	
+	<select id="q_searchResultCnt" parameterType="map" resultType="int">
+		select count(*) from questions
+		where ques_writer = #{ques_writer}
+	</select>
+	
+	<select id="q_searchResultManagerCnt" parameterType="SearchCondition" resultType="int">
+		select count(*) from questions
+	</select>
+	
+	<select id="q_searchResultNoAnsManagerCnt" parameterType="SearchCondition" resultType="int">
+		select count(*) from questions
+		where ansbool = 0
+	</select>
+	
+
+	
+</mapper>

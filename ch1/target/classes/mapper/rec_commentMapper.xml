@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace = "com.greenart.ch1">
+	<select id="rm_count" parameterType="int" resultType="int">
+		select count(*) from rec_comment where rec_num=#{rec_num}
+	</select>
+	
+	<select id="rm_selectAll" parameterType="map" resultType="rec_commentDto">
+		select * from rec_comment where rec_num= #{rec_num} order by rec_comm_date asc, rec_comm_num asc 
+		limit #{offset},#{pageSize}
+	</select>
+	
+	<select id="rm_select" parameterType="int" resultType="rec_commentDto">
+		select * from rec_comment where rec_comm_num = #{rec_comm_num}
+	</select>
+	<delete id="rm_deleteAll">
+		delete from rec_comment
+	</delete>
+	
+	<delete id="rm_delete" parameterType="map">
+		delete from rec_comment where rec_comm_num= #{rec_comm_num} and rec_comm_writer= #{rec_comm_writer}
+	</delete>
+	
+	<insert id="rm_insert" parameterType="rec_commentDto">
+		insert into rec_comment (rec_num, rec_comm_content,rec_comm_writer) values(#{rec_num}, #{rec_comm_content}, #{rec_comm_writer})
+	</insert>
+	
+	<update id="rm_update" parameterType="rec_commentDto">
+		update rec_comment
+		set rec_comm_content= #{rec_comm_modicontent}, rec_comm_up= now()
+		where rec_comm_num= #{rec_comm_num}
+	</update>
+	
+	<sql id="rm_selectFromRec_comment">
+		select rec_num, rec_comm_num, rec_comm_content, rec_comm_writer, rec_comm_date from rec_comment
+	</sql>
+	
+	<select id="rm_selectPage" parameterType="map" resultType="rec_commentDto">
+		<include refid="rm_selectFromRec_comment"/>
+		order by rec_comm_date desc, rec_comm_num desc limit #{offset},#{pageSize}
+	</select>
+	
+</mapper>
