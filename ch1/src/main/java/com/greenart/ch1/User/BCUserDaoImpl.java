@@ -94,13 +94,12 @@ public class BCUserDaoImpl implements BCUserDao  {
 //	고객 정보 전체 삭제
 	@Override
 	public int deleteAll() {
-		return session.delete(namespace + "deleteAll");
+		return session.delete(namespace + "u_deleteAll");
 	}
-	
 //	고객 정보 전체 검색
 	@Override
 	public List<BCUserDto> selectAll() throws Exception {
-		return session.selectList(namespace + "selectAll");
+		return session.selectList(namespace + "u_selectAll");
 	}
 	
 }

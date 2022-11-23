@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
-<mapper namespace = "com.greenart.ch1">
+<mapper namespace = "com.greenart.BCUserMapper">
 	<!-- 아이디 찾을 때 아이디 개수 1개( signupController ) -->
 	<select id="selectIdCount" parameterType="String" resultType="int">
 		SELECT count(*) FROM member
