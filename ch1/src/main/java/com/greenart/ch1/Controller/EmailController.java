@@ -72,9 +72,9 @@ public class EmailController {
 
 			String subject = "BCtour 이메일 인증확인입니다."; // 제목
 			
-			String findId = "http://localhost:8080/ch1/BCFind/BCFindingPwd?id2=" + id + "&name2=" + name + "&email2=" + email;
+			String findPwd = "http://localhost:8080/ch1/BCFind/BCFindingPwd?id2=" + id + "&name2=" + name + "&email2=" + email;
 			
-			String body = findId; // 내용 ( 인증확인 링크 )
+			String body = findPwd; // 내용 ( 인증확인 링크 )
 
 			mailService.sendEmail(toAddr, fromAddr, subject, body);
 			

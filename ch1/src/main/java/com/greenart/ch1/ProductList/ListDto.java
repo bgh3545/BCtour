@@ -3,23 +3,23 @@ package com.greenart.ch1.ProductList;
 import java.util.Date;
 
 public class ListDto {
-	private int pd_num;
-	private String pd_city;
-	private String	pd_img; // nullê°’ì„ ë“¤ì–´ì˜¬ ë•Œ ì²˜ë¦¬í•˜ê¸° ìœ„í•´ ( intëŠ” nullê°’ ì²˜ë¦¬ë¶ˆê°€ )
-	private String	pd_title;
-	private int	pd_price;
-	private String pd_subtitle;
-	private String pd_text;
-	private int pd_days;
-	private int pd_viewcnt;
-	private int wishlist;
-	private String pd_totalDays;
-	private String pd_transport;
-	private String pd_departStart;
-	private String pd_departEnd;
-	private String pd_deportStart;
-	private String pd_deportEnd;
-	private String pd_city1;
+	private int pd_num; 			//»óÇ° ¹øÈ£
+	private String pd_city;			//°ü±¤ µµ½Ã
+	private String	pd_img; 		//Áö¿ªÀÌ¹ÌÁö
+	private String	pd_title;		//Áö¿ªÀÌ¸§
+	private int	pd_price;			//°ü±¤ °¡°İ
+	private String pd_subtitle;		//Áö¿ªÀÌ¸§2
+	private String pd_text;			//¼³¸í±Û
+	private int pd_days;			//¿©ÇàÀÏ¼ö
+	private int pd_viewcnt;			//»óÇ° º» È½¼ö
+	private int wishlist;			//Âò
+	private String pd_totalDays;	//ÃÑ ³¯Â¥ 
+	private String pd_transport;	//ÀÌµ¿¼ö´Ü
+	private String pd_departStart;	//Ãâ¹ß ½Ã°£
+	private String pd_departEnd;	//µµÂø ½Ã°£
+	private String pd_deportStart;	//³ª°¥ ½Ã°£ 
+	private String pd_deportEnd;	//µµÂø ½Ã°£
+	private String pd_city1;		// 
 	private String pd_city2;
 	private String pd_city3;
 	private String pd_reserveUntil;

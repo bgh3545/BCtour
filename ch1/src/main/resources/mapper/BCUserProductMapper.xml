@@ -6,17 +6,21 @@
 	<select id="p_selectAll" resultType="ListDto">
 		SELECT * FROM pd_info
 	</select>
+	
 	<delete id = "p_deleteAll" parameterType = "int">
 		DELETE FROM pd_info
 		WHERE pd_num = #{pd_num}
 	</delete>
+	
 	<select id="productInfoSelectAll" resultType="productInfoDto">
 		select * from pd_info
 	</select>
+	
 	<select id="productInfoSelect" parameterType = "int" resultType="productInfoDto">
 		select * from pd_info
 		where pd_num = #{pd_num}
 	</select>
+	
 	<sql id="selectFromProduct">
       SELECT * FROM pd_info
    </sql>
@@ -34,24 +38,20 @@
       where pd_city = #{pd_city}
       <include refid="p_searchCondition"/>
    </select>
+   
    <insert id ="insertInfo" parameterType="ListDto">
-   	  insert into pd_info(pd_title,pd_subtitle,pd_days,pd_transport,pd_departStart,pd_departEnd,pd_deportStart,pd_deportEnd,pd_city1,pd_reserveUntil) values(#{pd_title},#{pd_subtitle},#{pd_days},#{pd_transport},#{pd_departStart},#{pd_departEnd},#{pd_deportStart},#{pd_deportEnd},#{pd_city1},#{pd_reserveUntil})
+   	  insert into pd_info(pd_title,pd_subtitle,pd_days,pd_transport,pd_departStart,pd_departEnd,pd_deportStart,pd_deportEnd,pd_city1,pd_reserveUntil) 
+   	  values(#{pd_title},#{pd_subtitle},#{pd_days},#{pd_transport},#{pd_departStart},#{pd_departEnd},#{pd_deportStart},#{pd_deportEnd},#{pd_city1},#{pd_reserveUntil})
    </insert>
+   
   <select id ="seoulList" parameterType ="String" resultType = "ListDto">
   		select * from pd_info
   		where pd_city = "서울" 
   </select>
    
    <sql id="p_searchCondition">
-      <choose>
-         <when test='option=="T"'>
-            and pd_title like concat('%',#{keyword},'%')
-         </when>
-         <otherwise>
-            and (pd_title like concat('%',#{keyword},'%')
-            or 
-            pd_subtitle like concat('%',#{keyword},'%'))
-         </otherwise>
-      </choose>
+        and (pd_title like concat('%',#{keyword},'%')
+        or 
+        pd_subtitle like concat('%',#{keyword},'%'))
    </sql>
 </mapper>
