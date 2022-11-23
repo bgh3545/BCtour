@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace = "com.greenart.ch1">
+	<select id="res_count" resultType="int">
+		select count(*) from reservation where mem_id = #{mem_id}
+	</select>
+	
+	<select id="res_selectAll" resultType="ReservationDto">
+		select * from reservation where mem_id = #{mem_id} and state = 0 or state = 1 or state = 2 order by res_num desc
+	</select>
+	
+	<select id="res_select" resultType="ReservationDto">
+		select * from reservation where mem_id = #{mem_id} and pd_num = #{pd_num}
+	</select>
+	
+	<update id="res_modify">
+		update reservation set totalMember = #{totalMember}, totalPrice = #{totalPrice} where mem_id = #{mem_id} and pd_num = #{pd_num}
+	</update>
+	
+	<update id="res_reservation" parameterType="map">
+		update reservation set state = 1, res_update= now() where mem_id = #{mem_id} and pd_num = #{pd_num} and state = 0
+	</update>
+	
+	<update id="res_deleteRequest" parameterType="map">
+		update reservation set state = 2, res_update= now() where mem_id = #{mem_id} and pd_num = #{pd_num} and state = 0 or state = 1
+	</update>
+	
+	<update id="res_delete" parameterType="map">
+		update reservation set state = 3, res_update= now() where mem_id = #{mem_id} and pd_num = #{pd_num} and state = 2
+	</update>
+	
+	<insert id="res_insert" parameterType="ReservationDto">
+		insert into reservation (mem_id, pd_num, totalMember, totalPrice) values(#{mem_id}, #{pd_num}, #{totalMember}, #{totalPrice})
+	</insert>
+	
+	<sql id="selectFromReservation">
+		select * from reservation
+	</sql>
+	
+	<select id="res_selectPage" parameterType="map" resultType="ReservationDto">
+		<include refid="selectFromReservation"/>
+		where mem_id=#{mem_id} and state = 0 or state = 1 or state = 2
+		order by res_num desc limit #{offset},#{pageSize}
+	</select>
+	
+</mapper>

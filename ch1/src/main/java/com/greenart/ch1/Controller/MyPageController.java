@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greenart.ch1.PageHandlerAndSearchCondition.PageHandler;
+import com.greenart.ch1.PageHandlerAndSearchCondition.ProductPageHandler;
+import com.greenart.ch1.PageHandlerAndSearchCondition.ProductSearchCondition;
 import com.greenart.ch1.PageHandlerAndSearchCondition.SearchCondition;
 import com.greenart.ch1.QuestionsAndAnswers.AnswerDto;
 import com.greenart.ch1.QuestionsAndAnswers.QuestionsDao;
@@ -22,6 +24,9 @@ import com.greenart.ch1.QuestionsAndAnswers.QuestionsDto;
 import com.greenart.ch1.QuestionsAndAnswers.QuestionsService;
 import com.greenart.ch1.User.BCUserDao;
 import com.greenart.ch1.User.BCUserDto;
+import com.greenart.ch1.WishList.WishDao;
+import com.greenart.ch1.WishList.WishDto;
+import com.greenart.ch1.WishList.WishService;
 
 @Controller
 @RequestMapping("/myPage")
@@ -33,6 +38,10 @@ public class MyPageController {
 	QuestionsService quesService;
 	@Autowired
 	BCUserDao userDao;
+	@Autowired
+	WishService wishService;
+	@Autowired
+	WishDao wishDao;
 	
 	@GetMapping("/myPage_main")
 	public String myPage_main(HttpServletRequest request, HttpSession session, Model m) throws Exception {
@@ -41,8 +50,10 @@ public class MyPageController {
 		
 		String writer = (String)session.getAttribute("id");
 		int quesCnt = quesService.q_getCount(writer);
+		int wishCnt = wishService.w_getCount(writer);
 		
 		m.addAttribute("quesCnt", quesCnt);
+		m.addAttribute("wishCnt", wishCnt);
 		
 		return "myPageMain/myPage_main";
 	}
@@ -72,8 +83,16 @@ public class MyPageController {
 		return "personalInfo/manage_pwdCheck";
 	}
 	
+	@GetMapping("/myPage_personalInfo")
+	public String myPage_personalInfo1(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
+		if(!loginCheck(request))
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
+		
+		return "personalInfo/myPage_personalInfo";
+	}
+	
 	@PostMapping("/myPage_personalInfo")
-	public String myPage_personalInfo(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
+	public String myPage_personalInfo2(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
@@ -135,9 +154,18 @@ public class MyPageController {
 	}
 	
 	@GetMapping("/myPage_wishList")
-	public String myPage_wishList(HttpServletRequest request) {
+	public String myPage_wishList(HttpServletRequest request, HttpSession session, ProductSearchCondition psc, Model m) throws Exception {
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
+		String id = (String)session.getAttribute("id");
+		List<WishDto> list = wishService.w_getWishPage(id, psc);
+		int totalCnt = wishService.w_getCount(id);
+		ProductPageHandler pph = new ProductPageHandler(totalCnt,psc);
+		
+		m.addAttribute("seoulList", list);
+		m.addAttribute("page", psc.getPage());
+		m.addAttribute("ph", pph);
+		
 		return "wishList/myPage_wishList";
 	}
 	

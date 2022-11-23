@@ -37,7 +37,7 @@ public class EmailController {
 			String subject = "BCtour �̸��� ����Ȯ���Դϴ�."; // ����
 			
 			
-			String findId = "http://localhost:8080/bctour/BCFind/BCFindingId?name2=" + name + "&email2=" + email;
+			String findId = "http://localhost:8080/ch1/BCFind/BCFindingId?name2=" + name + "&email2=" + email;
 			String body = findId; // ���� ( ����Ȯ�� ��ũ )
 
 			mailService.sendEmail(toAddr, fromAddr, subject, body);
@@ -72,7 +72,7 @@ public class EmailController {
 
 			String subject = "BCtour �̸��� ����Ȯ���Դϴ�."; // ����
 			
-			String findId = "http://localhost:8080/bctour/BCFind/BCFindingPwd?id2=" + id + "&name2=" + name + "&email2=" + email;
+			String findId = "http://localhost:8080/ch1/BCFind/BCFindingPwd?id2=" + id + "&name2=" + name + "&email2=" + email;
 			
 			String body = findId; // ���� ( ����Ȯ�� ��ũ )
 

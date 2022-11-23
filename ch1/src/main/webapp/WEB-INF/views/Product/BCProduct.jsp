@@ -37,8 +37,13 @@
                 </div>
                 <div class="mypageDiv">
                     <ul class="mypage">
-                        <li><a href="<c:url value='${mypageLink}'/>">${mypage}</a></li>
-                        <li><a href="<c:url value=''/>">여행일지</a></li>
+                        <c:if test="${sessionScope.id != 'admin'}">
+                            <li><a href="<c:url value='${mypageLink}'/>">${mypage}</a></li>
+                            </c:if>
+                            <c:if test="${sessionScope.id == 'admin'}">
+                            <li><a href="<c:url value='/myPage/manage'/>">고객 관리</a></li>
+                        </c:if>
+                        <li><a href="<c:url value='/board/list_2'/>">여행일지</a></li>
                     </ul>
                 </div>
             </div>
@@ -59,7 +64,7 @@
                     <tbody class="t_desc_tbl">
                         <tr>
                             <th class="t_th">여행기간</th>
-                            <td>${InfoListSelect.pd_totalDays }</td>
+                            <td>${InfoListSelect.pd_days }</td>
                         </tr>
                         <tr>
                             <th class="t_th">이용 교통</th>
@@ -81,11 +86,9 @@
                         </tr>
                         <tr>
                             <th class="t_th">방문도시</th>
-                            <td><p>${InfoListSelect.pd_city1 } - ${InfoListSelect.pd_city2 } - ${InfoListSelect.pd_city3 }</p></td>
+                            <td><p>${InfoListSelect.pd_visitCity }</p></td>
                         </tr>
                         <tr>
-                            <th class="t_th">예약현황</th>
-                            <td><p>현재 ${InfoListSelect.pd_reserveNow }명(총 ${InfoListSelect.pd_reserveUntil }명)</p></td>
                         </tr>
                     </tbody>
                 </table>
@@ -118,18 +121,23 @@
                         </tr>
                     </tbody>
                 </table>
-               
-                <button style ="position : static;" type="button" id ="removebtn">상품등록</button>
+                <button style ="position : static; float:right;" type="button" id ="payBtn">결제하기</button>
+                <button style ="position : static; float:right;" type="button" id ="removebtn" ${sessionScope.id == "admin"? '':'style="display:none;"'}>상품삭제</button>
             	</form>
             </div>
   <script>
-     document.getElementById('removebtn').addEventListener('click',e=>{
-         if(!confirm("삭제하시겠습니까?")) return;
-         var form = document.getElementById('form');
-         form.action="<c:url value='/delete'/>";
-         form.method="post"
-         form.submit();
-         });
+     	document.getElementById('removebtn').addEventListener('click',e=>{
+        if(!confirm("삭제하시겠습니까?")) return;
+        var form = document.getElementById('form');
+        form.action="<c:url value='/delete'/>";
+        form.method="post"
+        form.submit();
+        });
+     	
+     	document.getElementById('payBtn').addEventListener('click',e=>{
+    	window.location = "<c:url value='/purchase'/>?pd_num=${InfoListSelect.pd_num}";
+    	});
+     	
      </script>
 </body>
 </html>

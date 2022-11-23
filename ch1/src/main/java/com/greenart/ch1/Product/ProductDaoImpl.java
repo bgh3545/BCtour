@@ -1,4 +1,4 @@
-package com.greenart.ch1.ProductList;
+package com.greenart.ch1.Product;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,16 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.greenart.ch1.PageHandlerAndSearchCondition.ProductSearchCondition;
+import com.greenart.ch1.WishList.WishDto;
 
 @Repository
-public class ListDaoImpl implements ListDao      {
+public class ProductDaoImpl implements ProductDao      {
 	@Autowired
 	SqlSession session;
 
 	String namespace = "com.greenart.ch1.";
 
 	   @Override
-	   public List<ListDto> searchSelectPage(ProductSearchCondition psc,String pd_city) throws Exception {
+	   public List<ProductDto> searchSelectPage(ProductSearchCondition psc,String pd_city) throws Exception {
 		  Map map = new HashMap();
 		  map.put("pd_city",pd_city);
 		  map.put("offset",psc.getOffset());
@@ -38,7 +39,7 @@ public class ListDaoImpl implements ListDao      {
 	   }
 	   
 	   @Override
-	   public int insert(ListDto dto) throws Exception{
+	   public int insert(ProductDto dto) throws Exception{
 		   return session.insert(namespace+"insertInfo",dto);
 	   }
 	   
@@ -51,4 +52,24 @@ public class ListDaoImpl implements ListDao      {
 	   public String seoulList(String pd_city) throws Exception{
 		   return session.selectOne(namespace+"seoulList",pd_city);
 	   }
+	  @Override
+	   public List<ProductDto> selectAllPd_num() throws Exception{
+		   return session.selectList(namespace+"pd_numSelect");
+		}
+		
+	  @Override
+	   public List<WishDto> selectWish(ProductSearchCondition psc, String id, String pd_city) throws Exception{
+		   Map map = new HashMap();
+		   map.put("id", id);
+		   map.put("offset", psc.getOffset());
+		   map.put("pageSize", psc.getPageSize());
+		   map.put("pd_city", pd_city);
+		   map.put("keyword", psc.getKeyword());
+		   return session.selectList(namespace+"pd_wishSelect",map);	
+		}
+	  
+	  @Override
+	   public ProductDto select(int pd_num) throws Exception{
+	   return session.selectOne(namespace+"productInfoSelect",pd_num);	
+		}
 }

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace = "com.greenart.ch1">
+	<select id="w_count" resultType="int">
+		select count(*) from pd_wish where id = #{id} and pd_wishCheck =1
+	</select>
+	
+	<select id="w_selectAll" resultType="WishDto">
+		select pd_wishNum, id, pd_num, pd_title, pd_subtitle,  pd_days, pd_price, pd_wishCheck from pd_wish where id = #{id} order by pd_wishNum desc
+	</select>
+	
+	<select id="w_select" resultType="WishDto">
+		select pd_wishNum, id, pd_num, pd_title, pd_subtitle,  pd_days, pd_price, pd_wishCheck from pd_wish where id = #{id} and pd_num = #{pd_num}
+	</select>
+	
+	<update id="w_deleteAll">
+		update pd_wish set pd_wishCheck = 0 where id = #{id} and pd_wishCheck =1
+	</update>
+	
+	<update id="w_delete" parameterType="map">
+		update pd_wish set pd_wishCheck = 0 where id = #{id} and pd_num = #{pd_num} and pd_wishCheck =1
+	</update>
+	
+	<insert id="w_insert" parameterType="wishDto">
+		insert into pd_wish (id, pd_num, pd_title, pd_subtitle,  pd_days, pd_price) values(#{id}, #{pd_num}, #{pd_title}, #{pd_subtitle},  #{pd_days}, #{pd_price})
+	</insert>
+	
+	<update id="w_addWish" parameterType="map">
+		update pd_wish set pd_wishCheck = 1 where id = #{id} and pd_num = #{pd_num}
+	</update>
+	
+	<sql id="selectFromWish">
+		select pd_wishNum, id, pd_num, pd_title, pd_subtitle,  pd_days, pd_price, pd_wishCheck from pd_wish
+	</sql>
+	
+	<select id="w_selectPage" parameterType="map" resultType="WishDto">
+		<include refid="selectFromWish"/>
+		where id=#{id} 
+		order by pd_wishNum desc limit #{offset},#{pageSize}
+	</select>
+	
+	<select id="w_selectWishPage" parameterType="map" resultType="WishDto">
+		<include refid="selectFromWish"/>
+		where id=#{id} and pd_wishCheck =1
+		order by pd_wishNum desc limit #{offset},#{pageSize}
+	</select>
+	
+</mapper>

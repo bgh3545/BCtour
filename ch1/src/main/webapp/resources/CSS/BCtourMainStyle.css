@@ -727,3 +727,63 @@ margin-top: 98px;
 .pd_titleInput{
     margin: 20px;
 }
+.wishLabel{
+	line-height:180px;
+	color:gray;
+	font-size:30px;
+}
+.checked{
+	color:rgb(229,214,0);
+}
+.b_purchasebox{
+	text-align: left;
+	margin-top:40px;
+	display:flex;
+	flex-direction:column;
+}
+.b_purchaseContentBox{
+	display: flex;
+	justify-content:center;
+}
+.b_quantityBtn{
+	position:relative;
+	height:30px;
+	width:30px;
+	line-height:30px;
+	padding:0;
+}
+.b_quantityInput{
+	height:24px;
+	text-align:right;
+}
+.b_personCnt{
+	display:flex;
+	flex-direction:row;
+	justify-content:space-between;
+}
+.b_pricebox{
+	border:none;
+	float:right;
+	text-align:right;
+	font-size:32px;
+	width:150px;
+}
+.b_pricebox:focus{
+	outline:none;
+}
+.b_purchaseContentBox{
+	display:flex;
+	justify-content:space-around;
+}
+.b_purchaseCostBox{
+	display:flex;
+	justify-content:flex-end;
+}
+.b_payBtn{
+	position:relative;
+	height:60px;
+	width:100px;
+	line-height:30px;
+	padding:0;
+	margin-left:30px;
+}

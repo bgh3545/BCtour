@@ -34,7 +34,7 @@
                 </div>
                 <div class="mypageDiv">
                     <ul class="mypage">
-                            <li><a id="select" href="<c:url value='/myPage/manage'/>">고객 관리</a></li>
+                        <li><a id="select" href="<c:url value='/myPage/manage'/>">고객 관리</a></li>
                         <li><a href="<c:url value='/board/list_2'/>">여행일지</a></li>
                     </ul>
                 </div>

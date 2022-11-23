@@ -36,7 +36,12 @@
                     </div>
                     <div class="mypageDiv">
                         <ul class="mypage">
+                            <c:if test="${sessionScope.id != 'admin'}">
                             <li><a href="<c:url value='${mypageLink}'/>">${mypage}</a></li>
+                            </c:if>
+                            <c:if test="${sessionScope.id == 'admin'}">
+                            <li><a href="<c:url value='/myPage/manage'/>">고객 관리</a></li>
+                            </c:if>
                             <li><a href="<c:url value='/board/list_2'/>">여행일지</a></li>
                         </ul>
                     </div>

@@ -13,7 +13,8 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
-<link href="../resources/CSS/BCStyle.css" rel="stylesheet"/>
+<link href="../resources/CSS/BCtourMainStyle.css" rel="stylesheet"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 	<div class="main">
@@ -54,10 +55,111 @@
                     </div>
                 </div>
                 <div class="column2">
-                    <div></div>
+                                    <div class="pd_column">
+                        <div class="item_align">
+                            <div class="current_item">
+                            </div>
+                        </div>
+                        <div class="product">
+                        	<c:forEach var="list" items="${seoulList}">
+                        	<input type="hidden" name="pd_num" id="pd_num" value="${list.pd_num}">
+                            <ul class="list">
+                                <li class="pd_list">
+                                		<label for="pd_wish" id="wishLabel" class="wishLabel" ${list.pd_wishCheck ==1? 'style="color:rgb(229,214,0);"':''}>★
+                        					<input type="checkbox" name="pd_wish" id="pd_wish"  ${list.pd_wishCheck ==1? 'checked':''} style="display:none;" >
+                        				</label>
+                                    <div class="pd_img">
+                                        <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><img src="/ch1/resources/img/200하늘.jpg"></a>
+                                    </div>
+                                    <div class="pd_text">
+                                        <div class="tag">
+                                            <span class="pakage_tag">패키지</span>
+                                        </div>
+                                        <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><strong class="item_desc">${list.pd_title }<input type="hidden" id="pd_title" value="${list.pd_title }"></strong></a>
+                  						<p>${list.pd_subtitle }</p>
+                  						<input type="hidden" id="pd_subtitle" value="${list.pd_subtitle }">
+                                        <p>여행기간 <input type="hidden" id="pd_days" value="${list.pd_days}">${list.pd_days}일</p>
+                                    </div>
+                                    <div class="pd_price">
+                                        <strong class="price">${list.pd_price }</strong>
+                                        <input type="hidden" id="pd_price" value="${list.pd_price}">
+                                        <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><h2>자세히</h2></a>
+                                    </div>
+                                </li>
+                            </ul>
+                            </c:forEach>
+                            <div class="b_pageNavi">
+	                          <c:if test="${ph.showPrev}">
+	                          <a href="<c:url value='myPage_wishList${ph.psc.getQueryString(ph.beginPage-1)}'/>"><div class="b_preNext">이전</div></a>
+	                          </c:if>
+	                          <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
+	                          <c:if test="${i == page}">
+	                          <a href="<c:url value='myPage_wishList${ph.psc.getQueryString(i)}'/>"><div id="select" class="b_pageNum">${i}</div></a>
+	                          </c:if>
+	                          <c:if test="${i != page}">
+	                          <a href="<c:url value='myPage_wishList${ph.psc.getQueryString(i)}'/>"><div class="b_pageNum">${i}</div></a>
+	                          </c:if>
+	                          </c:forEach>
+	                          <c:if test="${ph.showNext}">
+	                          <a href="<c:url value='myPage_wishList${ph.psc.getQueryString(ph.endPage+1)}'/>"><div class="b_preNext">다음</div></a>
+	                          </c:if>
+                        	</div>
+                    	</div>
+                    </div>
                 </div>
             </div>
         </div>
 	</div>
+	<script>
+	$(document).ready(function() {
+	$("input:checkbox").on('click', function() {
+	      if ( $(this).prop('checked') ) {
+	        $("#wishLabel").addClass("checked");
+	        var params = {
+	                pd_num: $("#pd_num").val(),
+	                pd_title:$("#pd_title").val(),
+	                pd_subtitle:$("#pd_subtitle").val(),
+	      		  	pd_days:$("#pd_days").val(),
+	                pd_price:$("#pd_price").val()
+	      }
+	        $.ajax({
+	            type : "Post",            // HTTP method type(GET, POST) 형식이다.
+	            url : "/ch1/addWish",      // 컨트롤러에서 대기중인 URL 주소이다.
+	            data :  params,           // Json 형식의 데이터이다.
+	            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+	                // 응답코드 > 0000
+	                location.reload();
+	            },
+	            error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+	                alert("위시리스트 등록에 실패하였습니다.")
+	            }
+	        });
+	      } else {
+	        $("#wishLabel").removeClass("checked");
+	        var params = {
+	                pd_num: $("#pd_num").val(),
+	                pd_title:$("#pd_title").val(),
+	                pd_subtitle:$("#pd_subtitle").val(),
+	      		  	pd_days:$("#pd_days").val(),
+	                pd_price:$("#pd_price").val()
+	      }
+	        $.ajax({
+	            type : "POST",            // HTTP method type(GET, POST) 형식이다.
+	            url : "/ch1/delWish",      // 컨트롤러에서 대기중인 URL 주소이다.
+	            data : params,            // Json 형식의 데이터이다.
+	            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+	                // 응답코드 > 0000
+	                location.reload();
+	            },
+	            error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+	                alert("위시리스트 삭제에 실패하였습니다.")
+	            }
+	        });
+	      }
+	    });
+	});
+	
+
+</script>
 </body>
 </html>

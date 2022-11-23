@@ -17,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?hjk">
-    <link href="/bootstrap-3.3.2-dist/CSS/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
     <div class="allDiv">
@@ -36,8 +36,13 @@
                     </div>
                     <div class="mypageDiv">
                         <ul class="mypage">
+                            <c:if test="${sessionScope.id != 'admin'}">
                             <li><a href="<c:url value='${mypageLink}'/>">${mypage}</a></li>
-                            <li><a href="<c:url value=''/>">여행일지</a></li>
+                            </c:if>
+                            <c:if test="${sessionScope.id == 'admin'}">
+                            <li><a href="<c:url value='/myPage/manage'/>">고객 관리</a></li>
+                            </c:if>
+                            <li><a href="<c:url value='/board/list_2'/>">여행일지</a></li>
                         </ul>
                     </div>
                 </div>
@@ -75,34 +80,35 @@
                     <div class="pd_column">
                         <div class="item_align">
                             <div class="current_item">
-                                <h3>현재 상품이 10개있습니다</h3>
                             </div>
                             <div class="align_menu">
-                                <a>추천순</a>
                                 <a>구매순</a>
                                 <a>평점순</a>
                             </div>
                         </div>
                         <div class="product">
-                        	<c:forEach var="list" items="${seoulList }">
-                        	<input type="hidden" name="pd_num" value="${ list.pd_num}">
+                        	<c:forEach var="list" items="${list}">
+                        	<input type="hidden" name="pd_num" id="pd_num" value="${list.pd_num}">
                             <ul class="list">
                                 <li class="pd_list">
-                                
+                                		<label id="wishLabel" class="wishLabel" ${list.pd_wishCheck ==1?'style="color:rgb(229,214,0);"':'' }>★
+                        					<input type="checkbox" id="pd_wish" style="display:none;" ${list.pd_wishCheck ==1?'checked':'' } name="pd_wish" data-num="${list.pd_num}" data-title="${list.pd_title}" data-sub="${list.pd_subtitle}" data-days="${list.pd_days}" class="pd_wish" data-price="${list.pd_price}" >
+                        				</label>
                                     <div class="pd_img">
-                                    	
-                                        <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><img src="${pd_img }"></a>
+                                        <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><img src="/ch1/resources/img/200하늘.jpg"></a>
                                     </div>
                                     <div class="pd_text">
                                         <div class="tag">
                                             <span class="pakage_tag">패키지</span>
                                         </div>
-                                        <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><strong class="item_desc">${list.pd_title }</strong></a>
+                                        <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><strong class="item_desc">${list.pd_title }<input type="hidden" id="pd_title" value="${list.pd_title }"></strong></a>
                   						<p>${list.pd_subtitle }</p>
-                                        <p>여행기간 ${list.pd_days }일</p>
+                  						<input type="hidden" id="pd_subtitle"  value="${list.pd_subtitle }">
+                                        <p>여행기간 <input type="hidden" id="pd_days" value="${list.pd_days}">${list.pd_days}일</p>
                                     </div>
                                     <div class="pd_price">
                                         <strong class="price">${list.pd_price }</strong>
+                                        <input type="hidden" id="pd_price" value="${list.pd_price}">
                                         <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><h2>자세히</h2></a>
                                     </div>
                                 </li>
@@ -110,18 +116,18 @@
                             </c:forEach>
                             <div class="b_pageNavi">
                           <c:if test="${ph.showPrev}">
-                          <a href="<c:url value='capital${ph.sc.getQueryString(ph.beginPage-1)}'/>"><div class="b_preNext">이전</div></a>
+                          <a href="<c:url value='capital${ph.psc.getQueryString(ph.beginPage-1)}'/>"><div class="b_preNext">이전</div></a>
                           </c:if>
                           <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
                           <c:if test="${i == page}">
-                          <a href="<c:url value='capital${ph.sc.getQueryString(i)}'/>"><div id="select" class="b_pageNum">${i}</div></a>
+                          <a href="<c:url value='capital${ph.psc.getQueryString(i)}'/>"><div id="select" class="b_pageNum">${i}</div></a>
                           </c:if>
                           <c:if test="${i != page}">
-                          <a href="<c:url value='capital${ph.sc.getQueryString(i)}'/>"><div class="b_pageNum">${i}</div></a>
+                          <a href="<c:url value='capital${ph.psc.getQueryString(i)}'/>"><div class="b_pageNum">${i}</div></a>
                           </c:if>
                           </c:forEach>
                           <c:if test="${ph.showNext}">
-                          <a href="<c:url value='capital${ph.sc.getQueryString(ph.endPage+1)}'/>"><div class="b_preNext">다음</div></a>
+                          <a href="<c:url value='capital${ph.psc.getQueryString(ph.endPage+1)}'/>"><div class="b_preNext">다음</div></a>
                           </c:if>
                        </div>
                        <div>
@@ -131,7 +137,57 @@
                     </div>
                   </div>
                  </div>
-              
-                 
+                 <script>
+				$(document).ready(function() {
+					
+				$(".pd_wish").on('click', function() {
+				      if ( $(this).prop('checked') ) {
+				        $(this).parent().addClass("checked");
+				        
+				        var params = {
+				                pd_num: $(this).attr('data-num'),
+				                pd_title:$(this).attr('data-title'),
+				                pd_subtitle:$(this).attr('data-sub'),
+				      		  	pd_days:$(this).attr('data-days'),
+				                pd_price:$(this).attr('data-price')
+				      }
+				        $.ajax({
+				            type : "Post",            // HTTP method type(GET, POST) 형식이다.
+				            url : "/ch1/addWish?pd_num="+$(this).attr('data-num'),      // 컨트롤러에서 대기중인 URL 주소이다.
+				            headers: {"content-type" : "application/json"}, // 보내는 데이터 타입명시
+				            data : JSON.stringify(params), // 전달 데이터// Json 형식의 데이터이다.
+				            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+				                // 응답코드 > 0000
+				            },
+				            error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+				                alert("위시리스트 등록에 실패하였습니다.")
+				            }
+				        });
+				      } else {
+				    	  $(this).parent().removeClass("checked");
+				    	  var params = {
+					                pd_num: $(this).attr('data-num'),
+					                pd_title:$(this).attr('data-title'),
+					                pd_subtitle:$(this).attr('data-sub'),
+					      		  	pd_days:$(this).attr('data-days'),
+					                pd_price:$(this).attr('data-price')
+					      }
+				    	  console.log(params)
+				        $.ajax({
+				            type : "Post",            // HTTP method type(GET, POST) 형식이다.
+				            url : "/ch1/delWish?pd_num="+$(this).attr('data-num'),      // 컨트롤러에서 대기중인 URL 주소이다.
+				            headers: {"content-type" : "application/json"}, // 보내는 데이터 타입명시
+				            data : JSON.stringify(params), // 전달 데이터// Json 형식의 데이터이다.
+				            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+				                console.log(res)
+				            },
+				            error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+				                alert("위시리스트 삭제에 실패하였습니다.")
+				            }
+				        });
+				      }
+				    });
+				});
+</script>
 </body>
 </html>

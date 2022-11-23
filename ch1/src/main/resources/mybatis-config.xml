@@ -4,8 +4,9 @@
 		"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias alias="ProductInfoDto" type="com.greenart.ch1.ProductList.ProductInfoDto"/>
-		<typeAlias alias="ListDto" type="com.greenart.ch1.ProductList.ListDto"/>
+		<typeAlias alias="ReservationDto" type="com.greenart.ch1.Reservation.ReservationDto"/>
+		<typeAlias alias="WishDto" type="com.greenart.ch1.WishList.WishDto"/>
+		<typeAlias alias="ProductDto" type="com.greenart.ch1.Product.ProductDto"/>
 		<typeAlias alias="BCUserDto" type="com.greenart.ch1.User.BCUserDto"/>
 		<typeAlias alias="BoardDto" type="com.greenart.ch1.Board.BoardDto"/>
 		<typeAlias alias="CommunityDto" type="com.greenart.ch1.Community.CommunityDto"/>
