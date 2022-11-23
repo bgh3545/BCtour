@@ -1,5 +1,6 @@
 package com.greenart.ch1.Controller;
 
+import java.net.http.HttpRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +10,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,10 +65,22 @@ public class MyPageController {
 		return "myPageMain/manage_main";
 	}
 	
-	@GetMapping("/myPage_pwdCheck")
-	public String myPage_pwdCheck() throws Exception {
-	
-		return "personalInfo/myPage_pwdCheck";
+	@PostMapping("/myPage_pwdCheck")
+	public String myPage_pwdCheck(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
+		String id = (String)session.getAttribute("id");
+		
+		if(!pwdCheck(pwd,id)) {
+			String msg= "비밀번호가 틀렸습니다. 다시 입력해주세요";
+			m.addAttribute("msg", msg);
+			return "personalInfo/myPage_pwdCheck";
+		}
+		session = request.getSession();
+		session.setAttribute("pwd", pwd);
+		
+		BCUserDto myPageUser = userDao.selectUser(id);
+		m.addAttribute("myPageUser", myPageUser);
+		
+		return "personalInfo/myPage_personalInfo";
 	}
 	
 	@GetMapping("/manage_pwdCheck")
@@ -74,35 +89,77 @@ public class MyPageController {
 		return "personalInfo/manage_pwdCheck";
 	}
 	
-	@PostMapping("/myPage_personalInfo")
-	public String myPage_personalInfo(HttpServletRequest request, HttpSession session, BCUserDto userDto, Model m) throws Exception {
-		if(!loginCheck(request))
+	@GetMapping("/myPage_personalInfo")
+	public String myPage_personalInfo1(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
+		if(!loginCheck(request)) {
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
-		
-		String id = (String)session.getAttribute("id");
-		String pwd = userDto.getPwd();
-		
-		if(!pwdCheck(pwd,id)) {
-			String msg= "비밀번호가 틀렸습니다. 다시 입력해주세요";
-			m.addAttribute("msg", msg);
-			return "personalInfo/myPage_pwdCheck";
 		}
-		
-		BCUserDto myPageUser = userDao.selectUser(id);
-		m.addAttribute("myPageUser", myPageUser);
-		
-		return "personalInfo/myPage_personalInfo";
+		String id = (String)session.getAttribute("id");
+		BCUserDto user = userDao.selectUser(id);
+		if( session.getAttribute("pwd") != null ) {
+			if( session.getAttribute("pwd").equals(user.getPwd()) ){
+				BCUserDto myPageUser = userDao.selectUser(id);
+				m.addAttribute("myPageUser", myPageUser);
+				return "personalInfo/myPage_personalInfo";
+			}
+		}
+		return "personalInfo/myPage_pwdCheck";
 	}
 	
-	@GetMapping("/modifyPwd")
+	@DeleteMapping("/infoDel")
 	@ResponseBody
-	public String modifyPwd(HttpSession session, @RequestParam String pwd, Model m) throws Exception {
+	public String infoDel(HttpSession session, BCUserDto userDto) throws Exception {
 		String id = (String)session.getAttribute("id");
-		int cnt = userDao.updateUserPwd(id, pwd);
-		if(cnt!=0) {
-			return "true";
+		String pwd = userDao.selectUser(id).getPwd();
+		
+		int cnt = userDao.deleteUser(id, pwd);
+		
+		if(cnt==1) {
+			session.invalidate();
+			return "infoDel";
+		} else {
+			throw new Exception("회원탈퇴 예외");
 		}
-		return "false";
+	}
+	
+	@PatchMapping("/modifyPwd")
+	@ResponseBody
+	public String modifyPwd(HttpSession session, String pwd) {
+		try{
+			String id = (String)session.getAttribute("id");
+			int cnt = userDao.updateUserPwd(id, pwd);
+			if(cnt!=0) {
+				return "modifyPwd";
+			} else throw new Exception();
+		} catch(Exception e) {
+			e.printStackTrace();
+			return "modifyPwdFail";
+		}
+	}
+	@PatchMapping("/modifyEmail")
+	@ResponseBody
+	public String modifyEmail(HttpSession session, String email) throws Exception {
+			String id = (String)session.getAttribute("id");
+			int cnt = userDao.updateUserEmail(id, email);
+			if(cnt!=0) {
+				return "modifyEmail";
+			} 
+			return "modifyEmailFail";
+			
+	}
+	
+	@PatchMapping("/modifyTel")
+	@ResponseBody
+	public String modifyTel(HttpSession session, String tel) throws Exception{
+			String id = (String)session.getAttribute("id");
+			BCUserDto user = userDao.selectUser(id);
+			if(tel.equals(user.getTel())) throw new Exception("번호가 일치함");
+			if(tel.length() < 13) throw new Exception("길이가 부족함");
+			
+			int cnt = userDao.updateUserTel(id, tel);
+			if(cnt!=1) throw new Exception("알수 없는 에러");
+			
+			return "modifyTel";
 	}
 	
 	@GetMapping("/manage_managerInfo")
