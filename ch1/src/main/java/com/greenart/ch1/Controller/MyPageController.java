@@ -1,5 +1,6 @@
 package com.greenart.ch1.Controller;
 
+import java.net.http.HttpRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -9,14 +10,16 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greenart.ch1.PageHandlerAndSearchCondition.PageHandler;
-import com.greenart.ch1.PageHandlerAndSearchCondition.ProductPageHandler;
-import com.greenart.ch1.PageHandlerAndSearchCondition.ProductSearchCondition;
 import com.greenart.ch1.PageHandlerAndSearchCondition.SearchCondition;
 import com.greenart.ch1.QuestionsAndAnswers.AnswerDto;
 import com.greenart.ch1.QuestionsAndAnswers.QuestionsDao;
@@ -24,9 +27,6 @@ import com.greenart.ch1.QuestionsAndAnswers.QuestionsDto;
 import com.greenart.ch1.QuestionsAndAnswers.QuestionsService;
 import com.greenart.ch1.User.BCUserDao;
 import com.greenart.ch1.User.BCUserDto;
-import com.greenart.ch1.WishList.WishDao;
-import com.greenart.ch1.WishList.WishDto;
-import com.greenart.ch1.WishList.WishService;
 
 @Controller
 @RequestMapping("/myPage")
@@ -38,10 +38,6 @@ public class MyPageController {
 	QuestionsService quesService;
 	@Autowired
 	BCUserDao userDao;
-	@Autowired
-	WishService wishService;
-	@Autowired
-	WishDao wishDao;
 	
 	@GetMapping("/myPage_main")
 	public String myPage_main(HttpServletRequest request, HttpSession session, Model m) throws Exception {
@@ -50,10 +46,8 @@ public class MyPageController {
 		
 		String writer = (String)session.getAttribute("id");
 		int quesCnt = quesService.q_getCount(writer);
-		int wishCnt = wishService.w_getCount(writer);
 		
 		m.addAttribute("quesCnt", quesCnt);
-		m.addAttribute("wishCnt", wishCnt);
 		
 		return "myPageMain/myPage_main";
 	}
@@ -71,10 +65,22 @@ public class MyPageController {
 		return "myPageMain/manage_main";
 	}
 	
-	@GetMapping("/myPage_pwdCheck")
-	public String myPage_pwdCheck() throws Exception {
-	
-		return "personalInfo/myPage_pwdCheck";
+	@PostMapping("/myPage_pwdCheck")
+	public String myPage_pwdCheck(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
+		String id = (String)session.getAttribute("id");
+		
+		if(!pwdCheck(pwd,id)) {
+			String msg= "ºñ¹Ð¹øÈ£°¡ Æ²·È½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä";
+			m.addAttribute("msg", msg);
+			return "personalInfo/myPage_pwdCheck";
+		}
+		session = request.getSession();
+		session.setAttribute("pwd", pwd);
+		
+		BCUserDto myPageUser = userDao.selectUser(id);
+		m.addAttribute("myPageUser", myPageUser);
+		
+		return "personalInfo/myPage_personalInfo";
 	}
 	
 	@GetMapping("/manage_pwdCheck")
@@ -85,26 +91,75 @@ public class MyPageController {
 	
 	@GetMapping("/myPage_personalInfo")
 	public String myPage_personalInfo1(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
-		if(!loginCheck(request))
+		if(!loginCheck(request)) {
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
-		
-		return "personalInfo/myPage_personalInfo";
+		}
+		String id = (String)session.getAttribute("id");
+		BCUserDto user = userDao.selectUser(id);
+		if( session.getAttribute("pwd") != null ) {
+			if( session.getAttribute("pwd").equals(user.getPwd()) ){
+				BCUserDto myPageUser = userDao.selectUser(id);
+				m.addAttribute("myPageUser", myPageUser);
+				return "personalInfo/myPage_personalInfo";
+			}
+		}
+		return "personalInfo/myPage_pwdCheck";
 	}
 	
-	@PostMapping("/myPage_personalInfo")
-	public String myPage_personalInfo2(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
-		if(!loginCheck(request))
-			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
-		
+	@DeleteMapping("/infoDel")
+	@ResponseBody
+	public String infoDel(HttpSession session, BCUserDto userDto) throws Exception {
 		String id = (String)session.getAttribute("id");
+		String pwd = userDao.selectUser(id).getPwd();
 		
-		if(!pwdCheck(pwd,id)) {
-			String msg= "ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë ¸ìŠµë‹ˆë‹¤. ë‹¤ì‹œ ìž…ë ¥í•´ì£¼ì„¸ìš”";
-			m.addAttribute("msg", msg);
-			return "personalInfo/myPage_pwdCheck";
+		int cnt = userDao.deleteUser(id, pwd);
+		
+		if(cnt==1) {
+			session.invalidate();
+			return "infoDel";
+		} else {
+			throw new Exception("È¸¿øÅ»Åð ¿¹¿Ü");
 		}
-		
-		return "personalInfo/myPage_personalInfo";
+	}
+	
+	@PatchMapping("/modifyPwd")
+	@ResponseBody
+	public String modifyPwd(HttpSession session, String pwd) {
+		try{
+			String id = (String)session.getAttribute("id");
+			int cnt = userDao.updateUserPwd(id, pwd);
+			if(cnt!=0) {
+				return "modifyPwd";
+			} else throw new Exception();
+		} catch(Exception e) {
+			e.printStackTrace();
+			return "modifyPwdFail";
+		}
+	}
+	@PatchMapping("/modifyEmail")
+	@ResponseBody
+	public String modifyEmail(HttpSession session, String email) throws Exception {
+			String id = (String)session.getAttribute("id");
+			int cnt = userDao.updateUserEmail(id, email);
+			if(cnt!=0) {
+				return "modifyEmail";
+			} 
+			return "modifyEmailFail";
+			
+	}
+	
+	@PatchMapping("/modifyTel")
+	@ResponseBody
+	public String modifyTel(HttpSession session, String tel) throws Exception{
+			String id = (String)session.getAttribute("id");
+			BCUserDto user = userDao.selectUser(id);
+			if(tel.equals(user.getTel())) throw new Exception("¹øÈ£°¡ ÀÏÄ¡ÇÔ");
+			if(tel.length() < 13) throw new Exception("±æÀÌ°¡ ºÎÁ·ÇÔ");
+			
+			int cnt = userDao.updateUserTel(id, tel);
+			if(cnt!=1) throw new Exception("¾Ë¼ö ¾ø´Â ¿¡·¯");
+			
+			return "modifyTel";
 	}
 	
 	@GetMapping("/manage_managerInfo")
@@ -123,7 +178,7 @@ public class MyPageController {
 		String id = (String)session.getAttribute("id");
 		
 		if(!pwdCheck(pwd, id)) {
-			String msg= "ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë ¸ìŠµë‹ˆë‹¤. ë‹¤ì‹œ ìž…ë ¥í•´ì£¼ì„¸ìš”";
+			String msg= "ºñ¹Ð¹øÈ£°¡ Æ²·È½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØÁÖ¼¼¿ä";
 			m.addAttribute("msg", msg);
 			return "personalInfo/manage_pwdCheck";
 		}
@@ -154,18 +209,9 @@ public class MyPageController {
 	}
 	
 	@GetMapping("/myPage_wishList")
-	public String myPage_wishList(HttpServletRequest request, HttpSession session, ProductSearchCondition psc, Model m) throws Exception {
+	public String myPage_wishList(HttpServletRequest request) {
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
-		String id = (String)session.getAttribute("id");
-		List<WishDto> list = wishService.w_getWishPage(id, psc);
-		int totalCnt = wishService.w_getCount(id);
-		ProductPageHandler pph = new ProductPageHandler(totalCnt,psc);
-		
-		m.addAttribute("seoulList", list);
-		m.addAttribute("page", psc.getPage());
-		m.addAttribute("ph", pph);
-		
 		return "wishList/myPage_wishList";
 	}
 	
