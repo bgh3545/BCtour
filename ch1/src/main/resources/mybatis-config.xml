@@ -4,19 +4,6 @@
 		"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias alias="ProductInfoDto" type="com.greenart.ch1.ProductList.ProductInfoDto"/>
-		<typeAlias alias="ListDto" type="com.greenart.ch1.ProductList.ListDto"/>
-		<typeAlias alias="BCUserDto" type="com.greenart.ch1.User.BCUserDto"/>
-		<typeAlias alias="BoardDto" type="com.greenart.ch1.Board.BoardDto"/>
-		<typeAlias alias="CommunityDto" type="com.greenart.ch1.Community.CommunityDto"/>
-		<typeAlias alias="comm_commentDto" type="com.greenart.ch1.Community.comm_commentDto"/>
-		<typeAlias alias="SearchCondition" type="com.greenart.ch1.PageHandlerAndSearchCondition.SearchCondition"/>
-		<typeAlias alias="CommSearchCondition" type="com.greenart.ch1.PageHandlerAndSearchCondition.CommSearchCondition"/>
-		<typeAlias alias="ProductSearchCondition" type="com.greenart.ch1.PageHandlerAndSearchCondition.ProductSearchCondition"/>
-		<typeAlias alias="RecommendDto" type="com.greenart.ch1.Recommend.RecommendDto"/>
-		<typeAlias alias="rec_commentDto" type="com.greenart.ch1.Recommend.rec_commentDto"/>
-		<typeAlias alias="QuestionsDto" type="com.greenart.ch1.QuestionsAndAnswers.QuestionsDto"/>
-		<typeAlias alias="AnswerDto" type="com.greenart.ch1.QuestionsAndAnswers.AnswerDto"/>
+		<typeAlias alias="BoardDto" type="com.greenart.ch1.BoardDto"/>
 	</typeAliases>
-	
 </configuration>

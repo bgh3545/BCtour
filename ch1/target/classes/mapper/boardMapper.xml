@@ -8,11 +8,11 @@
 	</select>
 	
 	<select id="selectAll" resultType="BoardDto">
-		select bno, title, content,  writer, view_cnt, reg_date, up_date from board order by reg_date desc, bno desc
+		select bno, title, content,  writer, view_cnt, comment_cnt, reg_date, up_date from board order by reg_date desc, bno desc
 	</select>
 	
 	<select id="select" parameterType="int" resultType="BoardDto">
-		select bno, title, content, writer, view_cnt, reg_date, up_date from board where bno = #{bno}
+		select bno, title, content, writer, view_cnt, comment_cnt, reg_date, up_date from board where bno = #{bno}
 	</select>
 	<delete id="deleteAll">
 		delete from board
@@ -39,7 +39,7 @@
 	</update>
 	
 	<sql id="selectFromBoard">
-		select bno, title, content, writer, view_cnt, reg_date from board
+		select bno, title, content, writer, view_cnt, comment_cnt, reg_date from board
 	</sql>
 	
 	<select id="selectPage" parameterType="map" resultType="BoardDto">
@@ -51,35 +51,5 @@
 		<include refid="selectFromBoard"/>
 		order by reg_date desc, bno desc limit 3
 	</select>
-	
-	<select id="searchSelectPage" parameterType="SearchCondition" resultType="BoardDto">
-		<include refid="selectFromBoard"/>
-		where true
-		<include refid="searchCondition"/>
-		order by reg_date desc, bno desc
-		limit #{offset}, #{pageSize}
-	</select>
-	
-	<select id="searchResultCnt" parameterType="SearchCondition" resultType="int">
-		select count(*) from board
-		where true
-		<include refid="searchCondition"/>
-	</select>
-	
-	<sql id="searchCondition">
-		<choose>
-			<when test='option=="T"'>
-				and title like concat('%',#{keyword},'%')
-			</when>
-			<when test='option=="W"'>
-				and writer like concat('%',#{keyword},'%')
-			</when>
-			<otherwise>
-				and (title like concat('%',#{keyword},'%')
-				or content
-				like concat('%',#{keyword},'%'))
-			</otherwise>
-		</choose>
-	</sql>
 	
 </mapper>
