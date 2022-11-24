@@ -9,14 +9,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greenart.ch1.PageHandlerAndSearchCondition.PageHandler;
-import com.greenart.ch1.PageHandlerAndSearchCondition.ProductPageHandler;
-import com.greenart.ch1.PageHandlerAndSearchCondition.ProductSearchCondition;
 import com.greenart.ch1.PageHandlerAndSearchCondition.SearchCondition;
 import com.greenart.ch1.QuestionsAndAnswers.AnswerDto;
 import com.greenart.ch1.QuestionsAndAnswers.QuestionsDao;
@@ -28,7 +29,6 @@ import com.greenart.ch1.Reservation.ReservationService;
 import com.greenart.ch1.User.BCUserDao;
 import com.greenart.ch1.User.BCUserDto;
 import com.greenart.ch1.WishList.WishDao;
-import com.greenart.ch1.WishList.WishDto;
 import com.greenart.ch1.WishList.WishService;
 
 @Controller
@@ -67,6 +67,98 @@ public class MyPageController {
 		return "myPageMain/myPage_main";
 	}
 	
+	@PostMapping("/myPage_pwdCheck")
+	public String myPage_pwdCheck(HttpServletRequest request, HttpSession session, BCUserDto userDto, Model m) throws Exception {
+		String id = (String)session.getAttribute("id");
+		String pwd = userDto.getPwd();
+		
+		if(!pwdCheck(pwd,id)) {
+			String msg= "��й�ȣ�� Ʋ�Ƚ��ϴ�. �ٽ� �Է����ּ���";
+			m.addAttribute("msg", msg);
+			return "personalInfo/myPage_pwdCheck";
+		}
+		session = request.getSession();
+		session.setAttribute("pwd", pwd);
+		
+		BCUserDto myPageUser = userDao.selectUser(id);
+		m.addAttribute("myPageUser", myPageUser);
+		
+		return "personalInfo/myPage_personalInfo";
+	}
+	
+	@GetMapping("/myPage_personalInfo")
+	public String myPage_personalInfo1(HttpServletRequest request, HttpSession session, Model m) throws Exception {
+		if(!loginCheck(request)) {
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
+		}
+		String id = (String)session.getAttribute("id");
+		BCUserDto user = userDao.selectUser(id);
+		if( session.getAttribute("pwd") != null ) {
+			if( session.getAttribute("pwd").equals(user.getPwd()) ){
+				BCUserDto myPageUser = userDao.selectUser(id);
+				m.addAttribute("myPageUser", myPageUser);
+				return "personalInfo/myPage_personalInfo";
+			}
+		}
+		return "personalInfo/myPage_pwdCheck";
+	}
+	
+	@DeleteMapping("/infoDel")
+	@ResponseBody
+	public String infoDel(HttpSession session, BCUserDto userDto) throws Exception {
+		String id = (String)session.getAttribute("id");
+		String pwd = userDao.selectUser(id).getPwd();
+		
+		int cnt = userDao.deleteUser(id, pwd);
+		
+		if(cnt==1) {
+			session.invalidate();
+			return "infoDel";
+		} else {
+			throw new Exception("ȸ��Ż�� ����");
+		}
+	}
+	
+	@PatchMapping("/modifyPwd")
+	@ResponseBody
+	public String modifyPwd(HttpSession session, String pwd) {
+		try{
+			String id = (String)session.getAttribute("id");
+			int cnt = userDao.updateUserPwd(id, pwd);
+			if(cnt!=0) {
+				return "modifyPwd";
+			} else throw new Exception();
+		} catch(Exception e) {
+			e.printStackTrace();
+			return "modifyPwdFail";
+		}
+	}
+	@PatchMapping("/modifyEmail")
+	@ResponseBody
+	public String modifyEmail(HttpSession session, String email) throws Exception {
+			String id = (String)session.getAttribute("id");
+			int cnt = userDao.updateUserEmail(id, email);
+			if(cnt!=0) {
+				return "modifyEmail";
+			} 
+			return "modifyEmailFail";
+			
+	}
+	
+	@PatchMapping("/modifyTel")
+	@ResponseBody
+	public String modifyTel(HttpSession session, String tel) throws Exception{
+			String id = (String)session.getAttribute("id");
+			BCUserDto user = userDao.selectUser(id);
+			if(tel.equals(user.getTel())) throw new Exception("��ȣ�� ��ġ��");
+			if(tel.length() < 13) throw new Exception("���̰� ������");
+			
+			int cnt = userDao.updateUserTel(id, tel);
+			if(cnt!=1) throw new Exception("�˼� ���� ����");
+			
+			return "modifyTel";
+	}
+	
 	@GetMapping("/manage")
 	public String myPage_manage(HttpServletRequest request, HttpSession session, Model m) throws Exception {
 		if(!loginCheck(request))
@@ -80,67 +172,40 @@ public class MyPageController {
 		return "personalInfo/manage_pwdCheck";
 	}
 	
-	@GetMapping("/myPage_pwdCheck")
-	public String myPage_pwdCheck() throws Exception {
-	
-		return "personalInfo/myPage_pwdCheck";
-	}
-	
-	@GetMapping("/manage_pwdCheck")
-	public String manage_pwdCheck(HttpSession session) throws Exception {
+	@PostMapping("/manage_pwdCheck")
+	public String manage_pwdCheck(HttpServletRequest request, HttpSession session,String pwd, Model m) throws Exception {
 		
-		return "personalInfo/manage_pwdCheck";
-	}
-	
-	@GetMapping("/myPage_personalInfo")
-	public String myPage_personalInfo1(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
-		if(!loginCheck(request))
-			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
-		
-		return "personalInfo/myPage_personalInfo";
-	}
-	
-	@PostMapping("/myPage_personalInfo")
-	public String myPage_personalInfo2(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
-		if(!loginCheck(request))
-			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
-		
-		String id = (String)session.getAttribute("id");
-		
-		if(!pwdCheck(pwd,id)) {
-			String msg= "비밀번호가 틀렸습니다. 다시 입력해주세요";
-			m.addAttribute("msg", msg);
-			return "personalInfo/myPage_pwdCheck";
-		}
-		
-		return "personalInfo/myPage_personalInfo";
-	}
-	
-	@GetMapping("/manage_managerInfo")
-	public String manage_managerInfo1(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
-		if(!loginCheck(request))
-			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
-		
-		return "personalInfo/manage_managerInfo";
-	}
-	
-	@PostMapping("/manage_managerInfo")
-	public String manage_managerInfo2(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
-		if(!loginCheck(request))
-			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
-		
-		String id = (String)session.getAttribute("id");
+		String id = (String)session.getAttribute("id"); // admin id
 		
 		if(!pwdCheck(pwd, id)) {
-			String msg= "비밀번호가 틀렸습니다. 다시 입력해주세요";
+			String msg= "��й�ȣ�� Ʋ�Ƚ��ϴ�. �ٽ� �Է����ּ���";
 			m.addAttribute("msg", msg);
 			return "personalInfo/manage_pwdCheck";
 		}
 		
-		session = request.getSession();
-		session.setAttribute("pwd",pwd);
+		List<BCUserDto> userAll = userDao.selectAll();
+		m.addAttribute("userAll", userAll);
 		
 		return "personalInfo/manage_managerInfo";
+	}
+	
+	@GetMapping("/manage_managerInfo")
+	public String manage_managerInfo1(HttpServletRequest request, HttpSession session, Model m) throws Exception {
+		if(!loginCheck(request)) {
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
+		}
+		return "personalInfo/manage_pwdCheck";
+	}
+	
+	@GetMapping("/manage_managerInfoDel")
+	public String manage_managerInfoDel(HttpServletRequest request, HttpSession session,String id, String pwd, Model m) throws Exception {
+		if(!loginCheck(request)) {
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
+		}
+		
+		int cnt = userDao.deleteUser(id, pwd);
+		
+		return "redirect:/myPage/manage_managerInfo";
 	}
 	
 	@GetMapping("/myPage_reservation")
@@ -281,18 +346,9 @@ public class MyPageController {
 	}
 	
 	@GetMapping("/myPage_wishList")
-	public String myPage_wishList(HttpServletRequest request, HttpSession session, ProductSearchCondition psc, Model m) throws Exception {
+	public String myPage_wishList(HttpServletRequest request) {
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
-		String id = (String)session.getAttribute("id");
-		List<WishDto> list = wishService.w_getWishPage(id, psc);
-		int totalCnt = wishService.w_getCount(id);
-		ProductPageHandler pph = new ProductPageHandler(totalCnt,psc);
-		
-		m.addAttribute("seoulList", list);
-		m.addAttribute("page", psc.getPage());
-		m.addAttribute("ph", pph);
-		
 		return "wishList/myPage_wishList";
 	}
 	
