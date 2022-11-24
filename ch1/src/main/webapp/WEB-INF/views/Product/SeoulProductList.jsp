@@ -82,8 +82,7 @@
                             <div class="current_item">
                             </div>
                             <div class="align_menu">
-                                <a>구매순</a>
-                                <a>평점순</a>
+                                <a href="<c:url value='/buyCnt?pd_city=seoul'/>">구매순</a>
                             </div>
                         </div>
                         <div class="product">
@@ -116,18 +115,18 @@
                             </c:forEach>
                             <div class="b_pageNavi">
                           <c:if test="${ph.showPrev}">
-                          <a href="<c:url value='capital${ph.psc.getQueryString(ph.beginPage-1)}'/>"><div class="b_preNext">이전</div></a>
+                          <a href="<c:url value='${productFilter}${ph.psc.getQueryString(ph.beginPage-1)}'/>"><div class="b_preNext">이전</div></a>
                           </c:if>
                           <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
-                          <c:if test="${i == page}">
-                          <a href="<c:url value='capital${ph.psc.getQueryString(i)}'/>"><div id="select" class="b_pageNum">${i}</div></a>
+                          <c:if test="${i == ph.psc.getPage()}">
+                          <a href="<c:url value='${productFilter}${ph.psc.getQueryString(i)}'/>"><div id="select" class="b_pageNum">${i}</div></a>
                           </c:if>
-                          <c:if test="${i != page}">
-                          <a href="<c:url value='capital${ph.psc.getQueryString(i)}'/>"><div class="b_pageNum">${i}</div></a>
+                          <c:if test="${i != ph.psc.getPage()}">
+                          <a href="<c:url value='${productFilter}${ph.psc.getQueryString(i)}'/>"><div class="b_pageNum">${i}</div></a>
                           </c:if>
                           </c:forEach>
                           <c:if test="${ph.showNext}">
-                          <a href="<c:url value='capital${ph.psc.getQueryString(ph.endPage+1)}'/>"><div class="b_preNext">다음</div></a>
+                          <a href="<c:url value='${productFilter}${ph.psc.getQueryString(ph.endPage+1)}'/>"><div class="b_preNext">다음</div></a>
                           </c:if>
                        </div>
                        <div>

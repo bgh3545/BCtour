@@ -65,6 +65,7 @@ public class ProductController {
 		int rowCnt = productService.write(listDto);
 		return"redirect:/capital";
 	}
+	
 	@RequestMapping(value = "/capital", method=RequestMethod.GET)
 	public String ProductList(Model m, ProductSearchCondition psc, String pd_city, HttpSession session) throws Exception{
 		
@@ -76,9 +77,25 @@ public class ProductController {
 		
 		m.addAttribute("list", list);
 		m.addAttribute("ph",pph);
-		m.addAttribute("page", psc.getPage());
+		m.addAttribute("productFilter", "capital");
 		return "Product/SeoulProductList";
 	}
+	
+	@RequestMapping(value = "/buyCnt", method=RequestMethod.GET)
+	public String buycnt(Model m, ProductSearchCondition psc, String pd_city, HttpSession session) throws Exception{
+		
+		int totalCnt = productDao.searchResultCnt(psc,pd_city);
+		ProductPageHandler pph = new ProductPageHandler(totalCnt,psc);
+		
+		String id = (String)session.getAttribute("id");
+		List<WishDto> list = productDao.pd_buyCntSelect(psc, id, pd_city);
+		
+		m.addAttribute("list", list);
+		m.addAttribute("ph",pph);
+		m.addAttribute("productFilter", "capital");
+		return "Product/SeoulProductList";
+	}
+	
 	@ResponseBody
 	@PostMapping("/addWish")
 	public String addWish(HttpServletRequest request, HttpSession session, @RequestBody WishDto wishDto,Integer pd_num) throws Exception {
@@ -104,13 +121,13 @@ public class ProductController {
 	}
 	
 	@GetMapping("/purchase")
-	public String purchase1(Model m, Integer pd_num, HttpServletRequest request) throws Exception {
+	public String purchase1(Model m, Integer pd_num, HttpServletRequest request,String pd_city) throws Exception {
 		
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		if(pd_num == null) {
-			return "redirect:/";
+			return "redirect:/capital?pd_city="+pd_city;
 		}
 		
 		ProductDto productInfoDto = productDao.select(pd_num);
@@ -120,7 +137,7 @@ public class ProductController {
 	}
 	
 	@PostMapping("/purchase")
-	public String purchase2(Model m, ProductDto productDto, ReservationDto reservationDto, HttpSession session, HttpServletRequest request) throws Exception {
+	public String purchase2(Model m, ProductDto productDto, ReservationDto reservationDto, HttpSession session, HttpServletRequest request, String pd_city) throws Exception {
 		
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
@@ -131,17 +148,24 @@ public class ProductController {
 		
 		if(resCheck ==null) {
 		int reservationCnt = reservationService.res_insert(mem_id, reservationDto);
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+reservationCnt);
 		}
 		
-		if(resCheck !=null) {
+		if(resCheck !=null && (resCheck.getState() ==0 || resCheck.getState() ==3)) {
 		int reservationCnt = reservationService.res_modify(mem_id, reservationDto);
+		}
+		
+		if(resCheck.getState() ==1) {
+			m.addAttribute("msg", "reservated");
+		}
+		
+		if(resCheck.getState() ==2) {
+			m.addAttribute("msg", "cancleRequest");
 		}
 		
 		ProductDto productInfoDto = productDao.select(productDto.getPd_num());
 		m.addAttribute("info", productInfoDto);
 		
-		return "reservation/purchase";
+		return "redirect:/capital?pd_city="+pd_city;
 	}
 	
 	private boolean loginCheck(HttpServletRequest request) {

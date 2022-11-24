@@ -25,13 +25,14 @@ public interface ProductDao {
 
 	ProductDto select(int pd_num) throws Exception;
 
+	int increaseBuyCnt(Integer pd_num) throws Exception;
+
+	int decreaseBuyCnt(Integer pd_num) throws Exception;
+
+	List<WishDto> pd_buyCntSelect(ProductSearchCondition psc, String id, String pd_city) throws Exception;
+
 
 
 	
-
-	
-
-
-	//ListDto orderByPrice(int pd_price) throws Exception;
 
 }

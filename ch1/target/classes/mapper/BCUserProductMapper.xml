@@ -23,13 +23,27 @@
             A.pd_subtitle like concat('%',#{keyword},'%')) order by reg_date desc, pd_num desc limit #{offset}, #{pageSize}
 	</select>
 	
+	<select id="pd_buyCntSelect" resultType="WishDto">
+		select A.pd_num, A.pd_title, A.pd_subtitle, A.pd_days, A.pd_price, B.pd_wishCheck from pd_info as A left join pd_wish as B on A.pd_num = B.pd_num and B.id=#{id} where A.pd_city = #{pd_city} and (A.pd_title like concat('%',#{keyword},'%')
+            or 
+            A.pd_subtitle like concat('%',#{keyword},'%')) order by pd_buyCnt desc, pd_num desc limit #{offset}, #{pageSize}
+	</select>
+	
 	<select id="productInfoSelect" parameterType = "int" resultType="productDto">
 		select * from pd_info
 		where pd_num = #{pd_num}
 	</select>
 	<sql id="selectFromProduct">
-      SELECT * FROM pd_info
+      	SELECT * FROM pd_info
    </sql>
+   
+   <update id="increaseBuyCnt">
+   		update pd_info set pd_buyCnt= pd_buyCnt+1 where pd_num=#{pd_num}
+   </update>
+   
+   <update id="decreaseBuyCnt">
+   		update pd_info set pd_buyCnt= pd_buyCnt-1 where pd_num=#{pd_num}
+   </update>
    
    <select id="p_searchSelectPage" parameterType="map" resultType="ProductDto">
       <include refid="selectFromProduct"/>

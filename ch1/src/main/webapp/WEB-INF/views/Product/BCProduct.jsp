@@ -61,6 +61,7 @@
                <form id="form">
                 <table class="tour_desc">
                 <input type = "hidden" name="pd_num" value="${InfoListSelect.pd_num }">
+                <input type = "hidden" name="pd_city" value="${InfoListSelect.pd_city}">
                     <tbody class="t_desc_tbl">
                         <tr>
                             <th class="t_th">여행기간</th>
@@ -135,7 +136,7 @@
         });
      	
      	document.getElementById('payBtn').addEventListener('click',e=>{
-    	window.location = "<c:url value='/purchase'/>?pd_num=${InfoListSelect.pd_num}";
+    	window.location = "<c:url value='/purchase'/>?pd_num=${InfoListSelect.pd_num}&pd_city=${InfoListSelect.pd_city}";
     	});
      	
      </script>

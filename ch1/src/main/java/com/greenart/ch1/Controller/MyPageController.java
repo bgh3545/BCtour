@@ -21,6 +21,8 @@ import com.greenart.ch1.PageHandlerAndSearchCondition.PageHandler;
 import com.greenart.ch1.PageHandlerAndSearchCondition.ProductPageHandler;
 import com.greenart.ch1.PageHandlerAndSearchCondition.ProductSearchCondition;
 import com.greenart.ch1.PageHandlerAndSearchCondition.SearchCondition;
+import com.greenart.ch1.Product.ProductDao;
+import com.greenart.ch1.Product.ProductService;
 import com.greenart.ch1.QuestionsAndAnswers.AnswerDto;
 import com.greenart.ch1.QuestionsAndAnswers.QuestionsDao;
 import com.greenart.ch1.QuestionsAndAnswers.QuestionsDto;
@@ -52,6 +54,10 @@ public class MyPageController {
 	ReservationDao reservationDao;
 	@Autowired
 	ReservationService reservationService;
+	@Autowired
+	ProductDao productDao;
+	@Autowired
+	ProductService productService;
 	
 	@GetMapping("/myPage_main")
 	public String myPage_main(HttpServletRequest request, HttpSession session, Model m) throws Exception {
@@ -269,6 +275,7 @@ public class MyPageController {
 		if(!loginCheck(request))
 			return "redirect:/";
 		int reservationConfirm = reservationService.res_reservation(mem_id, pd_num);
+		int increaseBuyCnt = productService.increaseBuyCnt(pd_num);
 		return "redirect:/myPage/manage_reservation";
 	}
 	
@@ -277,6 +284,7 @@ public class MyPageController {
 		if(!loginCheck(request))
 			return "redirect:/";
 		int reservationCancle = reservationService.res_delete(mem_id, pd_num);
+		int decreaseBuyCnt = productService.decreaseBuyCnt(pd_num);
 		return "redirect:/myPage/manage_reservation";
 	}
 	
@@ -285,6 +293,7 @@ public class MyPageController {
 		if(!loginCheck(request))
 			return "redirect:/";
 		int reservationConfirm = reservationService.res_reservation(mem_id, pd_num);
+		int increaseBuyCnt = productService.increaseBuyCnt(pd_num);
 		return "redirect:/myPage/reservationWait";
 	}
 	
@@ -293,6 +302,7 @@ public class MyPageController {
 		if(!loginCheck(request))
 			return "redirect:/";
 		int reservationCancle = reservationService.res_delete(mem_id, pd_num);
+		int decreaseBuyCnt = productService.decreaseBuyCnt(pd_num);
 		return "redirect:/myPage/reservationWait";
 	}
 	
@@ -301,6 +311,7 @@ public class MyPageController {
 		if(!loginCheck(request))
 			return "redirect:/";
 		int reservationConfirm = reservationService.res_reservation(mem_id, pd_num);
+		int increaseBuyCnt = productService.increaseBuyCnt(pd_num);
 		return "redirect:/myPage/cancleRequest";
 	}
 	
@@ -309,6 +320,7 @@ public class MyPageController {
 		if(!loginCheck(request))
 			return "redirect:/";
 		int reservationCancle = reservationService.res_delete(mem_id, pd_num);
+		int decreaseBuyCnt = productService.decreaseBuyCnt(pd_num);
 		return "redirect:/myPage/cancleRequest";
 	}
 	

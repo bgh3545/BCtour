@@ -13,7 +13,7 @@
 	</select>
 	
 	<update id="res_modify">
-		update reservation set totalMember = #{totalMember}, totalPrice = #{totalPrice} where mem_id = #{mem_id} and pd_num = #{pd_num}
+		update reservation set totalMember = #{totalMember}, totalPrice = #{totalPrice}, state = 0, res_update= now() where mem_id = #{mem_id} and pd_num = #{pd_num}
 	</update>
 	
 	<update id="res_reservation" parameterType="map">
