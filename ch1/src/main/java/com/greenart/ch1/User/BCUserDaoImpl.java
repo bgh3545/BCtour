@@ -13,7 +13,7 @@ public class BCUserDaoImpl implements BCUserDao  {
 	@Autowired
 	SqlSession session; // session 주입, sql명령을 수행하는데 필요한 메서드 제공
 	
-	String namespace = "com.greenart.BCUserMapper.";
+	String namespace = "com.greenart.ch1.";
 	
 //	아이디 개수
 	@Override
