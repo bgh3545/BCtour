@@ -16,9 +16,39 @@
 <!-- 합쳐지고 최소화된 최신 CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <!-- 부가적인 테마 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">  
-​
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<!-- 아이콘 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
 <link href="../resources/CSS/BCStyle.css" rel="stylesheet"/>
+<link href="../resources/CSS/BCtourStyle.css?aas" rel="stylesheet"/>
+
+<style type="text/css">
+	.column2>.column2_container>ul>li>div {
+        display: flex;
+        justify-content: space-between;
+        width: 500px;
+        height: 30px;
+  	    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        margin-bottom: 2em;
+    }
+    .column2>.column2_container>ul>li>div>i {
+    	font-size: 1.5em;
+    }
+    .column2>.column2_container>ul>li>div>i>input {
+    	border: none;
+    	height: 20px;
+    }
+	.column2>.column2_container>div>h1 {
+		margin-bottom: 2em;
+	}
+	.column2>div>button {
+		margin-top: 2em;
+		font-size: 1.5em;
+	}
+                
+</style>
 </head>
 <body>
 	<div class="main">
@@ -46,7 +76,7 @@
             <div class ="nav">
                 <div id="column">
                     <div class="city">
-                        <h2><a id="select" href="<c:url value='${myPagePwd}'/>">개인정보</a></h2>
+                        <h2><a id="select" href="<c:url value='/myPage/myPage_personalInfo'/>">개인정보</a></h2>
                     </div>
                     <div class="city">
                         <h2><a href="<c:url value='/myPage/myPage_reservation'/>">예약/취소 내역</a></h2>
@@ -59,12 +89,217 @@
                     </div>
                 </div>
                 <div class="column2">
-                    <div>
-                    	개인정보
-                    </div>
-                </div>
-            </div>
-        </div>
-	</div>
+                	<div class="column2_container">
+      	            	<div>
+        	              	<h1>개인정보</h1>
+            	      	</div>
+                	       	<ul>
+                    	   		<li>
+                       				<div>
+                       					<i class="bi bi-person"> ${myPageUser.id }</i>
+                       				</div>
+	                           	</li>
+    	                       	<li>
+        	                    	<div>
+        	                    		<i class="bi bi-key"> <input type="text" id="pwd" name="pwd" value="${myPageUser.pwd }" readonly="readonly"></i>
+            	                       	<button id="pwdBtn">수정</button>
+            	                       	<button id="pwdBtn2" style="display:none;">확인</button>
+                	               	</div>
+                    	       	</li>
+                        	   	<li>
+	                            	<div>
+	                            		<i class="bi bi-person-badge"> ${myPageUser.name }</i>
+        	                       	</div>
+            	               	</li>
+                	           	<li>
+                    	        	<div>
+                    	        		<i class="bi bi-envelope"> <input type="text" id="email" name="email" value="${myPageUser.email }" readonly="readonly"></i>
+                        	           	<button id="emailBtn">수정</button>
+                        	           	<button id="emailBtn2" style="display:none;">확인</button>
+	                               	</div>
+    	                       	</li>
+        	                   	<li>
+            	                   	<div>
+            	                   		<i class="bi bi-phone"> <input type="tel" id="tel" name="tel" value="${myPageUser.tel }" readonly="readonly"
+            	                   		 							oninput="autoHyphen(this)" maxlength="13"></i>
+                	                   	<button id="telBtn">수정</button>
+                	                   	<button id="telBtn2" style="display:none;">확인</button>
+                    	          	</div>
+                        	  	</li>
+	                      	</ul>
+    	   	        	</div>
+    	   	        	<div><button type="button" id="infodel" name="infodel">회원탈퇴</button></div>
+        	      </div>
+           	</div>
+       </div>
+      </div>
+      <script src="http://code.jquery.com/jquery-latest.js" charset="UTF-8"></script>
+      <script>
+      // 회원탈퇴
+      $("#infodel").click(function(){
+    	  $.ajax({
+    		  type:'DELETE',
+    		  url:'/ch1/myPage/infoDel',
+    		  beforeSend : function(xhr) {
+    			  let del = prompt("회원탈퇴를 원하시면 '회원탈퇴'를 입력해주세요.");
+    			  if( del != "회원탈퇴" ) {
+    				  alert("회원탈퇴에 실패하였습니다.");
+    				  xhr.abort();
+    			  }
+    		  },
+    		  success : function(result) {
+    			  alert("회원탈퇴가 완료되었습니다.");
+    			  location.href = "/ch1/logIn/logIn";
+    		  },
+    		  error : function(result) { alert("회원탈퇴에 오류가 발생하였습니다." + result) }
+    	  });
+      });
+      
+      // 비밀번호 수정
+      let pwd = $("#pwd");
+      $("#pwdBtn").click(function(){
+    	 pwd.attr("value","");
+    	 pwd.removeAttr("readonly");
+    	 pwd.focus();
+    	 $(this).toggle();
+    	 $("#pwdBtn2").toggle();
+      });
+
+      	$("#pwdBtn2").click(function() {
+      		$.ajax({
+      			type:'PATCH',
+      			url: '/ch1/myPage/modifyPwd?pwd=' + pwd.val(),
+      			beforeSend : function(xhr) {
+      				if(pwd.val().length == 0) {
+      					alert("비밀번호를 입력해주세요.");
+      					pwd.focus();
+      					xhr.abort();
+      				} else {
+      					if(pwd.val().length < 5 || pwd.val().length > 16) {
+          					alert("최소 5자 이상, 최대 16자 이하");
+          					pwd.focus();
+          					xhr.abort();
+          				} 
+      					if( "${myPageUser.pwd}" == pwd.val() ) {
+          					alert("현재 비밀번호와 일치합니다.");
+          					pwd.focus();
+          					xhr.abort();
+      					}
+      				}
+      			},
+      			success : function(result) {
+	      				alert("비밀번호가 성공적으로 변경되었습니다.");
+	      				$("#pwdBtn2").hide();
+	          			$("#pwdBtn").show();
+      			},
+      			error: function() { 
+      				alert("수정이 취소되었습니다.\n다시 입력해주세요.");
+      				pwd.val("${myPageUser.pwd }");
+      				pwdBtn.style.display = "block";
+      				pwdBtn2.style.display = "none";
+      				}
+      		});
+      	});
+      	
+      // 이메일 수정
+      let email = $("#email");
+      $("#emailBtn").click(function(){
+    	  email.attr("value","");
+    	  email.removeAttr("readonly");
+    	  email.focus();
+    	  $(this).toggle();
+    	  $("#emailBtn2").toggle();
+      });
+
+      	$("#emailBtn2").click(function() {
+        	var valid = new RegExp('^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$');
+      		$.ajax({
+      			type:'PATCH',
+      			url: '/ch1/myPage/modifyEmail?email=' + email.val(),
+      			beforeSend : function(xhr) {
+      				if ( email.val().length == 0 ) {
+      					alert("이메일을 입력해주세요.");
+      					email.focus();
+      					xhr.abort();
+      				} else {
+	      				if(!valid.test(email.val())) {
+	      					alert("이메일 형식이 올바르지 않습니다.");
+	      					email.focus();
+	      					xhr.abort();
+	      				} 
+	      				if("${myPageUser.email}" == email.val()){
+	      					alert("현재 이메일과 일치합니다.");
+	      					email.focus();
+	      					xhr.abort();
+	      				}
+      				}
+      			},
+      			success : function(result) {
+	      				alert("이메일이 성공적으로 변경되었습니다.");
+	      				$("#emailBtn2").hide();
+	      				$("#emailBtn").show();
+      			},
+      			error: function() { 
+      				alert("수정이 취소되었습니다.\n다시 입력해주세요.");
+      				email.val("${myPageUser.email }");
+      				emailBtn.style.display = "block";
+      				emailBtn2.style.display = "none";
+      				}
+      		});
+      	});
+      	
+      	 // 휴대폰 3자리-4자리-4자리( 사이사이 - 추가 )
+        const autoHyphen = (target) => {
+        	 target.value = target.value
+        	   .replace(/[^0-9]/g, '')
+        	  .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, "$1-$2-$3").replace(/(\-{1,2})$/g, "");
+        	}
+        
+     // 전화번호 수정
+        let tel = $("#tel");
+        $("#telBtn").click(function(){
+      	  tel.attr("value","");
+      	  tel.removeAttr("readonly");
+      	  tel.focus();
+      	  $(this).toggle();
+      	  $("#telBtn2").toggle();
+        });
+
+       	$("#telBtn2").click(function() {
+       		$.ajax({
+       			type:'PATCH',
+       			url: '/ch1/myPage/modifyTel?tel=' + tel.val(),
+       			beforeSend : function(xhr) {
+       				if(tel.val().length == 0) {
+       					alert("번호를 입력해주세요.");
+       					tel.focus();
+       					xhr.abort();
+       				} else {
+	       				if(tel.val().length != 13) {
+	       					alert("번호를 정확히 입력해주세요.");
+	       					tel.focus();
+	       					xhr.abort();
+	       				}
+	       				if("${myPageUser.tel}" == tel.val()) {
+	       					alert("현재 번호와 일치합니다.");
+	       					tel.focus();
+	       					xhr.abort();
+	       				}
+       				}
+       			},
+       			success : function(result) {
+       				alert("번호가 성공적으로 변경되었습니다.");
+       				$("#telBtn2").hide();
+       				$("#telBtn").show();
+       			},
+       				error: function() { 
+       				alert("수정이 취소되었습니다.\n다시 입력해주세요.");
+       				tel.val("${myPageUser.tel }");
+       				telBtn.style.display = "block";
+       				telBtn2.style.display = "none";
+       				}
+       		});
+       	});
+      </script>
 </body>
 </html>
