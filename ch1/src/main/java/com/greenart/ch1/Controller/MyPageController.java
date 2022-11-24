@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -52,22 +54,10 @@ public class MyPageController {
 		return "myPageMain/myPage_main";
 	}
 	
-	@GetMapping("/manage")
-	public String myPage_manage(HttpServletRequest request, HttpSession session, Model m) throws Exception {
-		if(!loginCheck(request))
-			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
-		
-		String writer = (String)session.getAttribute("id");
-		int quesCnt = quesService.q_getCount(writer);
-		
-		m.addAttribute("quesCnt", quesCnt);
-		
-		return "myPageMain/manage_main";
-	}
-	
 	@PostMapping("/myPage_pwdCheck")
-	public String myPage_pwdCheck(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
+	public String myPage_pwdCheck(HttpServletRequest request, HttpSession session, BCUserDto userDto, Model m) throws Exception {
 		String id = (String)session.getAttribute("id");
+		String pwd = userDto.getPwd();
 		
 		if(!pwdCheck(pwd,id)) {
 			String msg= "비밀번호가 틀렸습니다. 다시 입력해주세요";
@@ -83,14 +73,8 @@ public class MyPageController {
 		return "personalInfo/myPage_personalInfo";
 	}
 	
-	@GetMapping("/manage_pwdCheck")
-	public String manage_pwdCheck(HttpSession session) throws Exception {
-		
-		return "personalInfo/manage_pwdCheck";
-	}
-	
 	@GetMapping("/myPage_personalInfo")
-	public String myPage_personalInfo1(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
+	public String myPage_personalInfo1(HttpServletRequest request, HttpSession session, Model m) throws Exception {
 		if(!loginCheck(request)) {
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		}
@@ -162,20 +146,23 @@ public class MyPageController {
 			return "modifyTel";
 	}
 	
-	@GetMapping("/manage_managerInfo")
-	public String manage_managerInfo1(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
+	@GetMapping("/manage")
+	public String myPage_manage(HttpServletRequest request, HttpSession session, Model m) throws Exception {
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
-		return "personalInfo/manage_managerInfo";
+		String writer = (String)session.getAttribute("id");
+		int quesCnt = quesService.q_getCount(writer);
+		
+		m.addAttribute("quesCnt", quesCnt);
+		
+		return "myPageMain/manage_main";
 	}
 	
-	@PostMapping("/manage_managerInfo")
-	public String manage_managerInfo2(HttpServletRequest request, HttpSession session, String pwd, Model m) throws Exception {
-		if(!loginCheck(request))
-			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
+	@PostMapping("/manage_pwdCheck")
+	public String manage_pwdCheck(HttpServletRequest request, HttpSession session,String pwd, Model m) throws Exception {
 		
-		String id = (String)session.getAttribute("id");
+		String id = (String)session.getAttribute("id"); // admin id
 		
 		if(!pwdCheck(pwd, id)) {
 			String msg= "비밀번호가 틀렸습니다. 다시 입력해주세요";
@@ -183,10 +170,45 @@ public class MyPageController {
 			return "personalInfo/manage_pwdCheck";
 		}
 		
-		session = request.getSession();
-		session.setAttribute("pwd",pwd);
+		List<BCUserDto> userAll = userDao.selectAll();
+		m.addAttribute("userAll", userAll);
 		
 		return "personalInfo/manage_managerInfo";
+	}
+	
+	@GetMapping("/manage_managerInfo")
+	public String manage_managerInfo1(HttpServletRequest request, HttpSession session, Model m) throws Exception {
+		if(!loginCheck(request)) {
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
+		}
+		return "personalInfo/manage_pwdCheck";
+	}
+	
+//	@DeleteMapping("/manage_managerInfoDel")
+//	@ResponseBody
+//	public String manage_managerInfoDel(HttpServletRequest request, HttpSession session,@RequestBody String id, @RequestBody String pwd, Model m) throws Exception {
+//		if(!loginCheck(request)) {
+//			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
+//		}
+////		String id = user.getId();
+////		String pwd = user.getPwd();
+//		
+//		int cnt = userDao.deleteUser(id, pwd);
+//		
+//		return "adminUserInfoDel";
+//	}
+	
+	@GetMapping("/manage_managerInfoDel")
+	public String manage_managerInfoDel(HttpServletRequest request, HttpSession session,String id, String pwd, Model m) throws Exception {
+		if(!loginCheck(request)) {
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
+		}
+//		String id = user.getId();
+//		String pwd = user.getPwd();
+		
+		int cnt = userDao.deleteUser(id, pwd);
+		
+		return "redirect:/myPage/manage_managerInfo";
 	}
 	
 	private boolean pwdCheck(String pwd, String id) throws Exception {

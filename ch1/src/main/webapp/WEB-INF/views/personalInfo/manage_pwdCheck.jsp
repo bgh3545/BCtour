@@ -43,7 +43,7 @@
             <div class ="nav">
                 <div id="column">
                     <div class="city">
-                        <h2><a id="select" href="<c:url value='${myPagePwd}'/>">개인정보</a></h2>
+                        <h2><a id="select" href="<c:url value='/myPage/manage_managerInfo'/>">개인정보</a></h2>
                     </div>
                     <div class="city">
                         <h2><a href="<c:url value='/myPage/manage_reservation'/>">예약/취소 관리</a></h2>
@@ -57,7 +57,7 @@
        					비밀번호 확인
                     </div>
                     <div id="b_column2center">
-                    <form action="<c:url value='/myPage/manage_managerInfo'/>" Method="Post" onsubmit="return formCheck(this);">
+                    <form action="<c:url value='/myPage/manage_pwdCheck'/>" Method="POST" onsubmit="return formCheck(this);">
 						<div id="msg" class="msg redcolor">
 							<c:if test="${not empty msg }">
 								<i class="fa-solid fa-triangle-exclamation">${msg}</i>

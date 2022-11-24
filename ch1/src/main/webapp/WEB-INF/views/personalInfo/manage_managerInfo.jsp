@@ -13,6 +13,11 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
 <link href="../resources/CSS/BCStyle.css" rel="stylesheet"/>
 <script src="https://kit.fontawesome.com/9eda133edb.js" crossorigin="anonymous"></script>
 </head>
@@ -42,7 +47,7 @@
             <div class ="nav">
                 <div id="column">
                     <div class="city">
-                        <h2><a id="select" href="<c:url value='${myPagePwd}'/>">개인정보</a></h2>
+                        <h2><a id="select" href="<c:url value='/myPage/manage_managerInfo'/>">개인정보</a></h2>
                     </div>
                     <div class="city">
                         <h2><a href="<c:url value='/myPage/manage_reservation'/>">예약/취소 관리</a></h2>
@@ -52,10 +57,56 @@
                     </div>
                 </div>
                 <div class="column2">
-                    
+				  <table class="table table-hover">
+						<tr>
+							<th style="text-align: center;">아이디</th>
+							<th style="text-align: center;">비밀번호</th>
+							<th style="text-align: center;">이름</th>
+							<th style="text-align: center;">이메일</th>
+							<th style="text-align: center;">전화번호</th>
+							<th style="text-align: center;">등록일</th>
+							<th style="text-align: center;">관리</th>
+						</tr>
+						<c:forEach var="userAll" items="${userAll }">
+							<tr>
+								<td class="id">${userAll.id }</td>
+								<td class="pwd">${userAll.pwd }</td>
+								<td>${userAll.name }</td>
+								<td>${userAll.email }</td>
+								<td>${userAll.tel }</td>
+								<td>${userAll.reg_date }</td>
+								<td><a id="adminDel" href="<c:url value='/myPage/manage_managerInfoDel?id=${userAll.id }&pwd=${userAll.pwd }'/>" >삭제</a></td>
+							</tr>
+						</c:forEach>
+					</table>
                 </div>
             </div>
         </div>
 	</div>
+	<script src="http://code.jquery.com/jquery-latest.js" charset="UTF-8"></script>
+	<script>
+// 	 $("#adminDel").click(function(){
+// 		 var userId = $(this).parent().siblings('.id').text();
+// 		 var userPwd = $(this).parent().siblings('.pwd').text();
+//    	  $.ajax({
+//    		  type:'DELETE',
+//    		  url:'/ch1/myPage/manage_managerInfoDel',
+//    		  data: JSON.stringify({userId:userId , userPwd:userPwd}),
+//    		  beforeSend : function(xhr) {
+//    			  let del = prompt("해당 회원을 삭제시키시겠습니까?(Y/N)");
+//    			  if( del != "Y" ) {
+//    				  alert("회원탈퇴에 실패하였습니다.");
+//    				  xhr.abort();
+//    			  }
+//    		  },
+//    		  success : function(result) {
+//    			  alert("해당 회원이 삭제되었습니다.");
+//    			  location.href = "/ch1/myPage/manage_managerInfo";
+//    		  },
+//    		  error : function(result) { alert("회원탈퇴에 오류가 발생하였습니다." + result) }
+//    	  });
+//      });
+	
+	</script>
 </body>
 </html>
