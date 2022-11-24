@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greenart.ch1.PageHandlerAndSearchCondition.PageHandler;
+import com.greenart.ch1.PageHandlerAndSearchCondition.ProductPageHandler;
+import com.greenart.ch1.PageHandlerAndSearchCondition.ProductSearchCondition;
 import com.greenart.ch1.PageHandlerAndSearchCondition.SearchCondition;
 import com.greenart.ch1.QuestionsAndAnswers.AnswerDto;
 import com.greenart.ch1.QuestionsAndAnswers.QuestionsDao;
@@ -29,6 +31,7 @@ import com.greenart.ch1.Reservation.ReservationService;
 import com.greenart.ch1.User.BCUserDao;
 import com.greenart.ch1.User.BCUserDto;
 import com.greenart.ch1.WishList.WishDao;
+import com.greenart.ch1.WishList.WishDto;
 import com.greenart.ch1.WishList.WishService;
 
 @Controller
@@ -346,9 +349,20 @@ public class MyPageController {
 	}
 	
 	@GetMapping("/myPage_wishList")
-	public String myPage_wishList(HttpServletRequest request) {
+	public String myPage_wishList(HttpServletRequest request,HttpSession session,ProductSearchCondition psc, Model m) throws Exception {
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
+		
+		String id = (String)session.getAttribute("id");
+		List<WishDto> wish = wishService.w_getWishPage(id, psc);
+		
+		int totalCnt = wishService.w_getCount(id);
+		
+		ProductPageHandler pph = new ProductPageHandler(totalCnt,psc);
+		
+		m.addAttribute("seoulList", wish);
+		m.addAttribute("ph", pph);
+		
 		return "wishList/myPage_wishList";
 	}
 	

@@ -90,10 +90,10 @@
 	                          <a href="<c:url value='myPage_wishList${ph.psc.getQueryString(ph.beginPage-1)}'/>"><div class="b_preNext">이전</div></a>
 	                          </c:if>
 	                          <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
-	                          <c:if test="${i == page}">
+	                          <c:if test="${i == ph.psc.getPage()}">
 	                          <a href="<c:url value='myPage_wishList${ph.psc.getQueryString(i)}'/>"><div id="select" class="b_pageNum">${i}</div></a>
 	                          </c:if>
-	                          <c:if test="${i != page}">
+	                          <c:if test="${i != ph.psc.getPage()}">
 	                          <a href="<c:url value='myPage_wishList${ph.psc.getQueryString(i)}'/>"><div class="b_pageNum">${i}</div></a>
 	                          </c:if>
 	                          </c:forEach>
