@@ -55,18 +55,15 @@
                     </div>
                 </div>
                 <div class="column2">
-                                    <div class="pd_column">
-                        <div class="item_align">
-                            <div class="current_item">
-                            </div>
-                        </div>
+                	<div class="pd_column">
                         <div class="product">
+                        <c:if test="${seoulList.size()==0}"><h1>찜 한 상품이 없습니다.</h1></c:if>
                         	<c:forEach var="list" items="${seoulList}">
                         	<input type="hidden" name="pd_num" id="pd_num" value="${list.pd_num}">
                             <ul class="list">
                                 <li class="pd_list">
                                 		<label for="pd_wish" id="wishLabel" class="wishLabel" ${list.pd_wishCheck ==1? 'style="color:rgb(229,214,0);"':''}>★
-                        					<input type="checkbox" name="pd_wish" id="pd_wish"  ${list.pd_wishCheck ==1? 'checked':''} style="display:none;" >
+                        					<input type="checkbox" name="pd_wish" id="pd_wish" class="pd_wish"  ${list.pd_wishCheck ==1? 'checked':''} data-num="${list.pd_num}" style="display:none;" >
                         				</label>
                                     <div class="pd_img">
                                         <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><img src="/ch1/resources/img/200하늘.jpg"></a>
@@ -112,54 +109,30 @@
 	</div>
 	<script>
 	$(document).ready(function() {
-	$("input:checkbox").on('click', function() {
-	      if ( $(this).prop('checked') ) {
-	        $("#wishLabel").addClass("checked");
-	        var params = {
-	                pd_num: $("#pd_num").val(),
-	                pd_title:$("#pd_title").val(),
-	                pd_subtitle:$("#pd_subtitle").val(),
-	      		  	pd_days:$("#pd_days").val(),
-	                pd_price:$("#pd_price").val()
-	      }
-	        $.ajax({
-	            type : "Post",            // HTTP method type(GET, POST) 형식이다.
-	            url : "/ch1/addWish",      // 컨트롤러에서 대기중인 URL 주소이다.
-	            data :  params,           // Json 형식의 데이터이다.
-	            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
-	                // 응답코드 > 0000
-	                location.reload();
-	            },
-	            error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
-	                alert("위시리스트 등록에 실패하였습니다.")
-	            }
-	        });
-	      } else {
-	        $("#wishLabel").removeClass("checked");
-	        var params = {
-	                pd_num: $("#pd_num").val(),
-	                pd_title:$("#pd_title").val(),
-	                pd_subtitle:$("#pd_subtitle").val(),
-	      		  	pd_days:$("#pd_days").val(),
-	                pd_price:$("#pd_price").val()
-	      }
-	        $.ajax({
-	            type : "POST",            // HTTP method type(GET, POST) 형식이다.
-	            url : "/ch1/delWish",      // 컨트롤러에서 대기중인 URL 주소이다.
-	            data : params,            // Json 형식의 데이터이다.
-	            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
-	                // 응답코드 > 0000
-	                location.reload();
-	            },
-	            error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
-	                alert("위시리스트 삭제에 실패하였습니다.")
-	            }
-	        });
-	      }
-	    });
-	});
-	
-
+		
+		$(".pd_wish").on('click', function() {
+		      if ( $(this).prop('checked') ) {
+		      } else {
+		    	  $(this).parent().removeClass("checked");
+		    	  var params = {
+			                pd_num: $(this).attr('data-num'),
+			      }
+		    	  console.log(params)
+		        $.ajax({
+		            type : "Post",            // HTTP method type(GET, POST) 형식이다.
+		            url : "/ch1/delWish?pd_num="+$(this).attr('data-num'),      // 컨트롤러에서 대기중인 URL 주소이다.
+		            headers: {"content-type" : "application/json"}, // 보내는 데이터 타입명시
+		            data : JSON.stringify(params), // 전달 데이터// Json 형식의 데이터이다.
+		            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
+		            	location.reload();
+		            },
+		            error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
+		                alert("위시리스트 삭제에 실패하였습니다.")
+		            }
+		        });
+		      }
+		    });
+		});
 </script>
 </body>
 </html>

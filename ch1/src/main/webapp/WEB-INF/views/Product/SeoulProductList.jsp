@@ -158,6 +158,7 @@
 				            data : JSON.stringify(params), // 전달 데이터// Json 형식의 데이터이다.
 				            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
 				                // 응답코드 > 0000
+				            	location.reload();
 				            },
 				            error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
 				                alert("위시리스트 등록에 실패하였습니다.")
@@ -179,7 +180,7 @@
 				            headers: {"content-type" : "application/json"}, // 보내는 데이터 타입명시
 				            data : JSON.stringify(params), // 전달 데이터// Json 형식의 데이터이다.
 				            success : function(res){ // 비동기통신의 성공일경우 success콜백으로 들어옵니다. 'res'는 응답받은 데이터이다.
-				                console.log(res)
+				            	location.reload();
 				            },
 				            error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
 				                alert("위시리스트 삭제에 실패하였습니다.")

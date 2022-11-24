@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var = "mypageLink" value="${sessionScope.id==null? '':'/myPage/myPage_main'}"/>
 <c:set var = "mypage" value="${sessionScope.id==null? '':'마이 페이지'}"/>
 <c:set var = "LoginOutlink" value="${sessionScope.id==null? '/logIn/logIn':'/logIn/logOut'}"/>
@@ -13,7 +14,7 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
-<link href="../resources/CSS/BCStyle.css" rel="stylesheet"/>
+<link href="../resources/CSS/BCtourStyle.css?asd" rel="stylesheet"/>
 </head>
 <body>
 	<div class="main">
@@ -50,11 +51,87 @@
                         <h2><a href="<c:url value='/myPage/manage_questions'/>">고객문의</a></h2>
                     </div>
                 </div>
-                <div class="column2">
-                    <div></div>
+                    <div class="column2">
+                    <div class="b_title">예약관리</div>
+                    <div class="b_content">
+                    <div style="display:flex; justify-content:flex-end;">
+                    <button type="button" id="reservationWait" class="b_btnsize">예약대기</button>
+                    <button type="button" id="cancleRequest"class="b_btnsize">취소요청</button>
+                    </div>
+                    <c:if test="${mrlist.size()==0}"><h1>항목이 없습니다.</h1></c:if>
+                    <c:if test="${mrlist.size()!=0}">
+                   		<div class="b_indextitle">
+                    		<div class="b_rindexNum">예약번호</div>
+                    		<div class="b_rindexName">상품명</div>
+                    		<div class="b_rindexNum">회원ID</div>
+                    		<div class="b_rindexNum">예약인원</div>
+                    		<div class="b_rindexNum">가격</div>
+                    		<div class="b_rindexNum">출발일</div>
+                    		<div class="b_rindexDate">상태</div>
+                    		<div class="b_rindexNum">예약확정</div>
+                    		<div class="b_rindexNum">취소요청</div>
+                    	</div>
+                    </c:if>
+                    	<c:forEach var="i" items="${mrlist}">
+							<fmt:formatDate value="${i.pd_departDay}" pattern="MM-dd" var="departDay" />
+	                    	<div class="b_indextitle">
+	                    		<div class="b_rcontentNum">${i.res_num}</div>
+	                    		<div class="b_rcontentName">${i.pd_title}</div>
+	                    		<div class="b_rcontentNum">${i.mem_id}</div>
+	                    		<div class="b_rcontentNum">${i.totalMember}</div>
+	                    		<div class="b_rcontentNum">${i.totalPrice}</div>
+	                    		<div class="b_rcontentNum">${departDay}</div>
+	                    		<c:if test="${i.state==0}">
+	                    		<div class="b_rcontentDate">예약대기</div>
+	                    		<div class="b_rcontentNum"><a href="<c:url value='/myPage/${wait_btn}?pd_num=${i.pd_num}&mem_id=${i.mem_id}'/>">확정하기</a></div>
+	                    		<div class="b_rcontentNum"><a href="<c:url value='/myPage/${cancle_btn}?pd_num=${i.pd_num}&mem_id=${i.mem_id}'/>">취소하기</a></div>
+	                    		</c:if>
+	                    		<c:if test="${i.state==1}">
+	                    		<div class="b_rcontentDate">예약완료</div>
+	                    		<div class="b_rcontentNum"><a style="color:gray">확정하기</a></div>
+	                    		<div class="b_rcontentNum"><a href="<c:url value='/myPage/${cancle_btn}?pd_num=${i.pd_num}&mem_id=${i.mem_id}'/>">취소하기</a></div>
+	                    		</c:if>
+	                    		<c:if test="${i.state==2}">
+	                    		<div class="b_rcontentDate">취소요청</div>
+	                    		<div class="b_rcontentNum"><a style="color:gray;">확정하기</a></div>
+	                    		<div class="b_rcontentNum"><a href="<c:url value='/myPage/${cancle_btn}?pd_num=${i.pd_num}&mem_id=${i.mem_id}'/>">취소하기</a></div>
+	                    		</c:if>
+	                    		<c:if test="${i.state==3}">
+	                    		<div class="b_rcontentDate">예약취소</div>
+	                    		<div class="b_rcontentNum"><a style="color:gray;">확정하기</a></div>
+	                    		<div class="b_rcontentNum"><a style="color:gray;">취소하기</a></div>
+	                    		</c:if>
+	                    	</div>
+                    	</c:forEach>
+                    	<div class="b_pageNavi">
+                    		<c:if test="${ph.showPrev}">
+                    		<a href="<c:url value='/myPage/${reservationFilter}${ph.sc.getQueryString(ph.beginPage-1)}'/>"><div class="b_preNext">이전</div></a>
+                    		</c:if>
+                    		<c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
+                    		<c:if test="${i == page}">
+                    		<a href="<c:url value='/myPage/${reservationFilter}${ph.sc.getQueryString(i)}'/>"><div id="select" class="b_pageNum">${i}</div></a>
+                    		</c:if>
+                    		<c:if test="${i != page}">
+                    		<a href="<c:url value='/myPage/${reservationFilter}${ph.sc.getQueryString(i)}'/>"><div class="b_pageNum">${i}</div></a>
+                    		</c:if>
+                    		</c:forEach>
+                    		<c:if test="${ph.showNext}">
+                    		<a href="<c:url value='/myPage/${reservationFilter}${ph.sc.getQueryString(ph.endPage+1)}'/>"><div class="b_preNext">다음</div></a>
+                    		</c:if>
+                    	</div>
+                    </div>
                 </div>
             </div>
         </div>
 	</div>
+	<script>
+		document.getElementById('reservationWait').addEventListener('click',e=>{
+		window.location = "<c:url value='/myPage/reservationWait'/>";
+		});
+		
+		document.getElementById('cancleRequest').addEventListener('click',e=>{
+		window.location = "<c:url value='/myPage/cancleRequest'/>";
+		});
+	</script>
 </body>
 </html>

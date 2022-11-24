@@ -3,8 +3,7 @@ package com.greenart.ch1.Reservation;
 import java.util.List;
 
 import com.greenart.ch1.PageHandlerAndSearchCondition.ProductSearchCondition;
-import com.greenart.ch1.Product.ProductDto;
-import com.greenart.ch1.WishList.WishDto;
+import com.greenart.ch1.PageHandlerAndSearchCondition.SearchCondition;
 
 public interface ReservationDao {
 
@@ -23,6 +22,20 @@ public interface ReservationDao {
 	ReservationDto res_select(String mem_id, Integer pd_num) throws Exception;
 
 	int res_modify(String mem_id, ReservationDto reservationDto) throws Exception;
+
+	List<ReservationDto> res_reservationSelect(String mem_id, SearchCondition sc) throws Exception;
+
+	List<ReservationDto> res_reservationSelectManage(SearchCondition sc) throws Exception;
+
+	List<ReservationDto> res_reservationRequestManage(SearchCondition sc) throws Exception;
+
+	List<ReservationDto> res_reservationCancleRequestManage(SearchCondition sc) throws Exception;
+
+	int res_countManage() throws Exception;
+
+	int res_countReservationRequest() throws Exception;
+
+	int res_countCancleRequest() throws Exception;
 
 
 }

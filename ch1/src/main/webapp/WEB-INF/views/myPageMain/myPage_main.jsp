@@ -60,7 +60,7 @@
                     </div>
                     <div id="b_column2center">
                     	<div id="b_column2centerContent"><i id="b_icon" class="fa-regular fa-user"></i><a id="b_iconname" href="<c:url value='${myPagePwd}'/>">개인정보 수정하기</a></div>
-                    	<div id="b_column2centerContent"><div id="b_iconcontent"><i id="b_icon" class="fa-regular fa-calendar-check"></i><a id="b_iconsimplecontent">내 예약: 0건</a></div><a id="b_iconname" href="<c:url value='/myPage/myPage_reservation'/>">세부내역 확인하기</a></div>
+                    	<div id="b_column2centerContent"><div id="b_iconcontent"><i id="b_icon" class="fa-regular fa-calendar-check"></i><a id="b_iconsimplecontent">내 예약: ${reservationCnt}건</a></div><a id="b_iconname" href="<c:url value='/myPage/myPage_reservation'/>">세부내역 확인하기</a></div>
                     	<div id="b_column2centerContent"><div id="b_iconcontent"><i id="b_icon" class="fa-solid fa-basket-shopping"></i><a id="b_iconsimplecontent">찜 갯수: ${wishCnt}개</a></div><a id="b_iconname" href="<c:url value='/myPage/myPage_wishList'/>">찜 목록 보기</a></div>
                     	<div id="b_column2centerContent"><div id="b_iconcontent"><i id="b_icon" class="fa-solid fa-headphones"></i><a id="b_iconsimplecontent">내 문의: ${quesCnt}건</a></div><a id="b_iconname" href="<c:url value='/myPage/myPage_questions'/>">문의 내역 확인하기</a></div>
                     </div>

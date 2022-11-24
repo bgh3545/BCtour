@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var = "mypageLink" value="${sessionScope.id==null? '':'/myPage/myPage_main'}"/>
 <c:set var = "mypage" value="${sessionScope.id==null? '':'마이 페이지'}"/>
 <c:set var = "LoginOutlink" value="${sessionScope.id==null? '/logIn/logIn':'/logIn/logOut'}"/>
@@ -13,7 +14,7 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
-<link href="../resources/CSS/BCStyle.css" rel="stylesheet"/>
+<link href="../resources/CSS/BCtourStyle.css" rel="stylesheet"/>
 </head>
 <body>
 	<div class="main">
@@ -53,8 +54,60 @@
                         <h2><a href="<c:url value='/myPage/myPage_questions'/>">고객문의</a></h2>
                     </div>
                 </div>
-                <div class="column2">
-                    <div></div>
+                    <div class="column2">
+                    <div class="b_title">예약확인</div>
+                    <div class="b_content">
+                    <c:if test="${reslist.size()==0}"><h1>예약 한 상품이 없습니다.</h1></c:if>
+                    <c:if test="${reslist.size()!=0}">
+                   		<div class="b_indextitle">
+                    		<div class="b_rindexNum">예약번호</div>
+                    		<div class="b_rindexName">상품명</div>
+                    		<div class="b_rindexNum">예약인원</div>
+                    		<div class="b_rindexNum">가격</div>
+                    		<div class="b_rindexNum">출발일</div>
+                    		<div class="b_rindexDate">상태</div>
+                    		<div class="b_rindexNum">취소요청</div>
+                    	</div>
+                    </c:if>
+                    	<c:forEach var="i" items="${reslist}">
+							<fmt:formatDate value="${i.pd_departDay}" pattern="MM-dd" var="departDay" />
+	                    	<div class="b_indextitle">
+	                    		<div class="b_rcontentNum">${i.res_num}</div>
+	                    		<div class="b_rcontentName"><a href="<c:url value='/product?pd_num=${i.pd_num}'/>">${i.pd_title}</a></div>
+	                    		<div class="b_rcontentNum">${i.totalMember}</div>
+	                    		<div class="b_rcontentNum">${i.totalPrice}</div>
+	                    		<div class="b_rcontentNum">${departDay}</div>
+	                    		<c:if test="${i.state==0}">
+	                    		<div class="b_rcontentDate">예약대기</div>
+	                    		<div class="b_rcontentNum"><a href="<c:url value='/myPage/cancle_request?pd_num=${i.pd_num}'/>">요청하기</a></div>
+	                    		</c:if>
+	                    		<c:if test="${i.state==1}">
+	                    		<div class="b_rcontentDate">예약완료</div>
+	                    		<div class="b_rcontentNum"><a href="<c:url value='/myPage/cancle_request?pd_num=${i.pd_num}'/>">요청하기</a></div>
+	                    		</c:if>
+	                    		<c:if test="${i.state==2}">
+	                    		<div class="b_rcontentDate">취소요청</div>
+	                    		<div class="b_rcontentNum"><a style="color:gray;">요청하기</a></div>
+	                    		</c:if>
+	                    	</div>
+                    	</c:forEach>
+                    	<div class="b_pageNavi">
+                    		<c:if test="${ph.showPrev}">
+                    		<a href="<c:url value='/myPage/myPage_reservation${ph.sc.getQueryString(ph.beginPage-1)}'/>"><div class="b_preNext">이전</div></a>
+                    		</c:if>
+                    		<c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
+                    		<c:if test="${i == page}">
+                    		<a href="<c:url value='/myPage/myPage_reservation${ph.sc.getQueryString(i)}'/>"><div id="select" class="b_pageNum">${i}</div></a>
+                    		</c:if>
+                    		<c:if test="${i != page}">
+                    		<a href="<c:url value='/myPage/myPage_reservation${ph.sc.getQueryString(i)}'/>"><div class="b_pageNum">${i}</div></a>
+                    		</c:if>
+                    		</c:forEach>
+                    		<c:if test="${ph.showNext}">
+                    		<a href="<c:url value='/myPage/myPage_reservation${ph.sc.getQueryString(ph.endPage+1)}'/>"><div class="b_preNext">다음</div></a>
+                    		</c:if>
+                    	</div>
+                    </div>
                 </div>
             </div>
         </div>
