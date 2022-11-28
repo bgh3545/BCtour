@@ -112,4 +112,34 @@ public class ProductDaoImpl implements ProductDao      {
 	   public ProductDto select(int pd_num) throws Exception{
 	   return session.selectOne(namespace+"productInfoSelect",pd_num);	
 		}
+	  
+	  @Override
+	   public ProductDto pd_reviewSelect(int pd_num, String id) throws Exception{
+		  Map map = new HashMap();
+		  map.put("id", id);
+		  map.put("pd_num", pd_num);
+	   return session.selectOne(namespace+"pd_reviewSelect",map);	
+		}
+	  
+	  @Override
+	  	public int pd_updateProduct(ProductDto productDto) throws Exception{
+		  return session.update(namespace+"updateProduct", productDto);
+	  }
+	  
+	  @Override
+	  public int pd_scoreInsert(ProductDto productDto, String id) throws Exception{
+		  Map map = new HashMap();
+		  map.put("id", id);
+		  map.put("pd_num", productDto.getPd_num());
+		  map.put("pd_departDay", productDto.getPd_departDay());
+		  return session.insert(namespace+"pd_scoreInsert", map);
+	  }
+	  
+	  @Override
+	  public ProductDto pd_scoreSelect(Integer pd_num, String id) throws Exception{
+		  Map map = new HashMap();
+		  map.put("id", id);
+		  map.put("pd_num", pd_num);
+		  return session.selectOne(namespace+"pd_scoreSelect", map);
+	  }
 }

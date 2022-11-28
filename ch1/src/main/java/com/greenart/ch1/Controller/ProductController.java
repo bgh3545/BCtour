@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greenart.ch1.PageHandlerAndSearchCondition.ProductPageHandler;
 import com.greenart.ch1.PageHandlerAndSearchCondition.ProductSearchCondition;
 import com.greenart.ch1.Product.ProductDao;
 import com.greenart.ch1.Product.ProductDto;
 import com.greenart.ch1.Product.ProductService;
+import com.greenart.ch1.Recommend.RecommendDto;
+import com.greenart.ch1.Recommend.RecommendService;
 import com.greenart.ch1.Reservation.ReservationDao;
 import com.greenart.ch1.Reservation.ReservationDto;
 import com.greenart.ch1.Reservation.ReservationService;
@@ -42,10 +46,26 @@ public class ProductController {
 	ReservationDao reservationDao;
 	@Autowired
 	ReservationService reservationService;
+	@Autowired
+	RecommendService recommendService;
 	
 	@RequestMapping(value ="/product",method=RequestMethod.GET)
-	public String ProductInfo(Model m,int pd_num) throws Exception{
-		ProductDto select = productDao.select(pd_num);
+	public String ProductInfo(Model m, Integer pd_num, HttpSession session) throws Exception{
+		String id = (String)session.getAttribute("id");
+		ProductDto select = productService.pd_reviewSelect(pd_num,id);
+		
+		ProductDto scoreCheck = productService.pd_scoreSelect(pd_num, id);
+		if(scoreCheck==null) {
+		int scoreInsert = productService.pd_scoreInsert(select,id);
+		}
+		
+		RecommendDto recDto = recommendService.r_selectReview(pd_num, id);
+		if(recDto==null) {
+			m.addAttribute("reviewCheck", "write");
+		}else {
+			m.addAttribute("reviewCheck", "modify");
+		}
+		
 		m.addAttribute("InfoListSelect",select);
 		return "Product/BCProduct";
 	}
@@ -60,10 +80,26 @@ public class ProductController {
 		return "Product/ProductWrite";
 	}
 	@PostMapping("/write")
-	public String write2(Model m,ProductDto listDto) throws Exception{
-		
-		int rowCnt = productService.write(listDto);
-		return"redirect:/capital";
+	public String write2(Model m,ProductDto productDto,MultipartFile[] uploadFile,HttpSession session,RedirectAttributes reatt) throws Exception{
+		try {
+			String uploadFolder = "C:\\Users\\green\\git\\BCtour\\ch1\\src\\main\\webapp\\resources\\img";
+			String str="";
+			for (MultipartFile multipartFile : uploadFile) { 
+				str = multipartFile.getOriginalFilename(); 
+			}
+			if(!str.equals("")) {
+				productDto.setPd_img(str);
+			}
+			int rowCnt = productService.write(productDto);
+			if(rowCnt != 1) throw new Exception("Write Error");
+			reatt.addFlashAttribute("msg", "write_ok");
+			return "redirect:/capital?pd_city="+productDto.getPd_city();
+	}catch (Exception e) {
+		e.printStackTrace();
+		m.addAttribute("msg", "write_error");
+		m.addAttribute("mode", "new");
+		return "redirect:/capital?pd_city="+productDto.getPd_city();
+	}
 	}
 	
 	@RequestMapping(value = "/capital", method=RequestMethod.GET)
@@ -167,20 +203,64 @@ public class ProductController {
 		
 		if(resCheck !=null && (resCheck.getState() ==0 || resCheck.getState() ==3)) {
 		int reservationCnt = reservationService.res_modify(mem_id, reservationDto);
+		m.addAttribute("msg", "complete");
 		}
 		
 		if(resCheck.getState() ==1) {
 			m.addAttribute("msg", "reservated");
+			return "redirect:/capital?pd_city="+pd_city;
 		}
 		
 		if(resCheck.getState() ==2) {
 			m.addAttribute("msg", "cancleRequest");
+			return "redirect:/capital?pd_city="+pd_city;
 		}
 		
 		ProductDto productInfoDto = productDao.select(productDto.getPd_num());
 		m.addAttribute("info", productInfoDto);
 		
 		return "redirect:/capital?pd_city="+pd_city;
+	}
+	
+	@GetMapping("/ProductModify")
+	   public String ProductModify(HttpServletRequest request, Integer pd_num, ProductSearchCondition psc, Model m) throws Exception{
+	      ProductDto modi = productDao.select(pd_num);
+	      m.addAttribute("modi",modi);
+	      m.addAttribute("page",psc.getPage());
+	      m.addAttribute("pageSize",psc.getPageSize());
+	      return "Product/ProductModify";
+	   }
+	
+	@PostMapping("/ProductModify")
+	   public String ProductModify2(Model m,ProductDto productDto,Integer del,String fileName,MultipartFile[] uploadFile,HttpSession session,RedirectAttributes reatt,HttpServletRequest request,Integer pd_num,ProductSearchCondition psc) {
+	      m.addAttribute("page",psc.getPage());
+	      m.addAttribute("pageSize",psc.getPageSize());
+	      
+	      String uploadFolder = "C:\\Users\\green\\git\\ch1\\ch\\\src\\main\\webapp\\resources\\img";
+
+	      String str="";
+	      
+	      for (MultipartFile multipartFile : uploadFile) { 
+	         str = multipartFile.getOriginalFilename(); 
+	      }
+	      if(!str.equals("")) {
+	         productDto.setPd_img(str);
+	      }
+	      System.out.println("수정 post"+productDto);
+	      // 페이지와, pageSize 정보를 전달
+	      try {
+	         // 현재 form에 작성된 내용이 db에 저장됨 
+	         int rowCnt = productService.updateProduct(productDto);
+	         if(rowCnt != 1) throw new Exception("modify Error");
+	         reatt.addFlashAttribute("msg", "modify_ok");
+	         return"redirect:/Seoul?pd_city=서울";
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	         m.addAttribute("ProductDto", productDto); // 잘못 작성된 경우 내용 다시 전달
+	         m.addAttribute("msg", "modify_error");
+	         m.addAttribute("m", "renew"); // 다시 이전의 수정모드로 돌아가기 위해서
+	         return"redirect:/Seoul?pd_city=서울";
+	      }
 	}
 	
 	private boolean loginCheck(HttpServletRequest request) {

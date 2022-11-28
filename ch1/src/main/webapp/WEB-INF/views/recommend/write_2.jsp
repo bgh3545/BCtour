@@ -13,7 +13,7 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
-<link href="../resources/CSS/BCtourStyle.css?asdf" rel="stylesheet"/>
+<link href="../resources/CSS/BCtourStyle.css?assa" rel="stylesheet"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 <script src="../resources/ckeditor/ckeditor/ckeditor.js"></script>
 </head>
@@ -74,6 +74,46 @@
 						<div class="b_writecontentarea">
 							<textarea name="rec_content" id="rec_content" class="b_textarea" placeholder="내용을 입력해 주세요."></textarea>
 						</div>
+						<div>
+							<label id="pd_star1" class="wishLabel" >★
+                        		<input type="radio" id="pd_score1" style="display:none;" name="pd_scorePoint" value=1 >
+                        	</label>
+                        	<label id="pd_star2" class="wishLabel" >★
+                        		<input type="radio" id="pd_score2" style="display:none;" name="pd_scorePoint" value=2 >
+                        	</label>
+                        	<label id="pd_star3" class="wishLabel" >★
+                        		<input type="radio" id="pd_score3" style="display:none;" name="pd_scorePoint" value=3 >
+                        	</label>
+                        	<label id="pd_star4" class="wishLabel" >★
+                        		<input type="radio" id="pd_score4" style="display:none;" name="pd_scorePoint" value=4 >
+                        	</label>
+                        	<label id="pd_star5" class="wishLabel" >★
+                        		<input type="radio" id="pd_score5" style="display:none;" name="pd_scorePoint" value=5 >
+                        	</label>
+						</div>
+						<div style="display:flex; text-align:left; align-items:center;">
+                        	<input type="hidden" name="pd_num" id="pd_num" value="${list.pd_num}">
+                            <div class="pd_img">
+                            	<a href="<c:url value='/product'/>?pd_num=${list.pd_num}">
+                            		<c:if test="${list.pd_img ==null}"><img src="/ch1/resources/img/noImg.jpg" style="width:200px; height:200px;"></c:if>
+                                	<c:if test="${list.pd_img !=null}"><img src="/ch1/resources/img/${list.pd_img}" style="width:200px; height:200px;"></c:if>
+                                </a>
+                            </div>
+                            <div class="pd_text">
+                                <div class="tag">
+                                    <span class="pakage_tag">패키지</span>
+                                </div>
+                                <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><strong class="item_desc">${list.pd_title }<input type="hidden" id="pd_title" value="${list.pd_title }"></strong></a>
+                  				<p>${list.pd_subtitle }</p>
+                  				<input type="hidden" id="pd_subtitle"  value="${list.pd_subtitle }">
+                                <p>여행기간 <input type="hidden" id="pd_days" value="${list.pd_days}">${list.pd_days-1}박${list.pd_days}일</p>
+                            </div>
+                            <div class="pd_price">
+                                <strong class="price2">평점 3.5/5</strong>
+                                <strong class="price">${list.pd_price }</strong>
+                                <input type="hidden" id="pd_price" value="${list.pd_price}">
+                        	</div>
+                    	</div>
 					</div>
                 </div>
                 </form>

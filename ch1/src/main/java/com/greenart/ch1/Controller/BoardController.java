@@ -29,7 +29,10 @@ import com.greenart.ch1.Community.comm_commentService;
 import com.greenart.ch1.PageHandlerAndSearchCondition.CommPageHandler;
 import com.greenart.ch1.PageHandlerAndSearchCondition.CommSearchCondition;
 import com.greenart.ch1.PageHandlerAndSearchCondition.PageHandler;
+import com.greenart.ch1.PageHandlerAndSearchCondition.ProductSearchCondition;
 import com.greenart.ch1.PageHandlerAndSearchCondition.SearchCondition;
+import com.greenart.ch1.Product.ProductDao;
+import com.greenart.ch1.Product.ProductDto;
 import com.greenart.ch1.Recommend.RecommendDao;
 import com.greenart.ch1.Recommend.RecommendDto;
 import com.greenart.ch1.Recommend.RecommendService;
@@ -61,6 +64,8 @@ public class BoardController {
 	rec_commentDao rec_commDao;
 	@Autowired
 	rec_commentService rec_commService;
+	@Autowired
+	ProductDao productDao;
 	
 	@GetMapping("/list_1")
 	public String list_1(HttpServletRequest request,SearchCondition sc, Model m,String keyword) throws Exception {
@@ -298,13 +303,14 @@ public class BoardController {
 	}
 	
 	@GetMapping("/write_2")
-	public String write_2(HttpServletRequest request,Model m, Integer rec_num, SearchCondition sc) {
+	public String write_2(HttpServletRequest request,Model m, Integer rec_num, SearchCondition sc, HttpSession session, Integer pd_num) {
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
 		try {
-			RecommendDto recDto = recService.r_read(rec_num);
-			m.addAttribute("recDto", recDto);
+			ProductDto productDto = productDao.select(pd_num);
+			
+			m.addAttribute("list", productDto);
 			m.addAttribute("page", sc.getPage());
 			m.addAttribute("pageSize", sc.getPageSize());
 		}catch(Exception e){
@@ -376,7 +382,7 @@ public class BoardController {
 	}
 	
 	@GetMapping("/read_2")
-	public String get_read_2(HttpServletRequest request, Model m, rec_commentDto rec_commDto,RecommendDto recDto, Integer rec_comm_num, Integer rec_num, SearchCondition sc, CommSearchCondition csc, HttpSession session) {
+	public String get_read_2(HttpServletRequest request, Model m, rec_commentDto rec_commDto,RecommendDto recDto, Integer rec_comm_num, Integer rec_num, ProductSearchCondition psc, SearchCondition sc, CommSearchCondition csc, HttpSession session) {
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
@@ -397,6 +403,9 @@ public class BoardController {
 			
 			List<rec_commentDto> r_comment = rec_commService.rm_getList(rec_num, csc);
 			recDto = recService.r_read(rec_num);
+			
+			ProductDto productDto = productDao.select(recDto.getPd_num());
+			m.addAttribute("list", productDto);
 			
 			m.addAttribute("r_comment",r_comment);
 			m.addAttribute("recDto", recDto);
@@ -476,10 +485,14 @@ public class BoardController {
 	}
 	
 	@GetMapping("/modify_2")
-	public String modify_2(HttpServletRequest request,Integer rec_num, SearchCondition sc, Model m) throws Exception {
+	public String modify_2(HttpServletRequest request,Integer rec_num,Integer pd_num, SearchCondition sc, Model m, HttpSession session) throws Exception {
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
-		RecommendDto modi = recDao.r_select(rec_num);
+		String id = (String)session.getAttribute("id");
+		RecommendDto modi = recDao.r_selectReview(pd_num,id);
+		ProductDto productDto = productDao.select(modi.getPd_num());
+		
+		m.addAttribute("list", productDto);
 		m.addAttribute("modi", modi);
 		m.addAttribute("page", sc.getPage());
 		m.addAttribute("pageSize", sc.getPageSize());

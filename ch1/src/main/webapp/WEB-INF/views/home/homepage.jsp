@@ -15,7 +15,7 @@
 
    <meta charset="UTF-8">
     <title>비씨투어</title>
-    <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?asd">
+    <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?aa">
 </head>
 <body>
     <body>
@@ -117,27 +117,41 @@
                         </div>
                     </div>
                     <div class="column2">
-                        <div class="imgContainer">
-                            <img src="" alt=""> 
-                            <img src="" alt="">
-                            <img src="" alt="">
-                            <button id="prev">&lang;</button>
-                            <button id="next">&rang;</button>
-                        </div>
-                    </div>
+                        <div class="slider">
+    					 	<input type="radio" name="slide" id="slide1" checked>
+   						 	<input type="radio" name="slide" id="slide2">
+    					 	<input type="radio" name="slide" id="slide3">
+    				     	<input type="radio" name="slide" id="slide4">
+    					 		<ul id="imgholder" class="imgs">
+        				    		<li><img src="${path }/resources/img/slide1.jpg"></li>
+        							<li><img src="${path }/resources/img/slide2.jpg"></li>
+        							<li><img src="${path }/resources/img/slide3.jpg"></li>
+        							<li><img src="${path }/resources/img/slide4.jpg"></li>
+    							</ul>
+    						<div class="bullets">
+        						<label for="slide1">&nbsp;</label>
+        						<label for="slide2">&nbsp;</label>
+        						<label for="slide3">&nbsp;</label>
+        						<label for="slide4">&nbsp;</label>
+    						</div>
+						</div>
+                	</div>
                 </div>
+            </div>
                 <div class="column3">
                     <div class ="column3title">
                         <h1>인기 급상승 여행지</h1>
                     </div> 
                     
                     <div class="boardLink">
-                    	<c:forEach var="list" items="${mainList }">
-                        <div class ="board">
-                            <img src=${list.pd_img }>
+                    	<c:forEach var="list" items="${InfoSelect }">
+                    	<a href="<c:url value='/product'/>?pd_num=${list.pd_num}">
+                        <div style ="text-overflow: ellipsis" class ="board">
+                            <img src="${path }/resources/img/${list.pd_img}"> 
                             <p>${list.pd_title }</p>
                             <p>${list.pd_subtitle }</p>
                         </div>
+                        </a>
                         </c:forEach>
                     </div>
                 </div>
@@ -187,31 +201,27 @@
             </div>
             
         </div>
-
-
-
-
-        <script>
-            let prev = document.getElementById("prev");
-            let next = document.getElementById("next");
-            let imgs = document.querySelectorAll(".imgContainer img");
+<script>
+           // let prev = document.getElementById("prev");
+           // let next = document.getElementById("next");
+           // let imgs = document.querySelectorAll(".imgContainer img");
     
-            let img_num = 0;
+          //  let img_num = 0;
     
-            showing(img_num);
+         //   showing(img_num);
     
             /** prev버튼을 클릭 했을 때의 함수
              *  img_num값 하나씩 뺌
              *  만약 0보다 작다면 img_num값을 imgs.length-1로 정함
              *  showing함수의 매개변수로 (img_num) */
-            prev.addEventListener('click', function() {
-                img_num--;
-                if(img_num < 0) {
-                    img_num = imgs.length-1;
-                }
-                showing(img_num);
-            });
-            // p.onclick = function () {
+          //  prev.addEventListener('click', function() {
+         //       img_num--;
+          //      if(img_num < 0) {
+         //           img_num = imgs.length-1;
+         //       }
+         //       showing(img_num);
+        //    });
+       //     // p.onclick = function () {
             //     img_num--;
             //     if(img_num < 0) {
             //         img_num = imgs.length-1;
@@ -223,13 +233,13 @@
              *  img_num값 하나씩 더함
              *  만약 imgs.length-1보다 크다면 img_num값 0
              *  showing함수의 매개변수로 (img_num) */
-            next.addEventListener('click', function() {
-                img_num++;
-                if(img_num > imgs.length-1) {
-                    img_num = 0;
-                }
-                showing(img_num);
-            });
+          //  next.addEventListener('click', function() {
+         //       img_num++;
+         //       if(img_num > imgs.length-1) {
+         //           img_num = 0;
+         //       }
+         //       showing(img_num);
+         //   });
             // n.onclick = function () {
             //     img_num++;
             //     if(img_num > imgs.length-1) {
@@ -239,12 +249,12 @@
             // }
     
     
-            function showing(a) { 
-                for(let i = 0 ; i < imgs.length ; i++){
-                    imgs[i].style.display = "none"; // 일단 다 안보이게 만듬
-                }
-                imgs[a].style.display = "inline"; // a값을 넣으면 보이게 만듬
-            }
+          //  function showing(a) { 
+         //       for(let i = 0 ; i < imgs.length ; i++){
+         //           imgs[i].style.display = "none"; // 일단 다 안보이게 만듬
+         //       }
+         //       imgs[a].style.display = "inline"; // a값을 넣으면 보이게 만듬
+        //    }
     
     
     

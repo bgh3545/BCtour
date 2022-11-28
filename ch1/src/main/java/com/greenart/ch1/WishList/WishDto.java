@@ -12,6 +12,27 @@ public class WishDto {
 	private Integer pd_days;
 	private Integer pd_price;
 	private Integer pd_wishCheck;
+	private String pd_img;
+	
+	public WishDto(Integer pd_wishNum, String id, Integer pd_num, String pd_title, String pd_subtitle, Integer pd_days,
+			Integer pd_price, Integer pd_wishCheck, String pd_img) {
+		super();
+		this.pd_wishNum = pd_wishNum;
+		this.id = id;
+		this.pd_num = pd_num;
+		this.pd_title = pd_title;
+		this.pd_subtitle = pd_subtitle;
+		this.pd_days = pd_days;
+		this.pd_price = pd_price;
+		this.pd_wishCheck = pd_wishCheck;
+		this.pd_img = pd_img;
+	}
+	public String getPd_img() {
+		return pd_img;
+	}
+	public void setPd_img(String pd_img) {
+		this.pd_img = pd_img;
+	}
 	public Integer getPd_wishNum() {
 		return pd_wishNum;
 	}
@@ -82,7 +103,7 @@ public class WishDto {
 	public String toString() {
 		return "WishDto [pd_wishNum=" + pd_wishNum + ", id=" + id + ", pd_num=" + pd_num + ", pd_title=" + pd_title
 				+ ", pd_subtitle=" + pd_subtitle + ", pd_days=" + pd_days + ", pd_price=" + pd_price + ", pd_wishCheck="
-				+ pd_wishCheck + "]";
+				+ pd_wishCheck + ", pd_img=" + pd_img + "]";
 	}
 	public WishDto(Integer pd_wishNum, String id, Integer pd_num, String pd_title, String pd_subtitle, Integer pd_days,
 			Integer pd_price, Integer pd_wishCheck) {

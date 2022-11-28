@@ -6,33 +6,49 @@
 	<select id="p_selectAll" resultType="ProductDto">
 		SELECT * FROM pd_info
 	</select>
+	
 	<delete id = "p_deleteAll" parameterType = "int">
 		DELETE FROM pd_info
 		WHERE pd_num = #{pd_num}
 	</delete>
+	
 	<select id="productInfoSelectAll" resultType="ProductDto">
 		select * from pd_info
 	</select>
+	
 	<select id="pd_numSelect" resultType="ProductDto">
 		select pd_num from pd_info
 	</select>
 	
 	<select id="pd_wishSelect" resultType="WishDto">
-		select A.pd_num, A.pd_title, A.pd_subtitle, A.pd_days, A.pd_price, B.pd_wishCheck from pd_info as A left join pd_wish as B on A.pd_num = B.pd_num and B.id=#{id} where A.pd_city = #{pd_city} and (A.pd_title like concat('%',#{keyword},'%')
+		select A.pd_num, A.pd_img, A.pd_title, A.pd_subtitle, A.pd_days, A.pd_price, B.pd_wishCheck from pd_info as A left join pd_wish as B on A.pd_num = B.pd_num and B.id=#{id} where A.pd_city = #{pd_city} and (A.pd_title like concat('%',#{keyword},'%')
             or 
             A.pd_subtitle like concat('%',#{keyword},'%')) order by reg_date desc, pd_num desc limit #{offset}, #{pageSize}
 	</select>
 	
 	<select id="pd_buyCntSelect" resultType="WishDto">
-		select A.pd_num, A.pd_title, A.pd_subtitle, A.pd_days, A.pd_price, B.pd_wishCheck from pd_info as A left join pd_wish as B on A.pd_num = B.pd_num and B.id=#{id} where A.pd_city = #{pd_city} and (A.pd_title like concat('%',#{keyword},'%')
+		select A.pd_num, A.pd_img, A.pd_title, A.pd_subtitle, A.pd_days, A.pd_price, B.pd_wishCheck from pd_info as A left join pd_wish as B on A.pd_num = B.pd_num and B.id=#{id} where A.pd_city = #{pd_city} and (A.pd_title like concat('%',#{keyword},'%')
             or 
             A.pd_subtitle like concat('%',#{keyword},'%')) order by pd_buyCnt desc, pd_num desc limit #{offset}, #{pageSize}
 	</select>
 	
 	<select id="pd_searchSelect" resultType="WishDto">
-		select A.pd_num, A.pd_title, A.pd_subtitle, A.pd_days, A.pd_price, B.pd_wishCheck from pd_info as A left join pd_wish as B on A.pd_num = B.pd_num and B.id=#{id} where (A.pd_title like concat('%',#{keyword},'%')
+		select A.pd_num, A.pd_img, A.pd_title, A.pd_subtitle, A.pd_days, A.pd_price, B.pd_wishCheck from pd_info as A left join pd_wish as B on A.pd_num = B.pd_num and B.id=#{id} where (A.pd_title like concat('%',#{keyword},'%')
             or 
             A.pd_subtitle like concat('%',#{keyword},'%')) order by pd_buyCnt desc, pd_num desc limit #{offset}, #{pageSize}
+	</select>
+	
+	<select id="pd_reviewSelect" resultType="ProductDto">
+		select A.pd_num, A.pd_city, A.pd_img, A.pd_title, A.pd_subtitle, A.pd_days, A.pd_price, A.pd_transport, A.pd_departDay, A.pd_departStart, A.pd_departEnd, A.pd_deportDay, A.pd_deportStart, A.pd_deportEnd, A.pd_visitCity, A.pd_totalScore, A.pd_totalScoreMember, A.pd_buyCnt, 
+		B.pd_reviewCheck from pd_info as A left join reservation as B on A.pd_num = B.pd_num and B.mem_id=#{id} where A.pd_num = #{pd_num}
+	</select>
+	
+	<insert id="pd_scoreInsert">
+		insert into pd_score(pd_num, id, pd_departDay) values(#{pd_num}, #{id}, #{pd_departDay})
+	</insert>
+	
+	<select id="pd_scoreSelect" resultType="ProductDto">
+		select pd_num, id, pd_scorePoint, pd_departDay from pd_score where pd_num =#{pd_num} and id=#{id}
 	</select>
 	
 	<select id="productInfoSelect" parameterType = "int" resultType="productDto">
@@ -71,8 +87,14 @@
    </select>
    
    <insert id ="insertInfo" parameterType="ProductDto">
-   	  insert into pd_info(pd_title,pd_subtitle,pd_days,pd_transport,pd_departStart,pd_departEnd,pd_deportStart,pd_deportEnd,pd_city1,pd_reserveUntil) values(#{pd_title},#{pd_subtitle},#{pd_days},#{pd_transport},#{pd_departStart},#{pd_departEnd},#{pd_deportStart},#{pd_deportEnd},#{pd_city1},#{pd_reserveUntil})
+   	  insert into pd_info(pd_img,pd_city,pd_title,pd_subtitle,pd_days,pd_price,pd_transport,pd_departDay,pd_departStart,pd_departEnd,pd_deportDay,pd_deportStart,pd_deportEnd,pd_visitCity) values(#{pd_img},#{pd_city},#{pd_title},#{pd_subtitle},#{pd_days},#{pd_price},#{pd_transport},#{pd_departDay},#{pd_departStart},#{pd_departEnd},#{pd_deportDay},#{pd_deportStart},#{pd_deportEnd},#{pd_visitCity})
    </insert>
+  
+  <update id="updateProduct" parameterType="ProductDto">
+         update pd_info
+         set pd_city = #{pd_city},pd_title = #{pd_title},pd_img = #{pd_img},pd_subtitle = #{pd_subtitle},pd_days = #{pd_days},pd_transport = #{pd_transport},pd_departDate = #{pd_departDate},pd_departStart = #{pd_departStart},pd_departEnd = #{pd_departEnd},pd_deportDate = #{pd_deportDate},pd_deportStart = #{pd_deportStart},pd_deportEnd = #{pd_deportEnd},pd_visitCity = #{pd_visitCity}
+         where pd_num = #{pd_num}
+   </update>
   
   <select id ="seoulList" parameterType ="String" resultType = "ProductDto">
   		select * from pd_info

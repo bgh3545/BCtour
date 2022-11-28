@@ -35,6 +35,14 @@ public interface ProductDao {
 
 	int p_citySelectResultCnt(ProductSearchCondition psc, String pd_city) throws Exception;
 
+	ProductDto pd_reviewSelect(int pd_num, String id) throws Exception;
+
+	int pd_updateProduct(ProductDto productDto) throws Exception;
+
+	int pd_scoreInsert(ProductDto productDto, String id) throws Exception;
+
+	ProductDto pd_scoreSelect(Integer pd_num, String id) throws Exception;
+
 
 
 	

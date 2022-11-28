@@ -106,10 +106,6 @@
         </div>
         <script>
         
-        let msg = "${msg}"
-        if(msg=="reservated"){ alert("이미 예약된 상품입니다.")}
-        if(msg=="cancleRequest"){ alert("취소 요청중인 상품입니다")}
-        
         var maxQ = 5
         var price = ${info.pd_price}
         $(document).ready(function() {

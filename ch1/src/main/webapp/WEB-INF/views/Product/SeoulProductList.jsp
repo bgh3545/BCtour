@@ -54,8 +54,8 @@
                         <div class="clicked_city">
                             <h2 class="do">수도권</h2>
                             <ul class="capital">
-                                <li class="clicked_loca">서울</li>
-                                <li>의정부</li>
+                                <li class="clicked_loca"><a href='<c:url value="/capital"/>?pd_city=seoul'>서울</a></li>
+                                <li><a href='<c:url value="/capital"/>?pd_city=uijeongbu'>의정부</a></li>
                             </ul>
                         </div>
                         <div class="city">
@@ -85,19 +85,21 @@
                             <div class="current_item">
                             </div>
                             <div class="align_menu">
-                                <a href="<c:url value='/buyCnt?pd_city=seoul'/>">구매순</a>
+                                <a href="<c:url value='/buyCnt?pd_city=${param.pd_city}'/>">구매순</a>
                             </div>
                         </div>
                         <div class="product">
                         	<c:forEach var="list" items="${list}">
                         	<input type="hidden" name="pd_num" id="pd_num" value="${list.pd_num}">
+                        	<input type="hidden" name="pd_city" id="pd_city" value="${param.pd_city}">
                             <ul class="list">
                                 <li class="pd_list">
                                 		<label id="wishLabel" class="wishLabel" ${list.pd_wishCheck ==1?'style="color:rgb(229,214,0);"':'' }>★
                         					<input type="checkbox" id="pd_wish" style="display:none;" ${list.pd_wishCheck ==1?'checked':'' } name="pd_wish" data-num="${list.pd_num}" data-title="${list.pd_title}" data-sub="${list.pd_subtitle}" data-days="${list.pd_days}" class="pd_wish" data-price="${list.pd_price}" >
                         				</label>
                                     <div class="pd_img">
-                                        <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><img src="/ch1/resources/img/200하늘.jpg"></a>
+                                        <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><c:if test="${list.pd_img ==null}"><img src="/ch1/resources/img/noImg.jpg" style="width:200px; height:200px;"></c:if>
+                                        <c:if test="${list.pd_img !=null}"><img src="/ch1/resources/img/${list.pd_img}" style="width:200px; height:200px;"></c:if></a>
                                     </div>
                                     <div class="pd_text">
                                         <div class="tag">
@@ -109,6 +111,7 @@
                                         <p>여행기간 <input type="hidden" id="pd_days" value="${list.pd_days}">${list.pd_days}일</p>
                                     </div>
                                     <div class="pd_price">
+                                    	<strong class="price2">평점 3.5/5</strong>
                                         <strong class="price">${list.pd_price }</strong>
                                         <input type="hidden" id="pd_price" value="${list.pd_price}">
                                         <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><h2>자세히</h2></a>
@@ -118,18 +121,18 @@
                             </c:forEach>
                             <div class="b_pageNavi">
                           <c:if test="${ph.showPrev}">
-                          <a href="<c:url value='${productFilter}${ph.psc.getQueryString(ph.beginPage-1)}'/>"><div class="b_preNext">이전</div></a>
+                          <a href="<c:url value='${productFilter}${ph.psc.getQueryString(ph.beginPage-1)}&pd_city=${param.pd_city}'/>"><div class="b_preNext">이전</div></a>
                           </c:if>
                           <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
                           <c:if test="${i == ph.psc.getPage()}">
-                          <a href="<c:url value='${productFilter}${ph.psc.getQueryString(i)}'/>"><div id="select" class="b_pageNum">${i}</div></a>
+                          <a href="<c:url value='${productFilter}${ph.psc.getQueryString(i)}&pd_city=${param.pd_city}'/>"><div id="select" class="b_pageNum">${i}</div></a>
                           </c:if>
                           <c:if test="${i != ph.psc.getPage()}">
-                          <a href="<c:url value='${productFilter}${ph.psc.getQueryString(i)}'/>"><div class="b_pageNum">${i}</div></a>
+                          <a href="<c:url value='${productFilter}${ph.psc.getQueryString(i)}&pd_city=${param.pd_city}'/>"><div class="b_pageNum">${i}</div></a>
                           </c:if>
                           </c:forEach>
                           <c:if test="${ph.showNext}">
-                          <a href="<c:url value='${productFilter}${ph.psc.getQueryString(ph.endPage+1)}'/>"><div class="b_preNext">다음</div></a>
+                          <a href="<c:url value='${productFilter}${ph.psc.getQueryString(ph.endPage+1)}&pd_city=${param.pd_city}'/>"><div class="b_preNext">다음</div></a>
                           </c:if>
                        </div>
                        <div>
@@ -140,6 +143,12 @@
                   </div>
                  </div>
                  <script>
+                 
+                 let msg = "${msg}"
+                     if(msg=="reservated"){ alert("이미 예약된 상품입니다.")}
+                     if(msg=="cancleRequest"){ alert("취소 요청중인 상품입니다")}
+                     if(msg=="complete"){ alert("결제되었습니다")}
+                 
 				$(document).ready(function() {
 					
 				$(".pd_wish").on('click', function() {
@@ -164,6 +173,7 @@
 				            },
 				            error : function(XMLHttpRequest, textStatus, errorThrown){ // 비동기 통신이 실패할경우 error 콜백으로 들어옵니다.
 				                alert("위시리스트 등록에 실패하였습니다.")
+				                location.reload();
 				            }
 				        });
 				      } else {

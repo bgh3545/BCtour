@@ -83,6 +83,44 @@
 						<div class="b_readcontentarea" id="content">
 							${recDto.rec_content}
 						</div>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+						<div style="display:flex; text-align:left; align-items:center;">
+                        	<input type="hidden" name="pd_num" id="pd_num" value="${list.pd_num}">
+                            <div class="pd_img">
+                            	<a href="<c:url value='/product'/>?pd_num=${list.pd_num}">
+                            		<c:if test="${list.pd_img ==null}"><img src="/ch1/resources/img/noImg.jpg" style="width:200px; height:200px;"></c:if>
+                                	<c:if test="${list.pd_img !=null}"><img src="/ch1/resources/img/${list.pd_img}" style="width:200px; height:200px;"></c:if>
+                                </a>
+                            </div>
+                            <div class="pd_text">
+                                <div class="tag">
+                                    <span class="pakage_tag">패키지</span>
+                                </div>
+                                <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><strong class="item_desc">${list.pd_title }<input type="hidden" id="pd_title" value="${list.pd_title }"></strong></a>
+                  				<p>${list.pd_subtitle }</p>
+                  				<input type="hidden" id="pd_subtitle"  value="${list.pd_subtitle }">
+                                <p>여행기간 <input type="hidden" id="pd_days" value="${list.pd_days}">${list.pd_days-1}박${list.pd_days}일</p>
+                            </div>
+                            <div class="pd_price">
+                                <strong class="price">평점 3.5/5</strong>
+                                <br>
+                                <br>
+                                <br>
+                                <strong class="price">가격 ${list.pd_price}</strong>
+                                <input type="hidden" id="pd_price" value="${list.pd_price}">
+                        	</div>
+                    	</div>
 					</div>
 					<div class="b_commentarea">
 					<c:forEach var="i" items="${r_comment}">

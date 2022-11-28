@@ -22,4 +22,24 @@ public class ProductServiceImpl implements ProductService {
 	public int decreaseBuyCnt(Integer pd_num) throws Exception{
 		return productDao.decreaseBuyCnt(pd_num);		
 	}
+	
+	@Override
+	public ProductDto pd_reviewSelect(Integer pd_num, String id) throws Exception{
+		return productDao.pd_reviewSelect(pd_num, id);
+	}
+	
+	@Override
+	public int updateProduct(ProductDto productDto) throws Exception{
+		return productDao.pd_updateProduct(productDto);
+	}
+	
+	@Override
+	public int pd_scoreInsert(ProductDto productDto, String id) throws Exception{
+		return productDao.pd_scoreInsert(productDto, id);
+	}
+	
+	@Override
+	public ProductDto pd_scoreSelect(Integer pd_num, String id) throws Exception{
+		return productDao.pd_scoreSelect(pd_num, id);
+	}
 }

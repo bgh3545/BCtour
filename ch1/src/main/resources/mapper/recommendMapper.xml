@@ -7,16 +7,20 @@
 		select count(*) from recommend
 	</select>
 	
-	<select id="r_selectAll" resultType="recommendDto">
+	<select id="r_selectAll" resultType="RecommendDto">
 		select * from recommend order by rec_reg_date desc, rec_num desc
 	</select>
 	
-	<select id="r_selectTop" resultType="recommendDto">
+	<select id="r_selectTop" resultType="RecommendDto">
 		select * from recommend where month(rec_reg_date) = month(now()) order by rec_recommend desc, rec_reg_date desc, rec_num desc limit 3
 	</select>
 	
-	<select id="r_select" parameterType="int" resultType="recommendDto">
+	<select id="r_select" parameterType="int" resultType="RecommendDto">
 		select * from recommend where rec_num = #{rec_num}
+	</select>
+	
+	<select id="r_selectReview" resultType ="RecommendDto">
+		select * from recommend where pd_num = #{pd_num} and rec_writer=#{id}
 	</select>
 	
 	<delete id="r_deleteAll">
@@ -27,11 +31,11 @@
 		delete from recommend where rec_num= #{rec_num} and rec_writer= #{rec_writer}
 	</delete>
 	
-	<insert id="r_insert" parameterType="recommendDto">
-		insert into recommend (rec_title, rec_content,rec_writer) values(#{rec_title}, #{rec_content}, #{rec_writer})
+	<insert id="r_insert" parameterType="RecommendDto">
+		insert into recommend (rec_title, rec_content,rec_writer,pd_num) values(#{rec_title}, #{rec_content}, #{rec_writer},#{pd_num})
 	</insert>
 	
-	<update id="r_update" parameterType="recommendDto">
+	<update id="r_update" parameterType="RecommendDto">
 		update recommend
 		set rec_title= #{rec_title}, rec_content= #{rec_content}, rec_up_date= now()
 		where rec_num= #{rec_num}
@@ -67,23 +71,23 @@
 		where rec_num= #{rec_num}
 	</update>
 	
-	<update id="r_increaseRecBool" parameterType="recommendDto">
+	<update id="r_increaseRecBool" parameterType="RecommendDto">
 		update recommendboolean
 		set recbool= 1
 		where rec_num= #{rec_num} and mem_id = #{mem_id}
 	</update>
 	
-	<update id="r_decreaseRecBool" parameterType="recommendDto">
+	<update id="r_decreaseRecBool" parameterType="RecommendDto">
 		update recommendboolean
 		set recbool= 0
 		where rec_num= #{rec_num} and mem_id = #{mem_id}
 	</update>
 	
-	<select id="rb_select" parameterType="recommendDto" resultType="recommendDto">
+	<select id="rb_select" parameterType="RecommendDto" resultType="RecommendDto">
 		select * from recommendboolean where rec_num = #{rec_num} and mem_id = #{mem_id}
 	</select>
 	
-	<insert id="rb_insert" parameterType="recommendDto">
+	<insert id="rb_insert" parameterType="RecommendDto">
 		insert into recommendboolean (rec_num, mem_id) values(#{rec_num}, #{mem_id})
 	</insert>
 	
@@ -91,12 +95,12 @@
 		select rec_num, rec_title, rec_content, rec_writer, rec_view,rec_recommend, rec_comment, rec_reg_date from recommend
 	</sql>
 	
-	<select id="r_selectPage" parameterType="map" resultType="recommendDto">
+	<select id="r_selectPage" parameterType="map" resultType="RecommendDto">
 		<include refid="r_selectFromrecommend"/>
 		order by rec_reg_date desc, rec_num desc limit #{offset},#{pageSize}
 	</select>
 	
-	<select id="r_searchSelectPage" parameterType="SearchCondition" resultType="recommendDto">
+	<select id="r_searchSelectPage" parameterType="SearchCondition" resultType="RecommendDto">
 		<include refid="r_selectFromrecommend"/>
 		where true
 		<include refid="r_searchCondition"/>
@@ -104,7 +108,7 @@
 		limit #{offset}, #{pageSize}
 	</select>
 	
-	<select id="r_searchSelectRecommendPage" parameterType="SearchCondition" resultType="recommendDto">
+	<select id="r_searchSelectRecommendPage" parameterType="SearchCondition" resultType="RecommendDto">
 		<include refid="r_selectFromrecommend"/>
 		where rec_recommend >= 10
 		<include refid="r_searchCondition"/>

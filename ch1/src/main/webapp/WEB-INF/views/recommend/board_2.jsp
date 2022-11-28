@@ -62,7 +62,6 @@
                     <div class="b_title">커뮤니티</div>
                     	<div class="b_writebtn">
                     		<button type="button" id="10recbtn" class="b_btnsize">10추</button>
-                    		<button type="button" id="writebtn" class="b_btnsize">글쓰기</button>
                     	</div>
                     <div class="b_content">
                    		<div class="b_indextitle">
