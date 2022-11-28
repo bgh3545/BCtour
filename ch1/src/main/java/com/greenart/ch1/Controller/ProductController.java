@@ -69,7 +69,7 @@ public class ProductController {
 	@RequestMapping(value = "/capital", method=RequestMethod.GET)
 	public String ProductList(Model m, ProductSearchCondition psc, String pd_city, HttpSession session) throws Exception{
 		
-		int totalCnt = productDao.searchResultCnt(psc,pd_city);
+		int totalCnt = productDao.p_citySelectResultCnt(psc,pd_city);
 		ProductPageHandler pph = new ProductPageHandler(totalCnt,psc);
 		
 		String id = (String)session.getAttribute("id");
@@ -84,7 +84,7 @@ public class ProductController {
 	@RequestMapping(value = "/buyCnt", method=RequestMethod.GET)
 	public String buycnt(Model m, ProductSearchCondition psc, String pd_city, HttpSession session) throws Exception{
 		
-		int totalCnt = productDao.searchResultCnt(psc,pd_city);
+		int totalCnt = productDao.p_citySelectResultCnt(psc,pd_city);
 		ProductPageHandler pph = new ProductPageHandler(totalCnt,psc);
 		
 		String id = (String)session.getAttribute("id");
@@ -92,7 +92,22 @@ public class ProductController {
 		
 		m.addAttribute("list", list);
 		m.addAttribute("ph",pph);
-		m.addAttribute("productFilter", "capital");
+		m.addAttribute("productFilter", "buyCnt");
+		return "Product/SeoulProductList";
+	}
+	
+	@RequestMapping(value = "/searchProduct", method=RequestMethod.GET)
+	public String searchProduct(Model m, ProductSearchCondition psc, HttpSession session) throws Exception{
+		
+		int totalCnt = productDao.searchResultCnt(psc);
+		ProductPageHandler pph = new ProductPageHandler(totalCnt,psc);
+		
+		String id = (String)session.getAttribute("id");
+		List<WishDto> list = productDao.pd_searchSelect(psc, id);
+		
+		m.addAttribute("list", list);
+		m.addAttribute("ph",pph);
+		m.addAttribute("productFilter", "searchProduct");
 		return "Product/SeoulProductList";
 	}
 	

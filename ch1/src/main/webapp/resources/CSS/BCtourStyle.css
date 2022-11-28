@@ -506,3 +506,10 @@
 		width:900px;
 	    min-height: 300px;
 	}
+	.b_searchBtn{
+	position:relative;
+	height:40px;
+	width:60px;
+	line-height:30px;
+	padding:0;
+	}

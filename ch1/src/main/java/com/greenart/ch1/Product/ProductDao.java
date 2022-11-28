@@ -9,7 +9,7 @@ public interface ProductDao {
 
 
 
-	int searchResultCnt(ProductSearchCondition psc,String pd_city) throws Exception;
+	int searchResultCnt(ProductSearchCondition psc) throws Exception;
 
 	List<ProductDto> searchSelectPage(ProductSearchCondition psc, String pd_city) throws Exception;
 
@@ -30,6 +30,10 @@ public interface ProductDao {
 	int decreaseBuyCnt(Integer pd_num) throws Exception;
 
 	List<WishDto> pd_buyCntSelect(ProductSearchCondition psc, String id, String pd_city) throws Exception;
+
+	List<WishDto> pd_searchSelect(ProductSearchCondition psc, String id) throws Exception;
+
+	int p_citySelectResultCnt(ProductSearchCondition psc, String pd_city) throws Exception;
 
 
 

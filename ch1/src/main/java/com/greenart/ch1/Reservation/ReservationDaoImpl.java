@@ -1,5 +1,6 @@
 package com.greenart.ch1.Reservation;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,7 @@ public class ReservationDaoImpl implements ReservationDao      {
 		map.put("pd_num", reservationDto.getPd_num());
 		map.put("totalMember", reservationDto.getTotalMember());
 		map.put("totalPrice", reservationDto.getTotalPrice());
+		map.put("pd_departDay", reservationDto.getPd_departDay());
 		
 		return session.insert(namespace + "res_insert",map);
 	}

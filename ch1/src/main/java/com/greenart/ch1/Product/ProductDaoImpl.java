@@ -30,12 +30,20 @@ public class ProductDaoImpl implements ProductDao      {
 	   }
 	   
 	   @Override
-	   public int searchResultCnt(ProductSearchCondition psc,String pd_city) throws Exception {
+	   public int searchResultCnt(ProductSearchCondition psc) throws Exception {
 		   Map map = new HashMap();
-			  map.put("pd_city",pd_city);
-			  map.put("keyword", psc.getKeyword());
-			  map.put("option", psc.getOption());
-	      return session.selectOne(namespace + "p_searchResultCnt",map);
+		   map.put("keyword", psc.getKeyword());
+		   map.put("option", psc.getOption());
+	      return session.selectOne(namespace + "p_searchResultCnt",psc);
+	   }
+	   
+	   @Override
+	   public int p_citySelectResultCnt(ProductSearchCondition psc, String pd_city) throws Exception {
+		   Map map = new HashMap();
+		   map.put("pd_city",pd_city);
+		   map.put("keyword", psc.getKeyword());
+		   map.put("option", psc.getOption());
+	      return session.selectOne(namespace + "p_citySelectResultCnt",map);
 	   }
 	   
 	   @Override
@@ -88,6 +96,16 @@ public class ProductDaoImpl implements ProductDao      {
 		   map.put("pd_city", pd_city);
 		   map.put("keyword", psc.getKeyword());
 		   return session.selectList(namespace+"pd_buyCntSelect",map);	
+		}
+	  
+	  @Override
+	   public List<WishDto> pd_searchSelect(ProductSearchCondition psc, String id) throws Exception{
+		   Map map = new HashMap();
+		   map.put("id", id);
+		   map.put("offset", psc.getOffset());
+		   map.put("pageSize", psc.getPageSize());
+		   map.put("keyword", psc.getKeyword());
+		   return session.selectList(namespace+"pd_searchSelect",map);	
 		}
 	  
 	  @Override

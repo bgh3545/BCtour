@@ -787,3 +787,10 @@ margin-top: 98px;
 	padding:0;
 	margin-left:30px;
 }
+.b_searchBtn{
+	position:relative;
+	height:40px;
+	width:60px;
+	line-height:30px;
+	padding:0;
+}

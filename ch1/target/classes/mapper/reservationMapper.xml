@@ -29,7 +29,7 @@
 	</update>
 	
 	<insert id="res_insert" parameterType="ReservationDto">
-		insert into reservation (mem_id, pd_num, totalMember, totalPrice) values(#{mem_id}, #{pd_num}, #{totalMember}, #{totalPrice})
+		insert into reservation (mem_id, pd_num, totalMember, totalPrice, pd_departDay) values(#{mem_id}, #{pd_num}, #{totalMember}, #{totalPrice}, #{pd_departDay})
 	</insert>
 
 	<select id="res_reservationSelect" resultType="ReservationDto">
