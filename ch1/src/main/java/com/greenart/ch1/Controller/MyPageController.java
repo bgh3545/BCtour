@@ -214,7 +214,7 @@ public class MyPageController {
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		}
 		
-		int cnt = userDao.deleteUser(user.getId(), user.getPwd());
+		userDao.deleteUser(user.getId(), user.getPwd());
 		
 		return "adminUserInfoDel";
 	}
