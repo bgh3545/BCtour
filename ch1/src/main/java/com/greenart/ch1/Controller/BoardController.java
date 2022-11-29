@@ -33,6 +33,7 @@ import com.greenart.ch1.PageHandlerAndSearchCondition.ProductSearchCondition;
 import com.greenart.ch1.PageHandlerAndSearchCondition.SearchCondition;
 import com.greenart.ch1.Product.ProductDao;
 import com.greenart.ch1.Product.ProductDto;
+import com.greenart.ch1.Product.ProductService;
 import com.greenart.ch1.Recommend.RecommendDao;
 import com.greenart.ch1.Recommend.RecommendDto;
 import com.greenart.ch1.Recommend.RecommendService;
@@ -66,6 +67,8 @@ public class BoardController {
 	rec_commentService rec_commService;
 	@Autowired
 	ProductDao productDao;
+	@Autowired
+	ProductService productService;
 	
 	@GetMapping("/list_1")
 	public String list_1(HttpServletRequest request,SearchCondition sc, Model m,String keyword) throws Exception {
@@ -320,7 +323,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/write_2")
-	public String write_2(HttpServletRequest request,Model m, RecommendDto recDto, HttpSession session, RedirectAttributes redatt) {
+	public String write_2(HttpServletRequest request,Model m, RecommendDto recDto, HttpSession session, RedirectAttributes redatt, Integer pd_scorePoint, Integer pd_num) {
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
@@ -337,6 +340,8 @@ public class BoardController {
 				return "recommend/write_2";
 			}
 			int rowCnt = recService.r_writer(recDto);
+			int setScore = productService.setScore(pd_num, writer, pd_scorePoint);
+			int addScore = productService.addScore(pd_num, pd_scorePoint);
 			if(rowCnt!=1) throw new Exception("write error");
 			redatt.addFlashAttribute("msg", "write_ok");
 			return "redirect:/board/list_2";
@@ -420,7 +425,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/remove_2")
-	public String remove_2(HttpServletRequest request,Model m, Integer rec_num, SearchCondition sc, HttpSession session, RedirectAttributes redatt) {
+	public String remove_2(HttpServletRequest request,Model m, Integer rec_num, SearchCondition sc, HttpSession session, RedirectAttributes redatt, Integer pd_num) {
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
@@ -436,7 +441,8 @@ public class BoardController {
 			else {
 				writer = (String)session.getAttribute("id");
 			}
-			
+			ProductDto proDto = productService.pd_scoreSelect(pd_num, writer);
+			int deleteScore = productService.deleteScore(pd_num, proDto.getPd_scorePoint());
 			int rowCnt= recService.r_remove(rec_num, writer);
 			if(rowCnt==1) {
 				redatt.addFlashAttribute("msg", "del");
@@ -490,8 +496,10 @@ public class BoardController {
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		String id = (String)session.getAttribute("id");
 		RecommendDto modi = recDao.r_selectReview(pd_num,id);
-		ProductDto productDto = productDao.select(modi.getPd_num());
+		ProductDto productDto = productDao.select(pd_num);
+		ProductDto proDto = productService.pd_scoreSelect(pd_num, id);
 		
+		m.addAttribute("score", proDto);
 		m.addAttribute("list", productDto);
 		m.addAttribute("modi", modi);
 		m.addAttribute("page", sc.getPage());
@@ -500,7 +508,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/modify_2")
-	public String modify_2(HttpServletRequest request,Model m,Integer rec_num, RecommendDto recDto, HttpSession session, SearchCondition sc, RedirectAttributes redatt) {
+	public String modify_2(HttpServletRequest request,Model m,Integer rec_num, RecommendDto recDto, HttpSession session, SearchCondition sc, RedirectAttributes redatt, Integer pd_num, Integer pd_scorePoint) {
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		
@@ -511,6 +519,10 @@ public class BoardController {
 		m.addAttribute("pageSize", sc.getPageSize());
 		
 		try {
+			ProductDto proDto = productService.pd_scoreSelect(pd_num, writer);
+			int deleteScore = productService.deleteScore(pd_num, proDto.getPd_scorePoint());
+			int setScore = productService.setScore(pd_num, writer, pd_scorePoint);
+			int addScore = productService.addScore(pd_num, pd_scorePoint);
 			int rowCnt = recService.r_modify(recDto);
 			if(rowCnt!=1) throw new Exception("modify error");
 			redatt.addFlashAttribute("msg", "modify_ok");

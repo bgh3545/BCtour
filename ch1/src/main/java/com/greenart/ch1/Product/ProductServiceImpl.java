@@ -42,4 +42,19 @@ public class ProductServiceImpl implements ProductService {
 	public ProductDto pd_scoreSelect(Integer pd_num, String id) throws Exception{
 		return productDao.pd_scoreSelect(pd_num, id);
 	}
+	
+	@Override
+	public int setScore(Integer pd_num, String id, Integer pd_scorePoint) throws Exception{
+		return productDao.setScore(pd_num, id, pd_scorePoint);
+	}
+	
+	@Override
+	public int addScore(Integer pd_num, Integer pd_scorePoint) throws Exception{
+		return productDao.addScore(pd_num, pd_scorePoint);
+	}
+	
+	@Override
+	public int deleteScore(Integer pd_num, Integer pd_scorePoint) throws Exception{
+		return productDao.deleteScore(pd_num, pd_scorePoint);
+	}
 }

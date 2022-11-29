@@ -43,6 +43,12 @@ public interface ProductDao {
 
 	ProductDto pd_scoreSelect(Integer pd_num, String id) throws Exception;
 
+	int setScore(Integer pd_num, String id, Integer pd_scorePoint) throws Exception;
+
+	int addScore(Integer pd_num, Integer pd_scorePoint) throws Exception;
+	
+	int deleteScore(Integer pd_num, Integer pd_scorePoint) throws Exception;
+
 
 
 	

@@ -16,6 +16,7 @@
 <link href="../resources/CSS/BCtourStyle.css?as" rel="stylesheet"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 <script src="../resources/ckeditor/ckeditor/ckeditor.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 	<div class="main">
@@ -74,6 +75,93 @@
 						<div class="b_writecontentarea">
 							<textarea name="rec_content" class="b_textarea" id="rec_content">${modi.rec_content}</textarea>
 						</div>
+						<div>
+							<c:if test="${score.pd_scorePoint ==1}">
+								<label id="pd_star1" class="wishLabel checked" >★
+	                        		<input type="radio" id="pd_score1" name="pd_scorePoint" value=1 style="display:none;" checked>
+	                        	</label>
+	                        	<label id="pd_star2" class="wishLabel" >★
+	                        		<input type="radio" id="pd_score2" name="pd_scorePoint" value=2 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star3" class="wishLabel" >★
+	                        		<input type="radio" id="pd_score3" name="pd_scorePoint" value=3 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star4" class="wishLabel" >★
+	                        		<input type="radio" id="pd_score4" name="pd_scorePoint" value=4 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star5" class="wishLabel" >★
+	                        		<input type="radio" id="pd_score5" name="pd_scorePoint" value=5 style="display:none;">
+	                        	</label>
+							</c:if>
+							<c:if test="${score.pd_scorePoint ==2}">
+								<label id="pd_star1" class="wishLabel checked" >★
+	                        		<input type="radio" id="pd_score1" name="pd_scorePoint" value=1 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star2" class="wishLabel checked" >★
+	                        		<input type="radio" id="pd_score2" name="pd_scorePoint" value=2 style="display:none;" checked>
+	                        	</label>
+	                        	<label id="pd_star3" class="wishLabel" >★
+	                        		<input type="radio" id="pd_score3" name="pd_scorePoint" value=3 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star4" class="wishLabel" >★
+	                        		<input type="radio" id="pd_score4" name="pd_scorePoint" value=4 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star5" class="wishLabel" >★
+	                        		<input type="radio" id="pd_score5" name="pd_scorePoint" value=5 style="display:none;">
+	                        	</label>
+							</c:if>
+							<c:if test="${score.pd_scorePoint ==3}">
+								<label id="pd_star1" class="wishLabel checked" >★
+	                        		<input type="radio" id="pd_score1" name="pd_scorePoint" value=1 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star2" class="wishLabel checked" >★
+	                        		<input type="radio" id="pd_score2" name="pd_scorePoint" value=2 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star3" class="wishLabel checked" >★
+	                        		<input type="radio" id="pd_score3" name="pd_scorePoint" value=3 style="display:none;" checked>
+	                        	</label>
+	                        	<label id="pd_star4" class="wishLabel" >★
+	                        		<input type="radio" id="pd_score4" name="pd_scorePoint" value=4 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star5" class="wishLabel" >★
+	                        		<input type="radio" id="pd_score5" name="pd_scorePoint" value=5 style="display:none;">
+	                        	</label>
+							</c:if>
+							<c:if test="${score.pd_scorePoint ==4}">
+								<label id="pd_star1" class="wishLabel checked" >★
+	                        		<input type="radio" id="pd_score1" name="pd_scorePoint" value=1 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star2" class="wishLabel checked" >★
+	                        		<input type="radio" id="pd_score2" name="pd_scorePoint" value=2 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star3" class="wishLabel checked" >★
+	                        		<input type="radio" id="pd_score3" name="pd_scorePoint" value=3 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star4" class="wishLabel checked" >★
+	                        		<input type="radio" id="pd_score4" name="pd_scorePoint" value=4 style="display:none;" checked>
+	                        	</label>
+	                        	<label id="pd_star5" class="wishLabel" >★
+	                        		<input type="radio" id="pd_score5" name="pd_scorePoint" value=5 style="display:none;">
+	                        	</label>
+							</c:if>
+							<c:if test="${score.pd_scorePoint ==5}">
+								<label id="pd_star1" class="wishLabel checked" >★
+	                        		<input type="radio" id="pd_score1" name="pd_scorePoint" value=1 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star2" class="wishLabel checked" >★
+	                        		<input type="radio" id="pd_score2" name="pd_scorePoint" value=2 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star3" class="wishLabel checked" >★
+	                        		<input type="radio" id="pd_score3" name="pd_scorePoint" value=3 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star4" class="wishLabel checked" >★
+	                        		<input type="radio" id="pd_score4" name="pd_scorePoint" value=4 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star5" class="wishLabel checked" >★
+	                        		<input type="radio" id="pd_score5" name="pd_scorePoint" value=5 style="display:none;" checked>
+	                        	</label>
+							</c:if>
+						</div>
 						<div style="display:flex; text-align:left; align-items:center;">
                         	<input type="hidden" name="pd_num" id="pd_num" value="${list.pd_num}">
                             <div class="pd_img">
@@ -92,7 +180,12 @@
                                 <p>여행기간 <input type="hidden" id="pd_days" value="${list.pd_days}">${list.pd_days-1}박${list.pd_days}일</p>
                             </div>
                             <div class="pd_price">
-                                <strong class="price2">평점 3.5/5</strong>
+                                <c:if test="${list.pd_totalScoreMember ==0}">
+                                	<strong class="price2">0/0</strong>
+                                </c:if>
+                                <c:if test="${list.pd_totalScoreMember !=0}">
+                                    <strong class="price2">평점 ${list.pd_totalScore/list.pd_totalScoreMember}/5</strong>
+                                </c:if>
                                 <strong class="price">${list.pd_price }</strong>
                                 <input type="hidden" id="pd_price" value="${list.pd_price}">
                         	</div>
@@ -120,7 +213,65 @@
 	         width:'100%',
 	         height:'400px',
 	         filebrowserUploadUrl: "<c:url value='/image/upload?'/>"
-	     });
+	    });
+		
+		$(document).ready(function() {
+			
+			$("#pd_star1").on('click', function() {
+			      if ( $("#pd_score1").prop('checked') ) {
+			        $("#pd_star1").addClass("checked");
+			        $("#pd_star2").removeClass("checked");
+			        $("#pd_star3").removeClass("checked");
+			        $("#pd_star4").removeClass("checked");
+			        $("#pd_star5").removeClass("checked");
+			        
+				}
+			});
+			
+			$("#pd_star2").on('click', function() {
+			      if ( $("#pd_score2").prop('checked') ) {
+			        $("#pd_star1").addClass("checked");
+			        $("#pd_star2").addClass("checked");
+			        $("#pd_star3").removeClass("checked");
+			        $("#pd_star4").removeClass("checked");
+			        $("#pd_star5").removeClass("checked");
+			        
+				}
+			});
+			
+			$("#pd_star3").on('click', function() {
+			      if ( $("#pd_score3").prop('checked') ) {
+			        $("#pd_star1").addClass("checked");
+			        $("#pd_star2").addClass("checked");
+			        $("#pd_star3").addClass("checked");
+			        $("#pd_star4").removeClass("checked");
+			        $("#pd_star5").removeClass("checked");
+			        
+				}
+			});
+			
+			$("#pd_star4").on('click', function() {
+			      if ( $("#pd_score4").prop('checked') ) {
+			        $("#pd_star1").addClass("checked");
+			        $("#pd_star2").addClass("checked");
+			        $("#pd_star3").addClass("checked");
+			        $("#pd_star4").addClass("checked");
+			        $("#pd_star5").removeClass("checked");
+			        
+				}
+			});
+			
+			$("#pd_star5").on('click', function() {
+			      if ( $("#pd_score5").prop('checked') ) {
+			        $("#pd_star1").addClass("checked");
+			        $("#pd_star2").addClass("checked");
+			        $("#pd_star3").addClass("checked");
+			        $("#pd_star4").addClass("checked");
+			        $("#pd_star5").addClass("checked");
+			        
+				}
+			});
+		});
 		
 	</script>
 </body>

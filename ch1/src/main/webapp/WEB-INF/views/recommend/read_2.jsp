@@ -113,7 +113,12 @@
                                 <p>여행기간 <input type="hidden" id="pd_days" value="${list.pd_days}">${list.pd_days-1}박${list.pd_days}일</p>
                             </div>
                             <div class="pd_price">
-                                <strong class="price">평점 3.5/5</strong>
+                                <c:if test="${list.pd_totalScoreMember ==0}">
+                                	<strong class="price2">0/0</strong>
+                                </c:if>
+                                <c:if test="${list.pd_totalScoreMember !=0}">
+                                    <strong class="price2">평점 ${list.pd_totalScore/list.pd_totalScoreMember}/5</strong>
+                                </c:if>
                                 <br>
                                 <br>
                                 <br>
@@ -194,7 +199,7 @@
 		});
 		
 		document.getElementById('modifybtn').addEventListener('click',e=>{
-		window.location = "<c:url value='/board/modify_2'/>?rec_num=${recDto.rec_num}&page=${page}&pageSize=${pageSize}";
+		window.location = "<c:url value='/board/modify_2'/>?rec_num=${recDto.rec_num}&pd_num=${list.pd_num}&page=${page}&pageSize=${pageSize}";
 		});
 		
 		$("#writecommbtn").click(function(){

@@ -133,9 +133,6 @@
         </div>
 	</div>
 	<script>
-		document.getElementById('writebtn').addEventListener('click',e=>{
-		window.location = "<c:url value='/board/write_2'/>";
-		});
 		
 		document.getElementById('10recbtn').addEventListener('click',e=>{
 		window.location = "<c:url value='/board/rec10'/>";

@@ -111,7 +111,12 @@
                                         <p>여행기간 <input type="hidden" id="pd_days" value="${list.pd_days}">${list.pd_days}일</p>
                                     </div>
                                     <div class="pd_price">
-                                    	<strong class="price2">평점 3.5/5</strong>
+                                    	<c:if test="${list.pd_totalScoreMember ==0}">
+                                    		<strong class="price2">0/0</strong>
+                                    	</c:if>
+                                    	<c:if test="${list.pd_totalScoreMember !=0}">
+                                    		<strong class="price2">평점 ${list.pd_totalScore/list.pd_totalScoreMember}/5</strong>
+                                    	</c:if>
                                         <strong class="price">${list.pd_price }</strong>
                                         <input type="hidden" id="pd_price" value="${list.pd_price}">
                                         <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><h2>자세히</h2></a>
