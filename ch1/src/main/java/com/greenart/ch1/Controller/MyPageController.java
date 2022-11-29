@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -82,7 +83,7 @@ public class MyPageController {
 		String pwd = userDto.getPwd();
 		
 		if(!pwdCheck(pwd,id)) {
-			String msg= "��й�ȣ�� Ʋ�Ƚ��ϴ�. �ٽ� �Է����ּ���";
+			String msg= "비밀번호가 틀렸습니다. 다시 입력해주세요";
 			m.addAttribute("msg", msg);
 			return "personalInfo/myPage_pwdCheck";
 		}
@@ -124,7 +125,7 @@ public class MyPageController {
 			session.invalidate();
 			return "infoDel";
 		} else {
-			throw new Exception("ȸ��Ż�� ����");
+			throw new Exception("회원탈퇴 예외");
 		}
 	}
 	
@@ -159,11 +160,11 @@ public class MyPageController {
 	public String modifyTel(HttpSession session, String tel) throws Exception{
 			String id = (String)session.getAttribute("id");
 			BCUserDto user = userDao.selectUser(id);
-			if(tel.equals(user.getTel())) throw new Exception("��ȣ�� ��ġ��");
-			if(tel.length() < 13) throw new Exception("���̰� ������");
+			if(tel.equals(user.getTel())) throw new Exception("번호가 일치함");
+			if(tel.length() < 13) throw new Exception("길이가 부족함");
 			
 			int cnt = userDao.updateUserTel(id, tel);
-			if(cnt!=1) throw new Exception("�˼� ���� ����");
+			if(cnt!=1) throw new Exception("알수 없는 에러");
 			
 			return "modifyTel";
 	}
@@ -187,7 +188,7 @@ public class MyPageController {
 		String id = (String)session.getAttribute("id"); // admin id
 		
 		if(!pwdCheck(pwd, id)) {
-			String msg= "��й�ȣ�� Ʋ�Ƚ��ϴ�. �ٽ� �Է����ּ���";
+			String msg= "비밀번호가 틀렸습니다. 다시 입력해주세요";
 			m.addAttribute("msg", msg);
 			return "personalInfo/manage_pwdCheck";
 		}
@@ -206,15 +207,16 @@ public class MyPageController {
 		return "personalInfo/manage_pwdCheck";
 	}
 	
-	@GetMapping("/manage_managerInfoDel")
-	public String manage_managerInfoDel(HttpServletRequest request, HttpSession session,String id, String pwd, Model m) throws Exception {
+	@PostMapping("/manage_managerInfoDel")
+	@ResponseBody
+	public String manage_managerInfoDel(HttpServletRequest request, HttpSession session,@RequestBody BCUserDto user, Model m) throws Exception {
 		if(!loginCheck(request)) {
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		}
 		
-		int cnt = userDao.deleteUser(id, pwd);
+		int cnt = userDao.deleteUser(user.getId(), user.getPwd());
 		
-		return "redirect:/myPage/manage_managerInfo";
+		return "adminUserInfoDel";
 	}
 	
 	@GetMapping("/myPage_reservation")

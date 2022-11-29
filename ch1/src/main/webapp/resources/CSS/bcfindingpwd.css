@@ -49,7 +49,10 @@ ul li {
 }
 
 #container>ul>li:hover {
-	border-bottom: 1px solid black;
+	font-weight: bold;
+}
+#container>ul>li[id="findpwd"] {
+	border-bottom: 3px solid black;
 	font-weight: bold;
 }
 

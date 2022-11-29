@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <c:set var="path" value="${pageContext.request.contextPath }" />
@@ -167,10 +167,10 @@
         // 최대 입력 글자수를 제한한다.
         if(pwd.length < 5 || pwd.length > 16) {
             pwd_msg = "최소 5자 이상, 최대 16자 이하";
-            color = "#A23E48";
+            color = "red";
         } else {
         	pwd_msg = "사용 가능한 비밀번호 입니다.";
-        	color = "#A23E48";
+        	color = "blue";
         }
         // 비밀번호 확인
     	if ( pwd == pwd_check && pwd_check.length != 0) {
@@ -179,7 +179,7 @@
     	}
        	if ( pwd != pwd_check && pwd_check.length != 0) {
        	pwd_msg = "비밀번호가 일치하지 않습니다.";
-       		color = "#A23E48";
+       		color = "red";
     	}
 
     } else {

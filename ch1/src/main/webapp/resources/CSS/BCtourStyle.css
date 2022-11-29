@@ -544,4 +544,6 @@
 	.checked{
 	color:rgb(229,214,0);
 	}
-	
+	#usertable {
+	font-size: 1.3em;
+	}

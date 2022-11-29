@@ -30,15 +30,7 @@ public class BCSignUpController {
 	
 	@PostMapping("/BCsignup")
 	public String save(Model m, BCUserDto user, String pwd_check) throws Exception {
-//		System.out.println(user);
-//		m.addAttribute("signuser", user);
 
-//		if(bcUserDao.selectIdCount(user.getId())!=1) {
-//			System.out.println("사용가능아이디");
-//			m.addAttribute("userId" , user.getId());
-//			System.out.println("user = " + user);
-//		}
-//		
 		if (!user.getPwd().equals(pwd_check)) {
 			System.out.println("비밀번호 불일치 pwd_check = " + pwd_check);
 			return "loginAndRegist/BCsignup";
@@ -52,7 +44,7 @@ public class BCSignUpController {
 	@GetMapping("/checkId")
 	@ResponseBody
 	public String test(@RequestParam String id, Model m) throws Exception {
-		System.out.println("아이디체크 =" + id);
+		System.out.println("idCheck = " + id);
 		int cnt = bcUserDao.selectIdCount(id);
 		System.out.println(cnt);
 		if(cnt!=0) {
@@ -61,7 +53,7 @@ public class BCSignUpController {
 		return "false";
 	}
 
-	// DB 전체 선택
+	// DB selectAll
 	@RequestMapping("/BCinput")
 	public String input(Model m, BCUserDto user) throws Exception {
 

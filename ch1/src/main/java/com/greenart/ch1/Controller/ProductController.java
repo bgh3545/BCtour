@@ -206,16 +206,6 @@ public class ProductController {
 		m.addAttribute("msg", "complete");
 		}
 		
-		if(resCheck.getState() ==1) {
-			m.addAttribute("msg", "reservated");
-			return "redirect:/capital?pd_city="+pd_city;
-		}
-		
-		if(resCheck.getState() ==2) {
-			m.addAttribute("msg", "cancleRequest");
-			return "redirect:/capital?pd_city="+pd_city;
-		}
-		
 		ProductDto productInfoDto = productDao.select(productDto.getPd_num());
 		m.addAttribute("info", productInfoDto);
 		
@@ -246,20 +236,20 @@ public class ProductController {
 	      if(!str.equals("")) {
 	         productDto.setPd_img(str);
 	      }
-	      System.out.println("수정 post"+productDto);
-	      // 페이지와, pageSize 정보를 전달
+	      System.out.println("�닔�젙 post"+productDto);
+	      // �럹�씠吏���, pageSize �젙蹂대�� �쟾�떖
 	      try {
-	         // 현재 form에 작성된 내용이 db에 저장됨 
+	         // �쁽�옱 form�뿉 �옉�꽦�맂 �궡�슜�씠 db�뿉 ���옣�맖 
 	         int rowCnt = productService.updateProduct(productDto);
 	         if(rowCnt != 1) throw new Exception("modify Error");
 	         reatt.addFlashAttribute("msg", "modify_ok");
-	         return"redirect:/Seoul?pd_city=서울";
+	         return"redirect:/Seoul?pd_city=�꽌�슱";
 	      } catch (Exception e) {
 	         e.printStackTrace();
-	         m.addAttribute("ProductDto", productDto); // 잘못 작성된 경우 내용 다시 전달
+	         m.addAttribute("ProductDto", productDto); // �옒紐� �옉�꽦�맂 寃쎌슦 �궡�슜 �떎�떆 �쟾�떖
 	         m.addAttribute("msg", "modify_error");
-	         m.addAttribute("m", "renew"); // 다시 이전의 수정모드로 돌아가기 위해서
-	         return"redirect:/Seoul?pd_city=서울";
+	         m.addAttribute("m", "renew"); // �떎�떆 �씠�쟾�쓽 �닔�젙紐⑤뱶濡� �룎�븘媛�湲� �쐞�빐�꽌
+	         return"redirect:/Seoul?pd_city=�꽌�슱";
 	      }
 	}
 	
