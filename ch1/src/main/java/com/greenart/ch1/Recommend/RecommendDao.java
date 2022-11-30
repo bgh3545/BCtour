@@ -50,4 +50,6 @@ public interface RecommendDao {
 	int r_searchResultRecommendCnt(SearchCondition sc) throws Exception;
 
 	List<RecommendDto> r_selectTop() throws Exception;
+
+	RecommendDto r_selectReview(Integer pd_num, String id) throws Exception;
 }

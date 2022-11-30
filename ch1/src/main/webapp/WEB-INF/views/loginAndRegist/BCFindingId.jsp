@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="${path }/resources/img/상단로고.jpg">
-    <link rel="stylesheet" href="${path }/resources/CSS/bcfindingid.css">
+    <link rel="stylesheet" href="${path }/resources/CSS/bcfindingid.css?a">
     <title>BC.Tour - 계정관리</title>
 </head>
 
@@ -26,7 +26,7 @@
             <p>아이디/비밀번호 찾기</p>
             <div id="container">
                 <ul>
-                    <li><a href="<c:url value='/BCFind/BCFindingId'/>">아이디</a></li>
+                    <li id="findid"><a href="<c:url value='/BCFind/BCFindingId'/>">아이디</a></li>
                     <li><a href="<c:url value='/BCFind/BCFindingPwd'/>">비밀번호</a></li>
                 </ul>
             </div>
@@ -72,16 +72,6 @@
     
     /* 인증확인 클릭 시 주소에 맞는 메일페이지로 이동 */
     document.getElementById('btn').addEventListener('click',e=>{
-    	setTimeout(() => {
-    		let emailAddr = document.getElementById('email').value;
-    		if ( emailAddr.match("naver") ) {
-    			window.location.href = "http://mail.naver.com";
-    		} else if ( emailAddr.match("gmail") ) {
-    			window.location.href = "https://mail.google.com";
-    		} else {
-    			window.location.href = "http://localhost:8080/bctour/logIn/logIn";
-    		}
-		}, 4300);
     	
     	let email = document.getElementById("email").value;
     	let valid = new RegExp('^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$');
@@ -89,11 +79,26 @@
  			alert("이메일 형식이 올바르지 않습니다.\n다시 입력해주세요.");
  			return false;
 		} else {
-			alert("입력하신 이메일로 인증확인이 발송되었습니다.\n메일페이지로 이동됩니다.");
-			var form = document.getElementById('form');
-			form.action = "<c:url value='/BCFind/emailGetId'/>";
-			form.method = "POST";
-			form.submit();
+			var mailPage = confirm("입력하신 이메일로 인증확인하시겠습니까?\n확인을 누르시면 메일페이지로 이동됩니다.");
+			if( mailPage ) {
+				var form = document.getElementById('form');
+				form.action = "<c:url value='/BCFind/emailGetId'/>";
+				form.method = "POST";
+				form.submit();
+				
+				setTimeout(() => {
+		    		let emailAddr = document.getElementById('email').value;
+		    		if ( emailAddr.match("naver") ) {
+		    			window.location.href = "http://mail.naver.com";
+		    		}
+		    		if ( emailAddr.match("gmail") ) {
+		    			window.location.href = "https://mail.google.com";
+		    		}
+				}, 1000);
+				
+			} else {
+				alert("발송이 취소되었습니다.");
+			}
 		}
 	});
     </script>

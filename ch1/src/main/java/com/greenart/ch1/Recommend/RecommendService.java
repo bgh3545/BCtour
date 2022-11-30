@@ -46,4 +46,6 @@ public interface RecommendService {
 	int r_getSearchResultRecommendCnt(SearchCondition sc) throws Exception;
 
 	List<RecommendDto> r_getTopList() throws Exception;
+
+	RecommendDto r_selectReview(Integer pd_num, String id) throws Exception;
 }

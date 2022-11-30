@@ -1,4 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/main/java/com/greenart/ch1/Controller/BCSignUpController.java=UTF-8
+encoding//src/main/java/com/greenart/ch1/Controller/EmailController.java=UTF-8
+encoding//src/main/java/com/greenart/ch1/Controller/MyPageController.java=UTF-8
+encoding//src/main/java/com/greenart/ch1/Controller/ProductController.java=UTF-8
 encoding//src/main/resources/error_message.properties=UTF-8
 encoding//src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml=UTF-8

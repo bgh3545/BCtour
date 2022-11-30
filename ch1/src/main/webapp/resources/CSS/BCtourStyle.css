@@ -233,7 +233,7 @@
     .b_btnsize{
     	margin-left:3px;
     	margin-right:3px;
-    	width:60px;
+    	width:75px;
     	height:30px;
     	font-size:18px;
     	line-height:30px;
@@ -505,4 +505,45 @@
 	.ck-editor__editable {
 		width:900px;
 	    min-height: 300px;
+	}
+	.b_searchBtn{
+	position:relative;
+	height:40px;
+	width:60px;
+	line-height:30px;
+	padding:0;
+	}
+	.list{
+    padding-left: 0;
+    width: 100%;
+	}
+	.pd_text{
+    padding:0px 228px 30px 25px;
+    width: 380px;
+	}
+	.tag>span{
+    display: inline-block;
+    padding: 0 6px;
+    line-height: 17px;
+    font-size: 12px;
+   
+    height: 12px;
+	}
+	.pakage_tag{
+    border: 1px solid #5b699c;
+    color: #5b699c;
+	}
+	.price{
+    font-size: 30px;
+	}
+	.wishLabel{
+	line-height:180px;
+	color:gray;
+	font-size:30px;
+	}
+	.checked{
+	color:rgb(229,214,0);
+	}
+	#usertable {
+	font-size: 1.3em;
 	}

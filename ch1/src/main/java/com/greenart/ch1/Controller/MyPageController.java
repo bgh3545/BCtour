@@ -1,13 +1,11 @@
 package com.greenart.ch1.Controller;
 
-import java.net.http.HttpRequest;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,18 +15,27 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.greenart.ch1.PageHandlerAndSearchCondition.PageHandler;
+import com.greenart.ch1.PageHandlerAndSearchCondition.ProductPageHandler;
+import com.greenart.ch1.PageHandlerAndSearchCondition.ProductSearchCondition;
 import com.greenart.ch1.PageHandlerAndSearchCondition.SearchCondition;
+import com.greenart.ch1.Product.ProductDao;
+import com.greenart.ch1.Product.ProductService;
 import com.greenart.ch1.QuestionsAndAnswers.AnswerDto;
 import com.greenart.ch1.QuestionsAndAnswers.QuestionsDao;
 import com.greenart.ch1.QuestionsAndAnswers.QuestionsDto;
 import com.greenart.ch1.QuestionsAndAnswers.QuestionsService;
+import com.greenart.ch1.Reservation.ReservationDao;
+import com.greenart.ch1.Reservation.ReservationDto;
+import com.greenart.ch1.Reservation.ReservationService;
 import com.greenart.ch1.User.BCUserDao;
 import com.greenart.ch1.User.BCUserDto;
+import com.greenart.ch1.WishList.WishDao;
+import com.greenart.ch1.WishList.WishDto;
+import com.greenart.ch1.WishList.WishService;
 
 @Controller
 @RequestMapping("/myPage")
@@ -40,6 +47,18 @@ public class MyPageController {
 	QuestionsService quesService;
 	@Autowired
 	BCUserDao userDao;
+	@Autowired
+	WishService wishService;
+	@Autowired
+	WishDao wishDao;
+	@Autowired
+	ReservationDao reservationDao;
+	@Autowired
+	ReservationService reservationService;
+	@Autowired
+	ProductDao productDao;
+	@Autowired
+	ProductService productService;
 	
 	@GetMapping("/myPage_main")
 	public String myPage_main(HttpServletRequest request, HttpSession session, Model m) throws Exception {
@@ -48,8 +67,12 @@ public class MyPageController {
 		
 		String writer = (String)session.getAttribute("id");
 		int quesCnt = quesService.q_getCount(writer);
+		int wishCnt = wishService.w_getCount(writer);
+		int reservationCnt = reservationService.res_count(writer);
 		
 		m.addAttribute("quesCnt", quesCnt);
+		m.addAttribute("wishCnt", wishCnt);
+		m.addAttribute("reservationCnt", reservationCnt);
 		
 		return "myPageMain/myPage_main";
 	}
@@ -60,7 +83,7 @@ public class MyPageController {
 		String pwd = userDto.getPwd();
 		
 		if(!pwdCheck(pwd,id)) {
-			String msg= "∫Òπ–π¯»£∞° ∆≤∑»Ω¿¥œ¥Ÿ. ¥ŸΩ√ ¿‘∑¬«ÿ¡÷ººø‰";
+			String msg= "ÎπÑÎ∞ÄÎ≤àÌò∏Í∞Ä ÌãÄÎ†∏ÏäµÎãàÎã§. Îã§Ïãú ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî";
 			m.addAttribute("msg", msg);
 			return "personalInfo/myPage_pwdCheck";
 		}
@@ -102,7 +125,7 @@ public class MyPageController {
 			session.invalidate();
 			return "infoDel";
 		} else {
-			throw new Exception("»∏ø¯≈ª≈ øπø‹");
+			throw new Exception("ÌöåÏõêÌÉàÌá¥ ÏòàÏô∏");
 		}
 	}
 	
@@ -137,11 +160,11 @@ public class MyPageController {
 	public String modifyTel(HttpSession session, String tel) throws Exception{
 			String id = (String)session.getAttribute("id");
 			BCUserDto user = userDao.selectUser(id);
-			if(tel.equals(user.getTel())) throw new Exception("π¯»£∞° ¿œƒ°«‘");
-			if(tel.length() < 13) throw new Exception("±Ê¿Ã∞° ∫Œ¡∑«‘");
+			if(tel.equals(user.getTel())) throw new Exception("Î≤àÌò∏Í∞Ä ÏùºÏπòÌï®");
+			if(tel.length() < 13) throw new Exception("Í∏∏Ïù¥Í∞Ä Î∂ÄÏ°±Ìï®");
 			
 			int cnt = userDao.updateUserTel(id, tel);
-			if(cnt!=1) throw new Exception("æÀºˆ æ¯¥¬ ø°∑Ø");
+			if(cnt!=1) throw new Exception("ÏïåÏàò ÏóÜÎäî ÏóêÎü¨");
 			
 			return "modifyTel";
 	}
@@ -156,7 +179,7 @@ public class MyPageController {
 		
 		m.addAttribute("quesCnt", quesCnt);
 		
-		return "myPageMain/manage_main";
+		return "personalInfo/manage_pwdCheck";
 	}
 	
 	@PostMapping("/manage_pwdCheck")
@@ -165,7 +188,7 @@ public class MyPageController {
 		String id = (String)session.getAttribute("id"); // admin id
 		
 		if(!pwdCheck(pwd, id)) {
-			String msg= "∫Òπ–π¯»£∞° ∆≤∑»Ω¿¥œ¥Ÿ. ¥ŸΩ√ ¿‘∑¬«ÿ¡÷ººø‰";
+			String msg= "ÎπÑÎ∞ÄÎ≤àÌò∏Í∞Ä ÌãÄÎ†∏ÏäµÎãàÎã§. Îã§Ïãú ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî";
 			m.addAttribute("msg", msg);
 			return "personalInfo/manage_pwdCheck";
 		}
@@ -184,56 +207,176 @@ public class MyPageController {
 		return "personalInfo/manage_pwdCheck";
 	}
 	
-//	@DeleteMapping("/manage_managerInfoDel")
-//	@ResponseBody
-//	public String manage_managerInfoDel(HttpServletRequest request, HttpSession session,@RequestBody String id, @RequestBody String pwd, Model m) throws Exception {
-//		if(!loginCheck(request)) {
-//			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
-//		}
-////		String id = user.getId();
-////		String pwd = user.getPwd();
-//		
-//		int cnt = userDao.deleteUser(id, pwd);
-//		
-//		return "adminUserInfoDel";
-//	}
-	
-	@GetMapping("/manage_managerInfoDel")
-	public String manage_managerInfoDel(HttpServletRequest request, HttpSession session,String id, String pwd, Model m) throws Exception {
+	@PostMapping("/manage_managerInfoDel")
+	@ResponseBody
+	public String manage_managerInfoDel(HttpServletRequest request, HttpSession session,@RequestBody BCUserDto user, Model m) throws Exception {
 		if(!loginCheck(request)) {
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
 		}
-//		String id = user.getId();
-//		String pwd = user.getPwd();
 		
-		int cnt = userDao.deleteUser(id, pwd);
+		userDao.deleteUser(user.getId(), user.getPwd());
 		
-		return "redirect:/myPage/manage_managerInfo";
-	}
-	
-	private boolean pwdCheck(String pwd, String id) throws Exception {
-		BCUserDto user = userDao.selectUser(id);
-		return user.getPwd().equals(pwd);
+		return "adminUserInfoDel";
 	}
 	
 	@GetMapping("/myPage_reservation")
-	public String myPage_reservation(HttpServletRequest request) {
+	public String myPage_reservation(HttpServletRequest request, SearchCondition sc, HttpSession session, Model m) throws Exception {
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
+		
+		String mem_id = (String)session.getAttribute("id");
+
+		List<ReservationDto> reslist = reservationService.res_reservationSelect(mem_id, sc);
+		
+		int totalCnt = reservationService.res_count(mem_id);
+		PageHandler ph = new PageHandler(totalCnt,sc);
+		
+		m.addAttribute("reslist", reslist);
+		m.addAttribute("page", sc.getPage());
+		m.addAttribute("ph", ph);
+		
+		
 		return "reservation/myPage_reservation";
 	}
 	
-	@GetMapping("/manage_reservation")
-	public String manage_reservation(HttpServletRequest request) {
+	@GetMapping("/cancle_request")
+	public String cancle_request(HttpServletRequest request, Integer pd_num, HttpSession session) throws Exception {
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
+		String mem_id = (String)session.getAttribute("id");
+		int cancleRequest = reservationService.res_deleteRequest(mem_id, pd_num);
+		return "redirect:/myPage/myPage_reservation";
+	}
+	
+	@GetMapping("/manage_reservation")
+	public String manage_reservation(HttpServletRequest request, SearchCondition sc, Model m) {
+		if(!loginCheck(request))
+			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
+		try {
+			List<ReservationDto> mrlist = reservationService.res_reservationSelectManage(sc);
+			
+			int totalCnt = reservationService.res_countManage();
+			PageHandler ph = new PageHandler(totalCnt, sc);
+			
+			m.addAttribute("mrlist", mrlist);
+			m.addAttribute("ph", ph);
+			m.addAttribute("page", sc.getPage());
+			m.addAttribute("reservationFilter","manage_reservation");
+			m.addAttribute("wait_btn","reservation_confirm");
+			m.addAttribute("cancle_btn","reservation_cancle");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "reservation/manage_reservation";
+	}
+	
+	@GetMapping("/reservation_confirm")
+	public String reservation_confirm(HttpServletRequest request, Integer pd_num, HttpSession session,String mem_id) throws Exception {
+		if(!loginCheck(request))
+			return "redirect:/";
+		int reservationConfirm = reservationService.res_reservation(mem_id, pd_num);
+		int increaseBuyCnt = productService.increaseBuyCnt(pd_num);
+		return "redirect:/myPage/manage_reservation";
+	}
+	
+	@GetMapping("/reservation_cancle")
+	public String reservation_cancle(HttpServletRequest request, Integer pd_num, HttpSession session,String mem_id) throws Exception {
+		if(!loginCheck(request))
+			return "redirect:/";
+		int reservationCancle = reservationService.res_delete(mem_id, pd_num);
+		int decreaseBuyCnt = productService.decreaseBuyCnt(pd_num);
+		return "redirect:/myPage/manage_reservation";
+	}
+	
+	@GetMapping("/wait_reservation_confirm")
+	public String wait_reservation_confirm(HttpServletRequest request, Integer pd_num, HttpSession session,String mem_id) throws Exception {
+		if(!loginCheck(request))
+			return "redirect:/";
+		int reservationConfirm = reservationService.res_reservation(mem_id, pd_num);
+		int increaseBuyCnt = productService.increaseBuyCnt(pd_num);
+		return "redirect:/myPage/reservationWait";
+	}
+	
+	@GetMapping("/wait_reservation_cancle")
+	public String wait_reservation_cancle(HttpServletRequest request, Integer pd_num, HttpSession session,String mem_id) throws Exception {
+		if(!loginCheck(request))
+			return "redirect:/";
+		int reservationCancle = reservationService.res_delete(mem_id, pd_num);
+		int decreaseBuyCnt = productService.decreaseBuyCnt(pd_num);
+		return "redirect:/myPage/reservationWait";
+	}
+	
+	@GetMapping("/cancle_reservation_confirm")
+	public String cancle_reservation_confirm(HttpServletRequest request, Integer pd_num, HttpSession session,String mem_id) throws Exception {
+		if(!loginCheck(request))
+			return "redirect:/";
+		int reservationConfirm = reservationService.res_reservation(mem_id, pd_num);
+		int increaseBuyCnt = productService.increaseBuyCnt(pd_num);
+		return "redirect:/myPage/cancleRequest";
+	}
+	
+	@GetMapping("/cancle_reservation_cancle")
+	public String cancle_reservation_cancle(HttpServletRequest request, Integer pd_num, HttpSession session,String mem_id) throws Exception {
+		if(!loginCheck(request))
+			return "redirect:/";
+		int reservationCancle = reservationService.res_delete(mem_id, pd_num);
+		int decreaseBuyCnt = productService.decreaseBuyCnt(pd_num);
+		return "redirect:/myPage/cancleRequest";
+	}
+	
+	@GetMapping("/reservationWait")
+	public String reservationWait(HttpServletRequest request, Model m, HttpSession session, SearchCondition sc) throws Exception {
+		if(!loginCheck(request))
+			return "redirect:/";
+		List<ReservationDto> mrlist = reservationService.res_reservationRequestManage(sc);
+		
+		int totalCnt = reservationService.res_countReservationRequest();
+		PageHandler ph = new PageHandler(totalCnt, sc);
+		
+		m.addAttribute("mrlist", mrlist);
+		m.addAttribute("ph", ph);
+		m.addAttribute("page", sc.getPage());
+		m.addAttribute("reservationFilter","reservationWait");
+		m.addAttribute("wait_btn","wait_reservation_confirm");
+		m.addAttribute("cancle_btn","wait_reservation_cancle");
+		return "reservation/manage_reservation";
+	}
+	
+	@GetMapping("/cancleRequest")
+	public String reservationCancle(HttpServletRequest request, Model m, HttpSession session, SearchCondition sc) throws Exception {
+		if(!loginCheck(request))
+			return "redirect:/";
+		List<ReservationDto> mrlist = reservationService.res_reservationCancleRequestManage(sc);
+		
+		int totalCnt = reservationService.res_countCancleRequest();
+		PageHandler ph = new PageHandler(totalCnt, sc);
+		
+		m.addAttribute("mrlist", mrlist);
+		m.addAttribute("ph", ph);
+		m.addAttribute("page", sc.getPage());
+		m.addAttribute("reservationFilter","cancleRequest");
+		m.addAttribute("wait_btn","cancle_reservation_confirm");
+		m.addAttribute("cancle_btn","cancle_reservation_cancle");
 		return "reservation/manage_reservation";
 	}
 	
 	@GetMapping("/myPage_wishList")
-	public String myPage_wishList(HttpServletRequest request) {
+	public String myPage_wishList(HttpServletRequest request,HttpSession session,ProductSearchCondition psc, Model m) throws Exception {
 		if(!loginCheck(request))
 			return "redirect:/logIn/logIn?toURL="+request.getRequestURL();
+		
+		String id = (String)session.getAttribute("id");
+		List<WishDto> wish = wishService.w_getWishPage(id, psc);
+		
+		int totalCnt = wishService.w_getCount(id);
+		
+		ProductPageHandler pph = new ProductPageHandler(totalCnt,psc);
+		
+		m.addAttribute("seoulList", wish);
+		m.addAttribute("ph", pph);
+		
 		return "wishList/myPage_wishList";
 	}
 	
@@ -540,4 +683,20 @@ public class MyPageController {
 			return false;
 		}
 	}
+	
+	private boolean managerCheck(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if(session.getAttribute("id")=="admin") {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	private boolean pwdCheck(String pwd, String id) throws Exception {
+		BCUserDto user = userDao.selectUser(id);
+		return user.getPwd().equals(pwd);
+	}
+	
 }

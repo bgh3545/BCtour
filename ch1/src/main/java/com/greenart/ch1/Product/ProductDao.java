@@ -9,7 +9,7 @@ public interface ProductDao {
 
 
 
-	int searchResultCnt(ProductSearchCondition psc,String pd_city) throws Exception;
+	int searchResultCnt(ProductSearchCondition psc) throws Exception;
 
 	List<ProductDto> searchSelectPage(ProductSearchCondition psc, String pd_city) throws Exception;
 
@@ -25,13 +25,32 @@ public interface ProductDao {
 
 	ProductDto select(int pd_num) throws Exception;
 
+	int increaseBuyCnt(Integer pd_num) throws Exception;
 
+	int decreaseBuyCnt(Integer pd_num) throws Exception;
 
+	List<WishDto> pd_buyCntSelect(ProductSearchCondition psc, String id, String pd_city) throws Exception;
+
+	List<WishDto> pd_searchSelect(ProductSearchCondition psc, String id) throws Exception;
+
+	int p_citySelectResultCnt(ProductSearchCondition psc, String pd_city) throws Exception;
+
+	ProductDto pd_reviewSelect(int pd_num, String id) throws Exception;
+
+	int pd_updateProduct(ProductDto productDto) throws Exception;
+
+	int pd_scoreInsert(ProductDto productDto, String id) throws Exception;
+
+	ProductDto pd_scoreSelect(Integer pd_num, String id) throws Exception;
+
+	int setScore(Integer pd_num, String id, Integer pd_scorePoint) throws Exception;
+
+	int addScore(Integer pd_num, Integer pd_scorePoint) throws Exception;
 	
+	int deleteScore(Integer pd_num, Integer pd_scorePoint) throws Exception;
 
-	
+	int p_buyCntResultCnt(ProductSearchCondition psc, String pd_city) throws Exception;
 
-
-	//ListDto orderByPrice(int pd_price) throws Exception;
+	List<ProductDto> pd_buyCntTop() throws Exception;
 
 }

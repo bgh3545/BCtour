@@ -22,9 +22,18 @@ public class ProductDto {
 	private String pd_deportStart;
 	private String pd_deportEnd;
 	private String pd_visitCity;
-	private Integer pd_score;
-	private Integer pd_scoreMember;
+	private Integer pd_totalScore;
+	private Integer pd_totalScoreMember;
+	private Integer pd_scorePoint;
+	private Integer pd_scoreCheck;
+	private Integer pd_reviewCheck;
 	
+	public Integer getPd_reviewCheck() {
+		return pd_reviewCheck;
+	}
+	public void setPd_reviewCheck(Integer pd_reviewCheck) {
+		this.pd_reviewCheck = pd_reviewCheck;
+	}
 	public int getPd_num() {
 		return pd_num;
 	}
@@ -115,33 +124,46 @@ public class ProductDto {
 	public void setPd_visitCity(String pd_visitCity) {
 		this.pd_visitCity = pd_visitCity;
 	}
-	public Integer getPd_score() {
-		return pd_score;
+	public Integer getPd_totalScore() {
+		return pd_totalScore;
 	}
-	public void setPd_score(Integer pd_score) {
-		this.pd_score = pd_score;
+	public void setPd_totalScore(Integer pd_totalScore) {
+		this.pd_totalScore = pd_totalScore;
 	}
-	public Integer getPd_scoreMember() {
-		return pd_scoreMember;
+	public Integer getPd_totalScoreMember() {
+		return pd_totalScoreMember;
 	}
-	public void setPd_scoreMember(Integer pd_scoreMember) {
-		this.pd_scoreMember = pd_scoreMember;
+	public void setPd_totalScoreMember(Integer pd_totalScoreMember) {
+		this.pd_totalScoreMember = pd_totalScoreMember;
 	}
-	
+	public Integer getPd_scorePoint() {
+		return pd_scorePoint;
+	}
+	public void setPd_scorePoint(Integer pd_scorePoint) {
+		this.pd_scorePoint = pd_scorePoint;
+	}
+	public Integer getPd_scoreCheck() {
+		return pd_scoreCheck;
+	}
+	public void setPd_scoreCheck(Integer pd_scoreCheck) {
+		this.pd_scoreCheck = pd_scoreCheck;
+	}
 	@Override
 	public String toString() {
 		return "ProductDto [pd_num=" + pd_num + ", pd_city=" + pd_city + ", pd_img=" + pd_img + ", pd_title=" + pd_title
 				+ ", pd_subtitle=" + pd_subtitle + ", pd_days=" + pd_days + ", pd_price=" + pd_price + ", pd_transport="
 				+ pd_transport + ", pd_departDay=" + pd_departDay + ", pd_departStart=" + pd_departStart
 				+ ", pd_departEnd=" + pd_departEnd + ", pd_deportDay=" + pd_deportDay + ", pd_deportStart="
-				+ pd_deportStart + ", pd_deportEnd=" + pd_deportEnd + ", pd_visitCity=" + pd_visitCity + ", pd_score="
-				+ pd_score + ", pd_scoreMember=" + pd_scoreMember + "]";
+				+ pd_deportStart + ", pd_deportEnd=" + pd_deportEnd + ", pd_visitCity=" + pd_visitCity
+				+ ", pd_totalScore=" + pd_totalScore + ", pd_totalScoreMember=" + pd_totalScoreMember
+				+ ", pd_scorePoint=" + pd_scorePoint + ", pd_scoreCheck=" + pd_scoreCheck + ", pd_reviewCheck="
+				+ pd_reviewCheck + "]";
 	}
 	
 	public ProductDto(int pd_num, String pd_city, String pd_img, String pd_title, String pd_subtitle, int pd_days,
 			int pd_price, String pd_transport, Date pd_departDay, String pd_departStart, String pd_departEnd,
-			Date pd_deportDay, String pd_deportStart, String pd_deportEnd, String pd_visitCity, Integer pd_score,
-			Integer pd_scoreMember) {
+			Date pd_deportDay, String pd_deportStart, String pd_deportEnd, String pd_visitCity, Integer pd_totalScore,
+			Integer pd_totalScoreMember, Integer pd_scorePoint, Integer pd_scoreCheck, Integer reviewCheck) {
 		super();
 		this.pd_num = pd_num;
 		this.pd_city = pd_city;
@@ -158,13 +180,17 @@ public class ProductDto {
 		this.pd_deportStart = pd_deportStart;
 		this.pd_deportEnd = pd_deportEnd;
 		this.pd_visitCity = pd_visitCity;
-		this.pd_score = pd_score;
-		this.pd_scoreMember = pd_scoreMember;
+		this.pd_totalScore = pd_totalScore;
+		this.pd_totalScoreMember = pd_totalScoreMember;
+		this.pd_scorePoint = pd_scorePoint;
+		this.pd_scoreCheck = pd_scoreCheck;
+		this.pd_reviewCheck = pd_reviewCheck;
 	}
 	
 	public ProductDto() {
 		super();
 	}
+	
 	
 }
 

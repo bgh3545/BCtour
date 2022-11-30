@@ -17,7 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css">
+    <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?asdqwe">
 </head>
 <body>
     <div class="main">
@@ -37,34 +37,31 @@
                 </div>
                 <div class="mypageDiv">
                     <ul class="mypage">
-                        <c:if test="${sessionScope.id != 'admin'}">
-                            <li><a href="<c:url value='${mypageLink}'/>">${mypage}</a></li>
-                            </c:if>
-                            <c:if test="${sessionScope.id == 'admin'}">
-                            <li><a href="<c:url value='/myPage/manage'/>">고객 관리</a></li>
-                        </c:if>
+                        <li><a href="<c:url value='${mypageLink}'/>">${mypage}</a></li>
                         <li><a href="<c:url value='/board/list_2'/>">여행일지</a></li>
                     </ul>
                 </div>
             </div>
-           
+            <div class ="product_title">
+                <h1>${InfoListSelect.pd_title }</h1>
+                <h3>${InfoListSelect.pd_subtitle }</h3>
+                
+            </div>
             <div class ="product_div">
                 <div class="pic_and_list">
                     <div class="pic">
-                        <img src="" alt=""> 
-                        <img src="" alt="">
-                        <img src="" alt="">
-                        <button id="prev">&lang;</button>
-                        <button id="next">&rang;</button>
+                        <img class ="pic_img" src="${path }/resources/img/${InfoListSelect.pd_img}" alt=""> 
                     </div>
                 </div>
                <form id="form">
-                <table class="tour_desc">
-                <input type = "hidden" name="pd_num" value="${InfoListSelect.pd_num }">
+               <input type = "hidden" name="pd_num" value="${InfoListSelect.pd_num }">
+              <div class ="pd_info">
+                 <div class="pd_infoTable">
+                	<table class="tour_desc">
                     <tbody class="t_desc_tbl">
                         <tr>
                             <th class="t_th">여행기간</th>
-                            <td>${InfoListSelect.pd_days }</td>
+                            <td>${InfoListSelect.pd_days }일</td>
                         </tr>
                         <tr>
                             <th class="t_th">이용 교통</th>
@@ -73,13 +70,17 @@
                                     <p>${InfoListSelect.pd_transport }</p>
                                 </div>  
                                 <div class="deportDepart">
-                                    <div class="deport">
+                                	<fmt:formatDate value="${InfoListSelect.pd_departDay}" pattern="yyyy.MM.dd" var="departDay" />
+                                    <div class="depart">
+                                    		<dt>출발일 : ${departDay}</dt>
                                             <dt>출발 : ${InfoListSelect.pd_departStart }</dt>
                                             <dt>도착 : ${InfoListSelect.pd_departEnd }</dt>
                                     </div>
-                                    <div class="depart">
-                                        <p>출발 : ${InfoListSelect.pd_deportStart }</p>
-                                        <p>도착 : ${InfoListSelect.pd_deportEnd }</p>
+                                    <div class="deport">
+                                    <fmt:formatDate value="${InfoListSelect.pd_deportDay}" pattern="yyyy.MM.dd" var="deportDay" />
+                                    	<dt>도착일 : ${deportDay }</dt>
+                                        <dt>출발 : ${InfoListSelect.pd_deportStart }</dt>
+                                        <dt>도착 : ${InfoListSelect.pd_deportEnd }</dt>
                                     </div>
                                 </div>
                             </td>
@@ -88,56 +89,30 @@
                             <th class="t_th">방문도시</th>
                             <td><p>${InfoListSelect.pd_visitCity }</p></td>
                         </tr>
-                        <tr>
-                        </tr>
                     </tbody>
-                </table>
-               
-                <table class="table">
-                    <tbody class="person_price">
-                        <tr>
-                            <th>구분</th>
-                            <th>성인</th>
-                            <th>아동</th>
-                            <th>유아</th>
-                        </tr>
-                        <tr>
-                            <td>기본상품가</td>
-                            <td>20000</td>
-                            <td>20000</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>유류할증료</td>
-                            <td>20000</td>
-                            <td>20000</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>총상품가</td>
-                            <td>20000</td>
-                            <td>20000</td>
-                            <td>0</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button style ="position : static; float:right;" type="button" id ="payBtn">결제하기</button>
-                <button style ="position : static; float:right;" type="button" id ="removebtn" ${sessionScope.id == "admin"? '':'style="display:none;"'}>상품삭제</button>
+               		 </table>
+              		</div>
+                 
+                </div>
+                <input type="${sessionScope.id=='admin'?'button':'hidden' }" id="removebtn" value="삭제">
+                <input type="${sessionScope.id=='admin'?'button':'hidden' }" id="ProductModify" onclick="location.href='<c:url value="/ProductModify"/>?pd_num=${InfoListSelect.pd_num}'" value="수정">
+                <input type="button" id="ProductPay" onclick="location.href='<c:url value='/purchase'/>?pd_num=${InfoListSelect.pd_num}&pd_city=${InfoListSelect.pd_city}'" value="결제">
+                <c:if test="${reviewCheck =='write'}">
+                <input type="button" id="reviewBtn" onclick="location.href='<c:url value="/board/write_2"/>?pd_num=${InfoListSelect.pd_num}'" value="리뷰 쓰기" ${InfoListSelect.pd_reviewCheck ==1? '':'style="display:none;"' }>
+                </c:if>
+                <c:if test="${reviewCheck =='modify'}">
+                <input type="button" id="reviewBtn" onclick="location.href='<c:url value="/board/modify_2"/>?pd_num=${InfoListSelect.pd_num}'" value="리뷰 수정" ${InfoListSelect.pd_reviewCheck ==1? '':'style="display:none;"' }>
+                </c:if>
             	</form>
             </div>
   <script>
-     	document.getElementById('removebtn').addEventListener('click',e=>{
-        if(!confirm("삭제하시겠습니까?")) return;
-        var form = document.getElementById('form');
-        form.action="<c:url value='/delete'/>";
-        form.method="post"
-        form.submit();
-        });
-     	
-     	document.getElementById('payBtn').addEventListener('click',e=>{
-    	window.location = "<c:url value='/purchase'/>?pd_num=${InfoListSelect.pd_num}";
-    	});
-     	
+     document.getElementById('removebtn').addEventListener('click',e=>{
+         if(!confirm("삭제하시겠습니까?")) return;
+         var form = document.getElementById('form');
+         form.action="<c:url value='/delete'/>";
+         form.method="post"
+         form.submit();
+         });
      </script>
 </body>
 </html>

@@ -138,4 +138,12 @@ public class RecommendDaoImpl implements RecommendDao{
 	public int r_searchResultRecommendCnt(SearchCondition sc) throws Exception{
 		return session.selectOne(namespace+"r_searchResultRecommendCnt", sc);
 	}
+	
+	@Override
+	public RecommendDto r_selectReview(Integer pd_num, String id) throws Exception{
+		Map map= new HashMap();
+		map.put("pd_num", pd_num);
+		map.put("id", id);
+		return session.selectOne(namespace+"r_selectReview", map);
+	}
 }

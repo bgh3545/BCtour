@@ -116,4 +116,9 @@ public class RecommendServiceImpl implements RecommendService {
 	public List<RecommendDto> r_getSearchResultRecommendPage(SearchCondition sc) throws Exception{
 		return recDao.r_searchSelectRecommendPage(sc);
 	}
+	
+	@Override
+	public RecommendDto r_selectReview(Integer pd_num, String id) throws Exception{
+		return recDao.r_selectReview(pd_num, id);
+	}
 }

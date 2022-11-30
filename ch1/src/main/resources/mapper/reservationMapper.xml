@@ -3,9 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
 <mapper namespace = "com.greenart.ch1">
-	<select id="res_count" resultType="int">
-		select count(*) from reservation where mem_id = #{mem_id}
-	</select>
 	
 	<select id="res_selectAll" resultType="ReservationDto">
 		select * from reservation where mem_id = #{mem_id} and state = 0 or state = 1 or state = 2 order by res_num desc
@@ -16,33 +13,55 @@
 	</select>
 	
 	<update id="res_modify">
-		update reservation set totalMember = #{totalMember}, totalPrice = #{totalPrice} where mem_id = #{mem_id} and pd_num = #{pd_num}
+		update reservation set totalMember = #{totalMember}, totalPrice = #{totalPrice}, state = 0, res_update= now() where mem_id = #{mem_id} and pd_num = #{pd_num}
 	</update>
 	
 	<update id="res_reservation" parameterType="map">
-		update reservation set state = 1, res_update= now() where mem_id = #{mem_id} and pd_num = #{pd_num} and state = 0
+		update reservation set state = 1, res_update= now() where mem_id = #{mem_id} and pd_num = #{pd_num}
 	</update>
 	
 	<update id="res_deleteRequest" parameterType="map">
-		update reservation set state = 2, res_update= now() where mem_id = #{mem_id} and pd_num = #{pd_num} and state = 0 or state = 1
+		update reservation set state = 2, res_update= now() where mem_id = #{mem_id} and pd_num = #{pd_num}
 	</update>
 	
 	<update id="res_delete" parameterType="map">
-		update reservation set state = 3, res_update= now() where mem_id = #{mem_id} and pd_num = #{pd_num} and state = 2
+		update reservation set state = 3, res_update= now() where mem_id = #{mem_id} and pd_num = #{pd_num}
 	</update>
 	
 	<insert id="res_insert" parameterType="ReservationDto">
-		insert into reservation (mem_id, pd_num, totalMember, totalPrice) values(#{mem_id}, #{pd_num}, #{totalMember}, #{totalPrice})
+		insert into reservation (mem_id, pd_num, totalMember, totalPrice, pd_departDay) values(#{mem_id}, #{pd_num}, #{totalMember}, #{totalPrice}, #{pd_departDay})
 	</insert>
+
+	<select id="res_reservationSelect" resultType="ReservationDto">
+		select A.res_num, A.pd_num, A.mem_Id, B.pd_title, B.pd_departDay, A.totalMember, A.totalPrice, A.state from reservation as A left join pd_info as B on A.pd_num = B.pd_num where mem_id=#{mem_id} and (state=0 or state=1 or state=2) order by res_num limit #{offset}, #{pageSize}
+	</select>
 	
-	<sql id="selectFromReservation">
-		select * from reservation
-	</sql>
+	<select id="res_reservationSelectManage" resultType="ReservationDto">
+		select A.res_num, A.pd_num, A.mem_Id, B.pd_title, B.pd_departDay, A.totalMember, A.totalPrice, A.state from reservation as A left join pd_info as B on A.pd_num = B.pd_num order by res_num limit #{offset}, #{pageSize}
+	</select>
 	
-	<select id="res_selectPage" parameterType="map" resultType="ReservationDto">
-		<include refid="selectFromReservation"/>
-		where mem_id=#{mem_id} and state = 0 or state = 1 or state = 2
-		order by res_num desc limit #{offset},#{pageSize}
+	<select id="res_reservationRequestManage" resultType="ReservationDto">
+		select A.res_num, A.pd_num, A.mem_Id, B.pd_title, B.pd_departDay, A.totalMember, A.totalPrice, A.state from reservation as A left join pd_info as B on A.pd_num = B.pd_num where A.state=0 order by res_num limit #{offset}, #{pageSize}
+	</select>
+	
+	<select id="res_reservationCancleRequestManage" resultType="ReservationDto">
+		select A.res_num, A.pd_num, A.mem_Id, B.pd_title, B.pd_departDay, A.totalMember, A.totalPrice, A.state from reservation as A left join pd_info as B on A.pd_num = B.pd_num where A.state=2 order by res_num limit #{offset}, #{pageSize}
+	</select>
+	
+	<select id="res_count" resultType="int">
+		select count(*) from reservation where mem_id = #{mem_id} and (state =0 or state=1 or state=2)
+	</select>
+	
+	<select id="res_countManage" resultType="int">
+		select count(*) from reservation
+	</select>
+	
+	<select id="res_countReservationRequest" resultType="int">
+		select count(*) from reservation where state=0
+	</select>
+	
+	<select id="res_countCancleRequest" resultType="int">
+		select count(*) from reservation where state=2
 	</select>
 	
 </mapper>
