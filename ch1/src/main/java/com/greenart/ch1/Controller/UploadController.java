@@ -1,17 +1,18 @@
 package com.greenart.ch1.Controller;
 
-import java.io.File;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
 @Controller
 public class UploadController {
 
 	
-	// UploadController- ê²Œì‹œíŒê³¼ ì—°ë™ ì „ ì‹¤ì œ upload ì‚¬ì´íŠ¸ì—ì„œ ì œëŒ€ë¡œ ë™ì‘í•˜ëŠ”ì§€ í™•ì¸ 
+	// UploadController- °Ô½ÃÆÇ°ú ¿¬µ¿ Àü ½ÇÁ¦ upload »çÀÌÆ®¿¡¼­ Á¦´ë·Î µ¿ÀÛÇÏ´ÂÁö È®ÀÎ 
 	@GetMapping("/upload2")
 	public String uploadAjax() {
 		return "file";
@@ -19,27 +20,27 @@ public class UploadController {
 	
 	@ResponseBody
 	@PostMapping("/upload2")
-							  // ìŠ¤í”„ë§ì—ì„œ ì§€ì›í•˜ëŠ” íŒŒì¼ ê°ì²´
+							  // ½ºÇÁ¸µ¿¡¼­ Áö¿øÇÏ´Â ÆÄÀÏ °´Ã¼
 	public void uploadAjaxPost( MultipartFile[] uploadFile, Integer bno) {
 
 		System.out.println("ajax post update!");
-        // ì €ì¥ë˜ëŠ” ê²½ë¡œ ( ìì‹ ì˜ íŒŒì¼ ìœ„ì¹˜ì— ë§ê²Œ ìˆ˜ì •í•  ê²ƒ)
-		String uploadFolder = "C:\\Users\\green\\git\\BCtour\\ch1\\src\\main\\webapp\\resources\\img";
+        // ÀúÀåµÇ´Â °æ·Î ( ÀÚ½ÅÀÇ ÆÄÀÏ À§Ä¡¿¡ ¸Â°Ô ¼öÁ¤ÇÒ °Í)
+		String uploadFolder = "C:\\Users\\green\\git\\ch1\\ch1\\src\\main\\webapp\\resources\\img";
 
-		for (MultipartFile multipartFile : uploadFile) { // ì—¬ëŸ¬ê°œì˜ íŒŒì¼ì¼ ê²½ìš° í–¥ìƒëœ forë¬¸ ì´ìš©
+		for (MultipartFile multipartFile : uploadFile) { // ¿©·¯°³ÀÇ ÆÄÀÏÀÏ °æ¿ì Çâ»óµÈ for¹® ÀÌ¿ë
 
 			System.out.println("------------------------");
-			System.out.println("Upload file name : " + multipartFile.getOriginalFilename()); // íŒŒì¼ ì´ë¦„
-			System.out.println("Upload file size : " + multipartFile.getSize()); // íŒŒì¼ í¬ê¸°
+			System.out.println("Upload file name : " + multipartFile.getOriginalFilename()); // ÆÄÀÏ ÀÌ¸§
+			System.out.println("Upload file size : " + multipartFile.getSize()); // ÆÄÀÏ Å©±â
 
 			String uploadFileName = multipartFile.getOriginalFilename(); 
 			System.out.println("uplodaFileName : "+uploadFileName);
-			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1); // ê²½ë¡œê°€ ìˆë‹¤ë©´ ì›ë˜ ì´ë¦„ë§Œ ê°€ì ¸ì˜¬ ìˆ˜ ìˆë„ë¡
+			uploadFileName = uploadFileName.substring(uploadFileName.lastIndexOf("\\") + 1); // °æ·Î°¡ ÀÖ´Ù¸é ¿ø·¡ ÀÌ¸§¸¸ °¡Á®¿Ã ¼ö ÀÖµµ·Ï
 			System.out.println("last file name : " + uploadFileName);
-			File saveFile = new File(uploadFolder, uploadFileName); //uploadFolder ìœ„ì¹˜ì— uploadFileNameìœ¼ë¡œ ìƒì„±
+			File saveFile = new File(uploadFolder, uploadFileName); //uploadFolder À§Ä¡¿¡ uploadFileNameÀ¸·Î »ı¼º
 
 			try {
-				multipartFile.transferTo(saveFile); // ìŠ¤í”„ë§ì—ì„œ ì œê³µí•˜ëŠ” íŒŒì¼ ê°ì²´ë¥¼ ìë°” íŒŒì¼ ê°ì²´ë¡œ ë³€í™˜
+				multipartFile.transferTo(saveFile); // ½ºÇÁ¸µ¿¡¼­ Á¦°øÇÏ´Â ÆÄÀÏ °´Ã¼¸¦ ÀÚ¹Ù ÆÄÀÏ °´Ã¼·Î º¯È¯
 
 			} catch (Exception e) {
 				e.getMessage();
@@ -50,28 +51,28 @@ public class UploadController {
 	
 	@ResponseBody
 	@PostMapping("/delete2")
-							  // ìŠ¤í”„ë§ì—ì„œ ì§€ì›í•˜ëŠ” íŒŒì¼ ê°ì²´
+							  // ½ºÇÁ¸µ¿¡¼­ Áö¿øÇÏ´Â ÆÄÀÏ °´Ã¼
 	public void deleteAjaxPost( MultipartFile[] deleteFile, Integer bno) {
 
 		System.out.println("ajax post update!");
 
 		String uploadFolder = "E:\\code\\MyBatisProject2\\src\\main\\webapp\\resources";
 
-		for (MultipartFile multipartFile : deleteFile) { // ì—¬ëŸ¬ê°œì˜ íŒŒì¼ì¼ ê²½ìš° í–¥ìƒëœ forë¬¸ ì´ìš©
+		for (MultipartFile multipartFile : deleteFile) { // ¿©·¯°³ÀÇ ÆÄÀÏÀÏ °æ¿ì Çâ»óµÈ for¹® ÀÌ¿ë
 
 			System.out.println("------------------------");
-			System.out.println("Upload file name : " + multipartFile.getOriginalFilename()); // íŒŒì¼ ì´ë¦„
-			System.out.println("Upload file size : " + multipartFile.getSize()); // íŒŒì¼ í¬ê¸°
+			System.out.println("Upload file name : " + multipartFile.getOriginalFilename()); // ÆÄÀÏ ÀÌ¸§
+			System.out.println("Upload file size : " + multipartFile.getSize()); // ÆÄÀÏ Å©±â
 
 			String deleteFileName = multipartFile.getOriginalFilename(); 
 			System.out.println("uplodaFileName : "+deleteFile);
-			deleteFileName = deleteFileName.substring(deleteFileName.lastIndexOf("\\") + 1); // ê²½ë¡œê°€ ìˆë‹¤ë©´ ì›ë˜ ì´ë¦„ë§Œ ê°€ì ¸ì˜¬ ìˆ˜ ìˆë„ë¡
+			deleteFileName = deleteFileName.substring(deleteFileName.lastIndexOf("\\") + 1); // °æ·Î°¡ ÀÖ´Ù¸é ¿ø·¡ ÀÌ¸§¸¸ °¡Á®¿Ã ¼ö ÀÖµµ·Ï
 			System.out.println("last file name : " + deleteFileName);
-			File delFile = new File(uploadFolder, deleteFileName); //uploadFolder ìœ„ì¹˜ì— uploadFileNameìœ¼ë¡œ ìƒì„±
+			File delFile = new File(uploadFolder, deleteFileName); //uploadFolder À§Ä¡¿¡ uploadFileNameÀ¸·Î »ı¼º
 
 			try {	
-				if(delFile.exists()) { // íŒŒì¼ì´ ì¡´ì¬í•˜ë©´
-					delFile.delete(); // íŒŒì¼ ì‚­ì œ	
+				if(delFile.exists()) { // ÆÄÀÏÀÌ Á¸ÀçÇÏ¸é
+					delFile.delete(); // ÆÄÀÏ »èÁ¦	
 				}
 
 			} catch (Exception e) {

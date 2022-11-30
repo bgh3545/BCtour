@@ -17,7 +17,7 @@ public class BCFindController {
 	@Autowired
 	BCUserDao bcUserDao;
 
-	// ���̵� ã��
+	// userId finding
 	@GetMapping("/BCFindingId")
 	public String findid() {
 		return "loginAndRegist/BCFindingId";
@@ -32,7 +32,7 @@ public class BCFindController {
 		return "loginAndRegist/BCFindingId";
 	}
 	
-	// ���̵� üũ
+	// userId check
 	private BCUserDto idCheck(String name, String email) throws Exception {
 		BCUserDto user = bcUserDao.idToEmail(name, email);
 		if (user.getName().equals(name) && user.getEmail().equals(email)) {
@@ -41,14 +41,14 @@ public class BCFindController {
 		return null;
 	}
 
-	// ��й�ȣ ã��
+	// userPwd finding
 	@GetMapping("/BCFindingPwd")
 	public String findpwd() {
 		return "loginAndRegist/BCFindingPwd";
 	}
 
 	@PostMapping("/BCFindingPwd")
-	public String findpwd2(Model m, String id, String name, String email) throws Exception { // ���� �ۼ�
+	public String findpwd2(Model m, String id, String name, String email) throws Exception {
 		if (pwdCheck(id, name, email) != null) {
 			m.addAttribute("userfindpwd", pwdCheck(id, name, email));
 			return "loginAndRegist/BCFindPwd";
@@ -56,8 +56,8 @@ public class BCFindController {
 		return "loginAndRegist/BCFingdingPwd";
 	}
 
-	// ��й�ȣ üũ
-	private BCUserDto pwdCheck(String id, String name, String email) throws Exception { // ��ȭ��ȣ ������ȣ �߰�
+	// userPwd check
+	private BCUserDto pwdCheck(String id, String name, String email) throws Exception {
 		BCUserDto user = bcUserDao.pwdToEmail(id, name, email);
 		if (user.getId().equals(id) && user.getName().equals(name)
 				&& user.getEmail().equals(email)) {

@@ -111,7 +111,7 @@
   
   <update id="updateProduct" parameterType="ProductDto">
          update pd_info
-         set pd_city = #{pd_city},pd_title = #{pd_title},pd_img = #{pd_img},pd_subtitle = #{pd_subtitle},pd_days = #{pd_days},pd_transport = #{pd_transport},pd_departDate = #{pd_departDate},pd_departStart = #{pd_departStart},pd_departEnd = #{pd_departEnd},pd_deportDate = #{pd_deportDate},pd_deportStart = #{pd_deportStart},pd_deportEnd = #{pd_deportEnd},pd_visitCity = #{pd_visitCity}
+         set pd_city = #{pd_city},pd_title = #{pd_title},pd_img = #{pd_img},pd_subtitle = #{pd_subtitle},pd_days = #{pd_days},pd_transport = #{pd_transport},pd_departDay = #{pd_departDay},pd_departStart = #{pd_departStart},pd_departEnd = #{pd_departEnd},pd_deportDay = #{pd_deportDay},pd_deportStart = #{pd_deportStart},pd_deportEnd = #{pd_deportEnd},pd_visitCity = #{pd_visitCity}
          where pd_num = #{pd_num}
    </update>
   

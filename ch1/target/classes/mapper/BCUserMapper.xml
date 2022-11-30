@@ -76,7 +76,7 @@
 	
 	<!-- 정보 전체 검색 -->
 	<select id="u_selectAll" resultType="BCUserDto">
-		SELECT * FROM member WHERE not id = 'admin'
+		SELECT * FROM member WHERE NOT id = 'admin'
 	</select>
 	
 </mapper>

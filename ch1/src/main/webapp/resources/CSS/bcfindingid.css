@@ -49,8 +49,11 @@ ul li {
 }
 
 #container>ul>li:hover {
-	border-bottom: 1px solid black;
 	font-weight: bold;
+}
+#container>ul>li[id="findid"] {
+	border-bottom: 3px solid black;
+	font-weight: bold; 
 }
 
 a {

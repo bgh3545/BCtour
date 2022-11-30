@@ -83,13 +83,16 @@
                                         <p><input type="text" name="pd_transport" value="${modi.pd_transport }" placeholder="버스or항공"></p>
                                     </div>  
                                     <div class="deportDepart">
-                                        <div class="deport">
-                                        		<dt>출발일 : <input type="text" name="pd_departDate" value ="${modi.pd_departDate }"placeholder="출발일"></dt>
+                                    
+                                        <div class="depart">
+                                        <fmt:formatDate value="${modi.pd_departDay}" pattern="yyyy.MM.dd" var="departDay" />
+                                        		<dt>출발일 : <input type="text" name="pd_departDay" value ="${departDay }"placeholder="출발일"></dt>
                                                 <dt>출발 : <input type="text" name="pd_departStart" value ="${modi.pd_departStart }"placeholder="출발시간"></dt>
                                                 <dt>도착 : <input type="text" name="pd_departEnd" value="${modi.pd_departEnd }" placeholder="도착시간"></dt>
                                         </div>
-                                        <div class="depart">
-                                        	<dt>출발일 : <input type="text" name="pd_deportDate" value ="${modi.pd_deportDate }"placeholder="출발일"></dt>
+                                        <div class="deport">
+                                        <fmt:formatDate value="${modi.pd_deportDay}" pattern="yyyy.MM.dd" var="deportDay" />
+                                        	<dt>출발일 : <input type="text" name="pd_deportDay" value ="${deportDay }"placeholder="출발일"></dt>
                                             <dt>출발 : <input type="text" name="pd_deportStart" value="${modi.pd_deportStart }" placeholder="출발시간"></dt>
                                             <dt>도착 : <input type="text" name="pd_deportEnd" value="${modi.pd_deportEnd }" placeholder="도착시간"></dt>
                                         </div>

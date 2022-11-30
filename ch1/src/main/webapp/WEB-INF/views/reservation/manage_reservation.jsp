@@ -80,29 +80,30 @@
 	                    	<div class="b_indextitle">
 	                    		<div class="b_rcontentNum">${i.res_num}</div>
 	                    		<div class="b_rcontentName">${i.pd_title}</div>
-	                    		<div class="b_rcontentNum">${i.mem_id}</div>
+	                    		<div class="b_rcontentNum" id="memId">${i.mem_id}</div>
 	                    		<div class="b_rcontentNum">${i.totalMember}</div>
 	                    		<div class="b_rcontentNum">${i.totalPrice}</div>
 	                    		<div class="b_rcontentNum">${departDay}</div>
+	                    		
 	                    		<c:if test="${i.state==0}">
-	                    		<div class="b_rcontentDate">예약대기</div>
-	                    		<div class="b_rcontentNum"><a href="<c:url value='/myPage/${wait_btn}?pd_num=${i.pd_num}&mem_id=${i.mem_id}'/>">확정하기</a></div>
-	                    		<div class="b_rcontentNum"><a href="<c:url value='/myPage/${cancle_btn}?pd_num=${i.pd_num}&mem_id=${i.mem_id}'/>">취소하기</a></div>
+		                    		<div class="b_rcontentDate">예약대기</div>
+		                    		<div class="b_rcontentNum"><a class="rvConfirmation" href="<c:url value='/myPage/${wait_btn}?pd_num=${i.pd_num}&mem_id=${i.mem_id}'/>">확정하기</a></div>
+		                    		<div class="b_rcontentNum"><a class="rvCancel" href="<c:url value='/myPage/${cancle_btn}?pd_num=${i.pd_num}&mem_id=${i.mem_id}'/>">취소하기</a></div>
 	                    		</c:if>
 	                    		<c:if test="${i.state==1}">
-	                    		<div class="b_rcontentDate">예약완료</div>
-	                    		<div class="b_rcontentNum"><a style="color:gray">확정하기</a></div>
-	                    		<div class="b_rcontentNum"><a href="<c:url value='/myPage/${cancle_btn}?pd_num=${i.pd_num}&mem_id=${i.mem_id}'/>">취소하기</a></div>
+		                    		<div class="b_rcontentDate">예약완료</div>
+		                    		<div class="b_rcontentNum"><a style="color:gray">확정하기</a></div>
+		                    		<div class="b_rcontentNum"><a class="rvCancel" href="<c:url value='/myPage/${cancle_btn}?pd_num=${i.pd_num}&mem_id=${i.mem_id}'/>">취소하기</a></div>
 	                    		</c:if>
 	                    		<c:if test="${i.state==2}">
-	                    		<div class="b_rcontentDate">취소요청</div>
-	                    		<div class="b_rcontentNum"><a style="color:gray;">확정하기</a></div>
-	                    		<div class="b_rcontentNum"><a href="<c:url value='/myPage/${cancle_btn}?pd_num=${i.pd_num}&mem_id=${i.mem_id}'/>">취소하기</a></div>
+		                    		<div class="b_rcontentDate">취소요청</div>
+		                    		<div class="b_rcontentNum"><a style="color:gray;">확정하기</a></div>
+		                    		<div class="b_rcontentNum"><a class="rvCancel" href="<c:url value='/myPage/${cancle_btn}?pd_num=${i.pd_num}&mem_id=${i.mem_id}'/>">취소하기</a></div>
 	                    		</c:if>
 	                    		<c:if test="${i.state==3}">
-	                    		<div class="b_rcontentDate">예약취소</div>
-	                    		<div class="b_rcontentNum"><a style="color:gray;">확정하기</a></div>
-	                    		<div class="b_rcontentNum"><a style="color:gray;">취소하기</a></div>
+		                    		<div class="b_rcontentDate">예약취소</div>
+		                    		<div class="b_rcontentNum"><a style="color:gray;">확정하기</a></div>
+		                    		<div class="b_rcontentNum"><a style="color:gray;">취소하기</a></div>
 	                    		</c:if>
 	                    	</div>
                     	</c:forEach>
@@ -127,7 +128,42 @@
             </div>
         </div>
 	</div>
+	<script src="http://code.jquery.com/jquery-latest.js" charset="UTF-8"></script>
 	<script>
+	// 확정하기 메일발송
+	var rv = $(".rvConfirmation");
+	rv.click(function() {
+		var memId = $(this).parent().parent().find("#memId").text();
+		$.ajax({
+			type : 'GET',
+			url : '/ch1/BCFind/rvConfirmEmail?mem_id=' + memId,
+			beforeSend : function (xhr) {
+					alert("예약확정이 완료되었습니다.");
+			},
+			success : function(result) {
+				console.log("예약완료 메일발송");
+			},
+			error : function(result) { alert("예약확정에서 오류가 발생하였습니다." + result) }
+		});
+	});
+	
+	// 취소하기 메일발송
+	var rvCancel = $(".rvCancel");
+	rvCancel.click(function() {
+		var memId2 = $(this).parent().parent().find("#memId").text();
+		$.ajax({
+			type : 'GET',
+			url : '/ch1/BCFind/rvCancelEmail?mem_id=' + memId2,
+			beforeSend : function (xhr) {
+					alert("예약이 취소되었습니다.");
+			},
+			success : function(result) {
+				console.log("취소메일발송");
+			},
+			error : function(result) { alert("예약취소에서 오류가 발생하였습니다." + result) }
+		});
+	});
+	
 		document.getElementById('reservationWait').addEventListener('click',e=>{
 		window.location = "<c:url value='/myPage/reservationWait'/>";
 		});
