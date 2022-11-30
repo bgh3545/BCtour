@@ -54,7 +54,7 @@
                         <h2><a href="<c:url value='/myPage/manage_reservation'/>">예약/취소 관리</a></h2>
                     </div>
                     <div class="city">
-                        <h2><a id="select" href="<c:url value='/myPage/myPage_questions'/>">고객문의</a></h2>
+                        <h2><a id="select" href="<c:url value='/myPage/manage_questions'/>">고객문의</a></h2>
                     </div>
                 </div>
                 <form id="form">
