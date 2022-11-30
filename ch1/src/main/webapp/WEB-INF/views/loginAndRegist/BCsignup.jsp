@@ -34,19 +34,19 @@
         </div>
         
         <div class="box">
-            <input type="password" name="pwd_check" id="pwd_check" onkeyup="Password()" placeholder="비밀번호 확인">
+            <input type="password" name="pwd_check" id="pwd_check" onkeyup="Password()" placeholder="비밀번호 확인" required="required">
         </div>
         
         <div id="pwd_msg"></div>
         
         <div class="box">
-            <input type="text" name="name" id="name" placeholder="이름">
+            <input type="text" name="name" id="name" placeholder="이름" required="required">
         </div>
         <div class="box">
             <input type="email" name="email" id="email" placeholder="이메일" required="required">
         </div>
         <div class="box">
-            <input type="tel" name="tel" id="tel" oninput="autoHyphen(this)" maxlength="13" placeholder="휴대번호">
+            <input type="tel" name="tel" id="tel" oninput="autoHyphen(this)" maxlength="13" placeholder="휴대번호" required="required">
         </div>
         <div class="checkbox">
         	<input type="checkbox" id="identify" name="identify">
@@ -92,8 +92,9 @@
 							$("#id_msg").text("아이디가 중복되었습니다.");
 							$("#id_msg").css("color", "red");
 						} else if ( !regExp.test(id) ) {
-				        	alert("특수문자는 사용하실 수 없습니다.");
-				        	$("#id_msg").css("display" , "none");
+							$("#id_msg").css("display" , "block");
+							$("#id_msg").text("특수문자는 사용하실 수 없습니다.");
+							$("#id_msg").css("color", "red");
 				        }
 						else{
 							if(confirm("사용 가능한 아이디 입니다.\n사용하시겠습니까?")) {
@@ -178,7 +179,7 @@
     		color = "blue";
     	}
        	if ( pwd != pwd_check && pwd_check.length != 0) {
-       	pwd_msg = "비밀번호가 일치하지 않습니다.";
+       		pwd_msg = "비밀번호가 일치하지 않습니다.";
        		color = "red";
     	}
 
