@@ -27,13 +27,13 @@
 	</select>
 	
 	<select id="pd_buyCntSelect" resultType="WishDto">
-		select A.pd_num, A.pd_img, A.pd_title, A.pd_subtitle, A.pd_days, A.pd_price, B.pd_wishCheck from pd_info as A left join pd_wish as B on A.pd_num = B.pd_num and B.id=#{id} where A.pd_city = #{pd_city} and (A.pd_title like concat('%',#{keyword},'%')
+		select A.pd_num, A.pd_img, A.pd_title, A.pd_subtitle, A.pd_days, A.pd_price, A.pd_totalScore, A.pd_totalScoreMember, B.pd_wishCheck from pd_info as A left join pd_wish as B on A.pd_num = B.pd_num and B.id=#{id} where A.pd_city = #{pd_city} and not A.pd_buyCnt =0 and (A.pd_title like concat('%',#{keyword},'%')
             or 
             A.pd_subtitle like concat('%',#{keyword},'%')) order by pd_buyCnt desc, pd_num desc limit #{offset}, #{pageSize}
 	</select>
 	
 	<select id="pd_searchSelect" resultType="WishDto">
-		select A.pd_num, A.pd_img, A.pd_title, A.pd_subtitle, A.pd_days, A.pd_price, B.pd_wishCheck from pd_info as A left join pd_wish as B on A.pd_num = B.pd_num and B.id=#{id} where (A.pd_title like concat('%',#{keyword},'%')
+		select A.pd_num, A.pd_img, A.pd_title, A.pd_subtitle, A.pd_days, A.pd_price, A.pd_totalScore, A.pd_totalScoreMember, B.pd_wishCheck from pd_info as A left join pd_wish as B on A.pd_num = B.pd_num and B.id=#{id} where (A.pd_title like concat('%',#{keyword},'%')
             or 
             A.pd_subtitle like concat('%',#{keyword},'%')) order by pd_buyCnt desc, pd_num desc limit #{offset}, #{pageSize}
 	</select>
@@ -96,6 +96,13 @@
    <select id="p_citySelectResultCnt" parameterType="map" resultType="int">
       select count(*) from pd_info
       where pd_city = #{pd_city}
+      <include refid="p_searchCondition"/>
+   </select>
+   
+   <select id="p_buyCntResultCnt" parameterType="map" resultType="int">
+      select count(*) from pd_info
+      where pd_city = #{pd_city} and not pd_buyCnt =0
+      <include refid="p_searchCondition"/>
    </select>
    
    <insert id ="insertInfo" parameterType="ProductDto">

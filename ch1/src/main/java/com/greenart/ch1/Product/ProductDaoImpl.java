@@ -47,6 +47,15 @@ public class ProductDaoImpl implements ProductDao      {
 	   }
 	   
 	   @Override
+	   public int p_buyCntResultCnt(ProductSearchCondition psc, String pd_city) throws Exception {
+		   Map map = new HashMap();
+		   map.put("pd_city",pd_city);
+		   map.put("keyword", psc.getKeyword());
+		   map.put("option", psc.getOption());
+	      return session.selectOne(namespace + "p_buyCntResultCnt",map);
+	   }
+	   
+	   @Override
 	   public int insert(ProductDto dto) throws Exception{
 		   return session.insert(namespace+"insertInfo",dto);
 	   }

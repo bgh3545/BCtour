@@ -120,7 +120,7 @@ public class ProductController {
 	@RequestMapping(value = "/buyCnt", method=RequestMethod.GET)
 	public String buycnt(Model m, ProductSearchCondition psc, String pd_city, HttpSession session) throws Exception{
 		
-		int totalCnt = productDao.p_citySelectResultCnt(psc,pd_city);
+		int totalCnt = productDao.p_buyCntResultCnt(psc,pd_city);
 		ProductPageHandler pph = new ProductPageHandler(totalCnt,psc);
 		
 		String id = (String)session.getAttribute("id");
@@ -204,16 +204,6 @@ public class ProductController {
 		if(resCheck !=null && (resCheck.getState() ==0 || resCheck.getState() ==3)) {
 		int reservationCnt = reservationService.res_modify(mem_id, reservationDto);
 		m.addAttribute("msg", "complete");
-		}
-		
-		if(resCheck.getState() ==1) {
-			m.addAttribute("msg", "reservated");
-			return "redirect:/capital?pd_city="+pd_city;
-		}
-		
-		if(resCheck.getState() ==2) {
-			m.addAttribute("msg", "cancleRequest");
-			return "redirect:/capital?pd_city="+pd_city;
 		}
 		
 		ProductDto productInfoDto = productDao.select(productDto.getPd_num());

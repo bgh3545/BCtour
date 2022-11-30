@@ -49,7 +49,7 @@
             <div class ="nav">
                 <div id="column">
                     <div class="city">
-                        <h2><a href="<c:url value='${myPagePwd}'/>">개인정보</a></h2>
+                        <h2><a href="<c:url value='/myPage/myPage_personalInfo'/>">개인정보</a></h2>
                     </div>
                     <div class="city">
                         <h2><a href="<c:url value='/myPage/myPage_reservation'/>">예약/취소 내역</a></h2>

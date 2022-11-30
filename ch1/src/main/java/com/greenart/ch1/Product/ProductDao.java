@@ -49,8 +49,6 @@ public interface ProductDao {
 	
 	int deleteScore(Integer pd_num, Integer pd_scorePoint) throws Exception;
 
-
-
-	
+	int p_buyCntResultCnt(ProductSearchCondition psc, String pd_city) throws Exception;
 
 }

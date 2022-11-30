@@ -190,7 +190,6 @@
 					      		  	pd_days:$(this).attr('data-days'),
 					                pd_price:$(this).attr('data-price')
 					      }
-				    	  console.log(params)
 				        $.ajax({
 				            type : "Post",            // HTTP method type(GET, POST) 형식이다.
 				            url : "/ch1/delWish?pd_num="+$(this).attr('data-num'),      // 컨트롤러에서 대기중인 URL 주소이다.
