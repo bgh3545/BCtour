@@ -237,19 +237,19 @@ public class ProductController {
 	         productDto.setPd_img(str);
 	      }
 	      System.out.println("�닔�젙 post"+productDto);
-	      // �럹�씠吏���, pageSize �젙蹂대�� �쟾�떖
+	      // 페이지와, pageSize 정보를 전달
 	      try {
-	         // �쁽�옱 form�뿉 �옉�꽦�맂 �궡�슜�씠 db�뿉 ���옣�맖 
+	         // 현재 form에 작성된 내용이 db에 저장됨
 	         int rowCnt = productService.updateProduct(productDto);
 	         if(rowCnt != 1) throw new Exception("modify Error");
 	         reatt.addFlashAttribute("msg", "modify_ok");
-	         return"redirect:/Seoul?pd_city=�꽌�슱";
+	         return"redirect:/capital?pd_city=" + productDto.getPd_city();
 	      } catch (Exception e) {
 	         e.printStackTrace();
 	         m.addAttribute("ProductDto", productDto); // �옒紐� �옉�꽦�맂 寃쎌슦 �궡�슜 �떎�떆 �쟾�떖
 	         m.addAttribute("msg", "modify_error");
 	         m.addAttribute("m", "renew"); // �떎�떆 �씠�쟾�쓽 �닔�젙紐⑤뱶濡� �룎�븘媛�湲� �쐞�빐�꽌
-	         return"redirect:/Seoul?pd_city=�꽌�슱";
+	         return"redirect:/capital?pd_city=" + productDto.getPd_city();
 	      }
 	}
 	
