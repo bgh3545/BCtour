@@ -51,4 +51,6 @@ public interface ProductDao {
 
 	int p_buyCntResultCnt(ProductSearchCondition psc, String pd_city) throws Exception;
 
+	List<ProductDto> pd_buyCntTop() throws Exception;
+
 }

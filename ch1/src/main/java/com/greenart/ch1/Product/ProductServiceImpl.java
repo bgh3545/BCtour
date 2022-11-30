@@ -1,5 +1,7 @@
 package com.greenart.ch1.Product;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +29,11 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public ProductDto pd_reviewSelect(Integer pd_num, String id) throws Exception{
 		return productDao.pd_reviewSelect(pd_num, id);
+	}
+	
+	@Override
+	public List<ProductDto> pd_buyCntTop() throws Exception{
+		return productDao.pd_buyCntTop();
 	}
 	
 	@Override

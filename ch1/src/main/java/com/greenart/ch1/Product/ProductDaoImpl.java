@@ -106,6 +106,11 @@ public class ProductDaoImpl implements ProductDao      {
 		   map.put("keyword", psc.getKeyword());
 		   return session.selectList(namespace+"pd_buyCntSelect",map);	
 	   }
+	   
+	   @Override
+	   public List<ProductDto> pd_buyCntTop() throws Exception{
+		   return session.selectList(namespace+"pd_buyCntTop");	
+	   }
 	  
 	   @Override
 	   public List<WishDto> pd_searchSelect(ProductSearchCondition psc, String id) throws Exception{

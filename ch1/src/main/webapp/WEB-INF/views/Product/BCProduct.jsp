@@ -96,7 +96,12 @@
                 </div>
                 <input type="${sessionScope.id=='admin'?'button':'hidden' }" id="removebtn" value="삭제">
                 <input type="${sessionScope.id=='admin'?'button':'hidden' }" id="ProductModify" onclick="location.href='<c:url value="/ProductModify"/>?pd_num=${InfoListSelect.pd_num}'" value="수정">
-                <input type="button" id="reviewBtn" onclick="location.href='<c:url value="//board/list_2"/>'" value="리뷰 쓰기">
+                <c:if test="${reviewCheck =='write'}">
+                <input type="button" id="reviewBtn" onclick="location.href='<c:url value="/board/write_2"/>?pd_num=${InfoListSelect.pd_num}'" value="리뷰 쓰기">
+                </c:if>
+                <c:if test="${reviewCheck =='modify'}">
+                <input type="button" id="reviewBtn" onclick="location.href='<c:url value="/board/modify_2"/>?pd_num=${InfoListSelect.pd_num}'" value="리뷰 수정">
+                </c:if>
             	</form>
             </div>
   <script>

@@ -1,5 +1,7 @@
 package com.greenart.ch1.Product;
 
+import java.util.List;
+
 public interface ProductService {
 
 	int write(ProductDto listDto) throws Exception;
@@ -21,5 +23,7 @@ public interface ProductService {
 	int addScore(Integer pd_num, Integer pd_scorePoint) throws Exception;
 
 	int deleteScore(Integer pd_num, Integer pd_scorePoint) throws Exception;
+
+	List<ProductDto> pd_buyCntTop() throws Exception;
 
 }

@@ -135,7 +135,7 @@
                     </div> 
                     
                     <div class="boardLink">
-                    	<c:forEach var="list" items="${InfoSelect }">
+                    	<c:forEach var="list" items="${list}">
                     	<a href="<c:url value='/product'/>?pd_num=${list.pd_num}">
                         <div style ="text-overflow: ellipsis" class ="board">
                             <img src="${path }/resources/img/${list.pd_img}"> 
@@ -146,51 +146,25 @@
                         </c:forEach>
                     </div>
                 </div>
+                <c:if test="${topList==null}">
+                	추천된 게시글이 없습니다.
+                </c:if>
+                <c:if test="${topList !=null}">
                 <div class ="review">
                     <div class="reviewTitle">
                         <h1>여행일지</h1>
                     </div>
-                    
                     <div class ="reviewMain">
                         <div class ="review1">
                             <div class ="reviewMainTitle">
-                                <h3>제주도에서 생긴 일</h3>
-                            </div>
-                            <div class="reviewContent">
-                                <p>오늘의 날씨는 쾌창하고 좋은 날씨다. 오늘 보드 준내 힘든데 어우 따라가기 어렵구먼. 저거 분명히 중요한 부분인데 집중 안해도 괜찮을까 슈발
-                                    <br>어우 근데 배고파 디지겄다. 오늘 맛있는거 먹어야겟구먼.
-                                </p> 
+                                <h3>${topList[0].rec_title}</h3>
                             </div>
                         </div>
-                        <div class="reviewImg">
-                            <img>
-                            <img>
-                        </div>
-                        <div class ="review2">
-                            <div class ="reviewMainTitle">
-                                <h3>제주도에서 생긴 일</h3>
-                            </div>
-                            <div class="reviewContent">
-                                <p>내일의 날씨는 쾌창하고 좋은 날씨다. 오늘 보드 준내 힘든데 어우 따라가기 어렵구먼. 저거 분명히 중요한 부분인데 집중 안해도 괜찮을까 슈발
-                                    <br>어우 근데 배고파 디지겄다. 오늘 맛있는거 먹어야겟구먼.
-                                </p> 
-                            </div>
-                        </div>
-                        <div class ="review3">
-                            <div class ="reviewMainTitle">
-                                <h3>제주도에서 생긴 일</h3>
-                            </div>
-                            <div class="reviewContent">
-                                <p>모레의 날씨는 쾌창하고 좋은 날씨다. 오늘 보드 준내 힘든데 어우 따라가기 어렵구먼. 저거 분명히 중요한 부분인데 집중 안해도 괜찮을까 슈발
-                                    <br>어우 근데 배고파 디지겄다. 오늘 맛있는거 먹어야겟구먼.
-                                </p> 
-                            </div>
+                        <div class="reviewImg" id="reviewImg">
                         </div>
                     </div>
                 </div>
-            </div>
-            
-        </div>
+                </c:if>
 <script>
         var slideWrapper = document.querySelector('.slider');
 		var slides = document.querySelectorAll('.item');
@@ -215,6 +189,19 @@
  		   }
  		   setTimeout(showSlides, 2000); 
 		}
+		
+		let img1 = `${topList[0].rec_content}`;
+    	let ext1 = /<img[^>]+src[^>]*>/;
+    	let res1 = ext1.exec(img1);
+    	if(res1 !=null){
+    	re1 = res1.toString();
+    	let thum1 = re1.replace(/style="[^"]+"/,'');
+    	document.getElementById("reviewImg").innerHTML=thum1;
+    	}
+    	else{
+    	document.getElementById("reviewImg").innerHTML='<img src="/ch1/resources/img/noImg.jpg">';
+    	}
+		
 </script>
 </body>
 </html>

@@ -32,6 +32,10 @@
             A.pd_subtitle like concat('%',#{keyword},'%')) order by pd_buyCnt desc, pd_num desc limit #{offset}, #{pageSize}
 	</select>
 	
+	<select id="pd_buyCntTop" resultType="ProductDto">
+		select * from pd_info where not pd_buyCnt =0 order by pd_buyCnt desc, pd_num desc limit 3
+	</select>
+	
 	<select id="pd_searchSelect" resultType="WishDto">
 		select A.pd_num, A.pd_img, A.pd_title, A.pd_subtitle, A.pd_days, A.pd_price, A.pd_totalScore, A.pd_totalScoreMember, B.pd_wishCheck from pd_info as A left join pd_wish as B on A.pd_num = B.pd_num and B.id=#{id} where (A.pd_title like concat('%',#{keyword},'%')
             or 
