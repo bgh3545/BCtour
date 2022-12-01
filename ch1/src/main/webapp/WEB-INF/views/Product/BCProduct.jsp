@@ -18,6 +18,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?asdqwe">
+    <link rel="icon" href="${path }/resources/img/상단로고.jpg" />
 </head>
 <body>
     <div class="main">

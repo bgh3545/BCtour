@@ -93,9 +93,10 @@
     }
     .searchEngine>input{
         width: 600px;
-        height: 55px;
+        height: 40px;
         border-radius: 8px;
         border-color: rgb(145,210,57);
+        font-size: 20px;
     }
     .myPageDiv{
     	float : right;
