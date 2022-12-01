@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="path" value="${pageContext.request.contextPath }" />
 <c:set var = "mypageLink" value="${sessionScope.id==null? '':'/myPage/myPage_main'}"/>
 <c:set var = "mypage" value="${sessionScope.id==null? '':'마이 페이지'}"/>
 <c:set var = "LoginOutlink" value="${sessionScope.id==null? '/logIn/logIn':'/logIn/logOut'}"/>
@@ -16,6 +17,7 @@
    <meta charset="UTF-8">
     <title>비씨투어</title>
 <link href="../resources/CSS/BCtourStyle.css?asdq" rel="stylesheet"/>
+<link rel="icon" href="${path }/resources/img/상단로고.jpg" />
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="../resources/ckeditor/ckeditor/ckeditor.js"></script>
