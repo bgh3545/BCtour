@@ -13,7 +13,7 @@
 <head>
    <meta charset="UTF-8">
     <title>비씨투어</title>
-<link href="../resources/CSS/BCtourStyle.css?a1sda" rel="stylesheet"/>
+<link href="../resources/CSS/BCtourStyle.css?da" rel="stylesheet"/>
 <fmt:formatDate value="${now}" pattern="yyyy-MM-dd" var="today" />
 </head>
 <body>

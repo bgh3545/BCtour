@@ -15,7 +15,7 @@
 
    <meta charset="UTF-8">
     <title>비씨투어</title>
-    <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?aaaa">
+    <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?aaaaa">
     <link rel="stylesheet" href="${path }/resources/CSS/slider1.css?asdafssa">
 </head>
 <body>
