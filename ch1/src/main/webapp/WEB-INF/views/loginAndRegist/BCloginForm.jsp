@@ -34,7 +34,7 @@
        <button type="button" onclick="location.href='<c:url value="/BCsignup"/>'">회원가입</button>
        
        <div class="margintop20">
-       		<label><input type="checkbox" name="rememberId" ${empty cookie.id.value ? "" : "checked"}>아이디기억</label>
+       		<label><input type="checkbox" name="rememberId" ${empty cookie.id.value ? "" : "checked"}>아이디저장</label>
        		<a href="<c:url value='/BCFind/BCFindingId'/>">아이디/비밀번호 찾기</a>
        </div>
        <div id="psize">
