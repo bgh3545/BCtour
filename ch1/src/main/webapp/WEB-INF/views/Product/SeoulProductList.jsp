@@ -16,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?hjk">
+    <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?hjak">
     <link rel="icon" href="${path }/resources/img/상단로고.jpg" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
@@ -142,7 +142,7 @@
                           </c:if>
                        </div>
                        <div>
-                       <input type="${sessionScope.id=='admin'?'button':'hidden' }" id="ProductWrite" onclick="location.href='<c:url value="/write"/>'" value="상품등록">
+                       <input class="btnsize" type="${sessionScope.id=='admin'?'button':'hidden' }" id="ProductWrite" onclick="location.href='<c:url value="/write"/>'" value="상품등록">
                        </div>
                         </div>
                     </div>

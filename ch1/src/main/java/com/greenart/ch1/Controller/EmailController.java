@@ -38,7 +38,8 @@ public class EmailController {
 
 			String subject = "BCtour 이메일 인증확인입니다."; // email title
 			
-			String findId = "아이디를 찾기 위한 인증확인 링크입니다. 아래의 링크를 클릭해주세요.\n\nhttp://localhost:8080/ch1/BCFind/BCFindingId?name2=" + name + "&email2=" + email;
+			String findId = "아이디를 찾기 위한 인증확인 링크입니다. 아래의 링크를 클릭해주세요."
+					+ "\n\nhttp://localhost:8080/ch1/BCFind/BCFindingId?name2=" + name + "&email2=" + email;
 			
 			String body = findId; // email contents
 

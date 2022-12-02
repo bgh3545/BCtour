@@ -10,7 +10,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="${path }/resources/img/상단로고.jpg" />
-<title>BC.Tour - 계정관리</title>
+<title>BC.Tour 아이디찾기</title>
 <style>
 * {
 	box-sizing: border-box;
@@ -37,7 +37,7 @@ header {
 	margin: -18px;
 	font-size: 3em;
 	font-weight: bold;
-	border-bottom: 1px solid black;
+	border-bottom: 2px solid rgba(0, 0, 0, 0.3);
 	/* border: 1px solid black; */
 }
 

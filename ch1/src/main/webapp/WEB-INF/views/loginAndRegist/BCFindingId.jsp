@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="${path }/resources/img/상단로고.jpg">
     <link rel="stylesheet" href="${path }/resources/CSS/bcfindingid.css?a">
-    <title>BC.Tour - 계정관리</title>
+    <title>BC.Tour 아이디찾기</title>
 </head>
 
 <body>

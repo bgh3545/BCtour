@@ -626,7 +626,7 @@ public class MyPageController {
 			int upansbool = quesService.q_ansBool(ans_num);
 			if(rowCnt!=1) throw new Exception("write error");
 			redatt.addFlashAttribute("msg", "write_ok");
-			return "redirect:/myPage/manager_questions";
+			return "redirect:/myPage/manage_questions";
 			}
 			m.addAttribute("msg", "notitle");
 			return "questionsAndAnswers/manage_write_answer";

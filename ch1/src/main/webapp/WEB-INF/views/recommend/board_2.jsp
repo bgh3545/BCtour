@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="column2">
-                    <div class="b_title">커뮤니티</div>
+                    <div class="b_title">여행일지</div>
                     	<div class="b_writebtn">
                     		<button type="button" id="10recbtn" class="b_btnsize">10추</button>
                     	</div>

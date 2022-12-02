@@ -16,8 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?asdqwe">
+    <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?addsdqwe">
     <link rel="icon" href="${path }/resources/img/상단로고.jpg" />
 </head>
 <body>
@@ -35,14 +34,21 @@
                 </div>
                 <div class="searchEngine">
                     <input type="text" id="id" name="id" value="" placeholder="검색">
+                    <button type="submit" class="b_searchBtn">검색</button>
                 </div>
                 <div class="mypageDiv">
                     <ul class="mypage">
-                        <li><a href="<c:url value='${mypageLink}'/>">${mypage}</a></li>
-                        <li><a href="<c:url value='/board/list_2'/>">여행일지</a></li>
+                        <c:if test="${sessionScope.id != 'admin'}">
+                            <li><a href="<c:url value='${mypageLink}'/>">${mypage}</a></li>
+                        </c:if>
+                        <c:if test="${sessionScope.id == 'admin'}">
+                            <li><a href="<c:url value='/myPage/manage'/>">고객 관리</a></li>
+                        </c:if>
+                            <li><a href="<c:url value='/board/list_2'/>">여행일지</a></li>
                     </ul>
                 </div>
             </div>
+            <div class="product_nav">
             <div class ="product_title">
                 <h1>${InfoListSelect.pd_title }</h1>
                 <h3>${InfoListSelect.pd_subtitle }</h3>
@@ -95,16 +101,17 @@
               		</div>
                  
                 </div>
-                <input type="${sessionScope.id=='admin'?'button':'hidden' }" id="removebtn" value="삭제">
-                <input type="${sessionScope.id=='admin'?'button':'hidden' }" id="ProductModify" onclick="location.href='<c:url value="/ProductModify"/>?pd_num=${InfoListSelect.pd_num}'" value="수정">
-                <input type="button" id="ProductPay" onclick="location.href='<c:url value='/purchase'/>?pd_num=${InfoListSelect.pd_num}&pd_city=${InfoListSelect.pd_city}'" value="결제">
+                <input class="btnsize" type="${sessionScope.id=='admin'?'button':'hidden' }" id="removebtn" value="삭제">
+                <input class="btnsize" type="${sessionScope.id=='admin'?'button':'hidden' }" id="ProductModify" onclick="location.href='<c:url value="/ProductModify"/>?pd_num=${InfoListSelect.pd_num}'" value="수정">
+                <input class="btnsize" type="button" id="ProductPay" onclick="location.href='<c:url value='/purchase'/>?pd_num=${InfoListSelect.pd_num}&pd_city=${InfoListSelect.pd_city}'" value="결제">
                 <c:if test="${reviewCheck =='write'}">
-                <input type="button" id="reviewBtn" onclick="location.href='<c:url value="/board/write_2"/>?pd_num=${InfoListSelect.pd_num}'" value="리뷰 쓰기" ${InfoListSelect.pd_reviewCheck ==1? '':'style="display:none;"' }>
+                <input class="btnsize" type="button" id="reviewBtn" onclick="location.href='<c:url value="/board/write_2"/>?pd_num=${InfoListSelect.pd_num}'" value="리뷰 쓰기" ${InfoListSelect.pd_reviewCheck ==1? '':'style="display:none;"' }>
                 </c:if>
                 <c:if test="${reviewCheck =='modify'}">
-                <input type="button" id="reviewBtn" onclick="location.href='<c:url value="/board/modify_2"/>?pd_num=${InfoListSelect.pd_num}'" value="리뷰 수정" ${InfoListSelect.pd_reviewCheck ==1? '':'style="display:none;"' }>
+                <input class="btnsize" type="button" id="reviewBtn" onclick="location.href='<c:url value="/board/modify_2"/>?pd_num=${InfoListSelect.pd_num}'" value="리뷰 수정" ${InfoListSelect.pd_reviewCheck ==1? '':'style="display:none;"' }>
                 </c:if>
             	</form>
+            	</div>
             </div>
   <script>
      document.getElementById('removebtn').addEventListener('click',e=>{

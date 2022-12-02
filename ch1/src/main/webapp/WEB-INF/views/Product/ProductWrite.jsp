@@ -15,7 +15,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?hjk">
+    <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?hsdjk">
     <link rel="icon" href="${path }/resources/img/상단로고.jpg" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
@@ -50,6 +50,7 @@
                     </ul>
                 </div>
             </div>
+            <div class="product_nav">
             <form action="" method ="post" id="form" enctype="multipart/form-data">
             <div class ="product_title_write">
                 <label for="pd_city"> 도시 선택 </label>
@@ -61,7 +62,7 @@
       					</optgroup>
       			</select>
                  <input class ="pd_titleInput" type="text" name="pd_title" placeholder="제목">
-                 <input class ="pd_titleInput" type="text" name="pd_subtitle" placeholder="부제목">
+                 <input class ="pd_subtitleInput" type="text" name="pd_subtitle" placeholder="부제목">
             </div>
             <div class ="product_div">
                 <div class="pic_and_list">
@@ -69,8 +70,7 @@
                         <img src="" alt=""> 
                         <img src="" alt="">
                         <img src="" alt="">
-                        <button id="prev">&lang;</button>
-                        <button id="next">&rang;</button>
+                     
                     </div>
                     <input type="file" name="uploadFile" id="uploadFile" multiple />이미지
                 </div>
@@ -118,9 +118,10 @@
                     </table>
                     </div>
                 </div>
-                <input id="writeBtn" type="button" value="등록"></input>
+                <input class="btnsize" id="writeBtn" type="button" value="등록"></input>
             </div>
             </form>
+            </div>
         </div>
     </div>
     <script>
@@ -131,14 +132,14 @@
 		 form.method="post";
 		 form.submit();
 
-	        alert("1111");
+	        alert("상품이 등록되었습니다.");
 	 
 	});		
 $(document).ready(function(){
     $('#uploadFile').on('change', function() {
         $('#fileName').text($(this).val());
         $('#del').val(1);
-        alert("2222");
+        alert("사진이 등록되었습니다.");
     });
 
 	// 정규표현식 : 예).com 끝나는 문장 등의 조건이 복잡한 문장을 컴퓨터에게 이해시키기 위한 구문
@@ -161,7 +162,6 @@ $(document).ready(function(){
 	}
 	
 	$('#writeBtn').on("click", function(e){
-		alert("이벤트 발생");
 		// form전송 객체, 주로 이미지와 같은 멀티미디어 파일을 페이지 전환없이 
 		// 폼데이터를 비동기로 제출하고 싶을 때  사용
 		let formData = new FormData(); 
@@ -204,7 +204,6 @@ $(document).ready(function(){
 			success : function(result){
 				console.log(result);
 				console.log($('#uploadFile').val())
-				alert("파일이 등록되었습니다.")
 				$('#deleteBtn').css('display', 'block');
 		        $('#del').val(2);
 		      

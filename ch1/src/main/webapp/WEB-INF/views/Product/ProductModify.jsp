@@ -15,7 +15,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?hjk">
+    <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?sdhjk">
     <link rel="icon" href="${path }/resources/img/상단로고.jpg" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link href="/bootstrap-3.3.2-dist/CSS/bootstrap.min.css" rel="stylesheet">
@@ -35,14 +35,21 @@
                 </div>
                 <div class="searchEngine">
                     <input type="text" id="id" name="id" value="" placeholder="검색">
+                    <button type="submit" class="b_searchBtn">검색</button>
                 </div>
                 <div class="mypageDiv">
                     <ul class="mypage">
-                        <li><a href="<c:url value='${mypageLink}'/>">${mypage}</a></li>
-                        <li><a href="<c:url value='/board/list_2'/>">여행일지</a></li>
+                        <c:if test="${sessionScope.id != 'admin'}">
+                            <li><a href="<c:url value='${mypageLink}'/>">${mypage}</a></li>
+                        </c:if>
+                        <c:if test="${sessionScope.id == 'admin'}">
+                            <li><a href="<c:url value='/myPage/manage'/>">고객 관리</a></li>
+                        </c:if>
+                            <li><a href="<c:url value='/board/list_2'/>">여행일지</a></li>
                     </ul>
                 </div>
             </div>
+            <div class="product_nav">
             <form action="" method ="post" id="form" enctype="multipart/form-data">
             <input type = "hidden" name="pd_num" value="${modi.pd_num }">
              <div class ="product_title_write">
@@ -54,17 +61,14 @@
       						<option value="의정부">의정부</option>
       					</optgroup>
                  <input class ="pd_titleInput" type="text" name="pd_title" value="${modi.pd_title }" placeholder="제목">
-                 <input class ="pd_titleInput" type="text" name="pd_subtitle" value="${modi.pd_subtitle }" placeholder="부제목">
+                 <input class ="pd_subtitleInput" type="text" name="pd_subtitle" value="${modi.pd_subtitle }" placeholder="부제목">
             </div>
-          
             <div class ="product_div">
                 <div class="pic_and_list">
                     <div class="pic">
-                        <img src="" alt=""> 
-                        <img src="" alt="">
-                        <img src="" alt="">
-                        <button id="prev">&lang;</button>
-                        <button id="next">&rang;</button>
+                        <img class ="pic_img" src="${path }/resources/img/${modi.pd_img}" alt=""> 
+                       
+                       
                     </div>
                     <input type="file" name="uploadFile" id="uploadFile" value="${modi.pd_img }" multiple  />이미지</input>
                 </div>
@@ -110,14 +114,11 @@
                         </tbody>
                     </table>
                     </div>
-                    <div class ="pd_titleDiv">
-                        <div class="pd_title">
-                        </div>
-                    </div>
                 </div>
-                <input id="modifyBtn" type="button" value="등록"></input>
+                <input id="modifyBtn" class="btnsize" type="button" value="등록"></input>
             </div>
             </form>
+        </div>
         </div>
     </div>
 <script>
