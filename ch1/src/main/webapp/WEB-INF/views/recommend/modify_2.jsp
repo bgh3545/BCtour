@@ -78,6 +78,23 @@
 							<textarea name="rec_content" class="b_textarea" id="rec_content">${modi.rec_content}</textarea>
 						</div>
 						<div>
+							<c:if test="${score.pd_scorePoint ==0}">
+								<label id="pd_star1" class="wishLabel" >★
+	                        		<input type="radio" id="pd_score1" name="pd_scorePoint" value=1 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star2" class="wishLabel" >★
+	                        		<input type="radio" id="pd_score2" name="pd_scorePoint" value=2 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star3" class="wishLabel" >★
+	                        		<input type="radio" id="pd_score3" name="pd_scorePoint" value=3 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star4" class="wishLabel" >★
+	                        		<input type="radio" id="pd_score4" name="pd_scorePoint" value=4 style="display:none;">
+	                        	</label>
+	                        	<label id="pd_star5" class="wishLabel" >★
+	                        		<input type="radio" id="pd_score5" name="pd_scorePoint" value=5 style="display:none;">
+	                        	</label>
+							</c:if>
 							<c:if test="${score.pd_scorePoint ==1}">
 								<label id="pd_star1" class="wishLabel checked" >★
 	                        		<input type="radio" id="pd_score1" name="pd_scorePoint" value=1 style="display:none;" checked>

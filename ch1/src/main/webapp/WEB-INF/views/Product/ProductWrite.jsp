@@ -14,7 +14,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>비씨투어</title>
     <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?hsdjk">
     <link rel="icon" href="${path }/resources/img/상단로고.jpg" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -119,22 +119,13 @@
                     </div>
                 </div>
                 <input class="btnsize" id="writeBtn" type="button" value="등록"></input>
+                <input class="btnsize" id="cancelBtn" type="button" onclick="location.href='<c:url value="/capital"/>?pd_city=seoul'" value="취소"></input>
             </div>
             </form>
             </div>
         </div>
     </div>
     <script>
-
-	document.getElementById('writeBtn').addEventListener('click',e=>{
-		 var form = document.getElementById('form');
-		 form.action="<c:url value='/write'/>"; // 가장 최근에 작성한 글이므로 1페이지에 보이게 되므로 따로 페이지값 지정 x
-		 form.method="post";
-		 form.submit();
-
-	        alert("상품이 등록되었습니다.");
-	 
-	});		
 $(document).ready(function(){
     $('#uploadFile').on('change', function() {
         $('#fileName').text($(this).val());
@@ -173,8 +164,15 @@ $(document).ready(function(){
 		let files = inputFile[0].files;// 실제 file 데이터
 		console.log(files);
 		if(files.length==0){
-			alert("파일이 없습니다.")
-			return;
+			alert("이미지를 등록 해 주십시오")
+			return false;
+		}
+		if(files.length!=0){
+			var form = document.getElementById('form');
+			form.action="<c:url value='/write'/>"; // 가장 최근에 작성한 글이므로 1페이지에 보이게 되므로 따로 페이지값 지정 x
+			form.method="post";
+			form.submit();
+	        alert("상품이 등록되었습니다.");
 		}
 		// 파일 데이터를 폼에 집어넣기
 		for(let i = 0; i < files.length; i++){

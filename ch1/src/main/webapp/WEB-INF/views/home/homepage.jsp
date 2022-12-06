@@ -123,10 +123,10 @@
                     <div class="column2">
                         <div class="slider">
     					 	<ul class="imgs">
-        				    <li><img class ="item" src="${path }/resources/img/slide1.jpg"></li>
-        					<li><img class ="item" src="${path }/resources/img/slide2.jpg"></li>
-        					<li><img class ="item" src="${path }/resources/img/slide3.jpg"></li>
-    					</ul>
+        				    <li><img class ="item" src="${path }/resources/img/slide1.png"></li>
+        					<li><img class ="item" src="${path }/resources/img/slide2.png"></li>
+        					<li><img class ="item" src="${path }/resources/img/slide3.png"></li>
+    						</ul>
    						</div>
 					</div>
                	</div>
@@ -187,16 +187,19 @@
 
 		slider.style.width = sliderWidth * totalSlides + 'px';
 
+		var list = ["background-color:rgb(246 172 162 / 30%);","background-color:rgb(244 166 67 / 30%);","background-color:rgb(113 215 238 / 30%);"];
+		
 		showSlides()
-
+		
 		function showSlides() {
  		   for(var i=0;i<slides.length;i++){
- 		       slider.style.left = -(sliderWidth * slideIndex) + 'px';    
+ 		       slider.style.left = -(sliderWidth * slideIndex) + 'px';
  		   }
  		   slideIndex++;
 		    if (slideIndex === totalSlides) {
 		        slideIndex = 0;
  		   }
+		   document.getElementsByClassName("m_nav")[0].setAttribute("style",list[slideIndex]);
  		   setTimeout(showSlides, 5000); 
 		}
 		

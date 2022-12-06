@@ -72,7 +72,7 @@ public class ProductController {
 	@PostMapping("/delete")
 	public String delete(Model m,int pd_num) {
 		int delete = productDao.deleteAll(pd_num);
-		return"redirect:/capital";
+		return "redirect:/capital?pd_city=seoul";
 	}
 	
 	@GetMapping("/write")
@@ -226,7 +226,7 @@ public class ProductController {
 	      m.addAttribute("page",psc.getPage());
 	      m.addAttribute("pageSize",psc.getPageSize());
 	      
-	      String uploadFolder = "C:\\Users\\green\\git\\ch1\\ch\\\src\\main\\webapp\\resources\\img";
+	      String uploadFolder = "C:\\Users\\green\\git\\BCtour\\ch1\\src\\main\\webapp\\resources\\img";
 
 	      String str="";
 	      
@@ -243,13 +243,13 @@ public class ProductController {
 	         int rowCnt = productService.updateProduct(productDto);
 	         if(rowCnt != 1) throw new Exception("modify Error");
 	         reatt.addFlashAttribute("msg", "modify_ok");
-	         return"redirect:/capital?pd_city=" + productDto.getPd_city();
+	         return"redirect:/product?pd_num=" + productDto.getPd_num();
 	      } catch (Exception e) {
 	         e.printStackTrace();
 	         m.addAttribute("ProductDto", productDto); // �옒紐� �옉�꽦�맂 寃쎌슦 �궡�슜 �떎�떆 �쟾�떖
 	         m.addAttribute("msg", "modify_error");
 	         m.addAttribute("m", "renew"); // �떎�떆 �씠�쟾�쓽 �닔�젙紐⑤뱶濡� �룎�븘媛�湲� �쐞�빐�꽌
-	         return"redirect:/capital?pd_city=" + productDto.getPd_city();
+	         return"redirect:/product?pd_num=" + productDto.getPd_num();
 	      }
 	}
 	

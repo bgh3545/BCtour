@@ -14,7 +14,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>비씨투어</title>
     <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?sdhjk">
     <link rel="icon" href="${path }/resources/img/상단로고.jpg" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -57,8 +57,8 @@
   				 <select id="pd_city" name="pd_city">
    				 	<option value="${modi.pd_city }">${modi.pd_city }</option>
    						 <optgroup label="수도권">
-     					 	<option value="서울">서울</option>
-      						<option value="의정부">의정부</option>
+     					 	<option value="seoul">서울</option>
+      						<option value="uijeongbu">의정부</option>
       					</optgroup>
                  <input class ="pd_titleInput" type="text" name="pd_title" value="${modi.pd_title }" placeholder="제목">
                  <input class ="pd_subtitleInput" type="text" name="pd_subtitle" value="${modi.pd_subtitle }" placeholder="부제목">
@@ -116,6 +116,7 @@
                     </div>
                 </div>
                 <input id="modifyBtn" class="btnsize" type="button" value="등록"></input>
+                <input id="cancelBtn" class="btnsize" type="button" onclick="location.href='<c:url value="/product"/>?pd_num=${modi.pd_num}'" value="취소"></input>
             </div>
             </form>
         </div>
@@ -214,9 +215,8 @@ $(document).ready(function(){
 		let fileName = $("#fileName").text()
 		if(files.length==0&&fileName.length==0){
 			$('#del').val(3);
-			alert("파일이 없습니다.")
-			modi();
-			return;
+			alert("이미지를 등록 해 주십시오");
+			return false;
 		}
 		else if(files.length==0&&fileName.lengh!=0){
 			$('#del').val(1);

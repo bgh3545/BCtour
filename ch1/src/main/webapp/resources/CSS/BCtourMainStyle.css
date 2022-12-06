@@ -103,7 +103,7 @@
         padding-right: 10px;
     }
     .m_nav{
-  		background-color:aliceblue;
+  		background-color:rgb(228,239,208);
     }
     .m_navMain{
     	width: 1910px;
@@ -156,10 +156,14 @@
     }
     
     #column>.city>h2{
-        color: gray;
+/*         color: gray; */
         font-size: 25px;
-        font-weight: lighter;
+/*         font-weight: lighter; */
+		font-weight: bold;
     
+    }
+    #m_column>.city>h2:hover{
+        color: rgb(145,210,57);
     }
     #column>.city>h2:hover{
         color: rgb(145,210,57);
@@ -902,4 +906,8 @@ margin-top: 98px;
     outline: none;
     cursor: pointer;
     resize: none;
+}
+.reviewMain>.reviewImg>p>img{
+	width: 300px !important;
+	height: 250px !important;
 }

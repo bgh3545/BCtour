@@ -25,7 +25,7 @@ public class UploadController {
 
 		System.out.println("ajax post update!");
         // 저장되는 경로 ( 자신의 파일 위치에 맞게 수정할 것)
-		String uploadFolder = "C:\\Users\\green\\git\\ch1\\ch1\\src\\main\\webapp\\resources\\img";
+		String uploadFolder = "C:\\Users\\green\\git\\BCtour\\ch1\\src\\main\\webapp\\resources\\img";
 
 		for (MultipartFile multipartFile : uploadFile) { // 여러개의 파일일 경우 향상된 for문 이용
 

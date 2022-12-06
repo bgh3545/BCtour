@@ -15,7 +15,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>비씨투어</title>
     <link rel="stylesheet" href="${path }/resources/CSS/BCtourMainStyle.css?addsdqwe">
     <link rel="icon" href="${path }/resources/img/상단로고.jpg" />
 </head>
@@ -115,11 +115,15 @@
             </div>
   <script>
      document.getElementById('removebtn').addEventListener('click',e=>{
-         if(!confirm("삭제하시겠습니까?")) return;
+         if(!confirm("삭제하시겠습니까?")) {
+        	 alert("삭제가 취소되었습니다.");
+        	 return;
+         }
          var form = document.getElementById('form');
          form.action="<c:url value='/delete'/>";
          form.method="post"
          form.submit();
+         alert("상품이 삭제되었습니다.");
          });
      </script>
 </body>
