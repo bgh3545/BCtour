@@ -369,6 +369,7 @@ public class MyPageController {
 		
 		String id = (String)session.getAttribute("id");
 		List<WishDto> wish = wishService.w_getWishPage(id, psc);
+		System.out.println("#####################" + wish);
 		
 		int totalCnt = wishService.w_getCount(id);
 		

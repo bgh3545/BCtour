@@ -96,7 +96,7 @@
                             <ul class="list">
                                 <li class="pd_list">
                                 		<label id="wishLabel" class="wishLabel" ${list.pd_wishCheck ==1?'style="color:rgb(229,214,0);"':'' }>★
-                        					<input type="checkbox" id="pd_wish" style="display:none;" ${list.pd_wishCheck ==1?'checked':'' } name="pd_wish" data-num="${list.pd_num}" data-title="${list.pd_title}" data-sub="${list.pd_subtitle}" data-days="${list.pd_days}" class="pd_wish" data-price="${list.pd_price}" >
+                        					<input type="checkbox" id="pd_wish" style="display:none;" ${list.pd_wishCheck ==1?'checked':'' } name="pd_wish" data-num="${list.pd_num}" data-img="${list.pd_img }" data-title="${list.pd_title}" data-sub="${list.pd_subtitle}" data-days="${list.pd_days}" class="pd_wish" data-price="${list.pd_price}" >
                         				</label>
                                     <div class="pd_img">
                                         <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><c:if test="${list.pd_img ==null}"><img src="/ch1/resources/img/noImg.jpg" style="width:200px; height:200px;"></c:if>
@@ -166,7 +166,8 @@
 				                pd_title:$(this).attr('data-title'),
 				                pd_subtitle:$(this).attr('data-sub'),
 				      		  	pd_days:$(this).attr('data-days'),
-				                pd_price:$(this).attr('data-price')
+				                pd_price:$(this).attr('data-price'),
+				                pd_img:$(this).attr('data-img')
 				      }
 				        $.ajax({
 				            type : "Post",            // HTTP method type(GET, POST) 형식이다.

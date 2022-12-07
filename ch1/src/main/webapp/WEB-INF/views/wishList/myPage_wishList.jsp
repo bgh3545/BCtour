@@ -71,7 +71,7 @@
                         					<input type="checkbox" name="pd_wish" id="pd_wish" class="pd_wish"  ${list.pd_wishCheck ==1? 'checked':''} data-num="${list.pd_num}" style="display:none;" >
                         				</label>
                                     <div class="pd_img">
-                                        <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><img src="/ch1/resources/img/200하늘.jpg"></a>
+                                        <a href="<c:url value='/product'/>?pd_num=${list.pd_num}"><img src="/ch1/resources/img/${list.pd_img }"></a>
                                     </div>
                                     <div class="pd_text">
                                         <div class="tag">

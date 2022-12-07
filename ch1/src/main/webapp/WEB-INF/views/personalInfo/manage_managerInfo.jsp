@@ -66,7 +66,6 @@
 				  <table class="table table-hover" id="usertable">
 						<tr>
 							<th style="text-align: center;">아이디</th>
-							<th style="text-align: center;">비밀번호</th>
 							<th style="text-align: center;">이름</th>
 							<th style="text-align: center;">이메일</th>
 							<th style="text-align: center;">전화번호</th>
@@ -77,7 +76,7 @@
 							<fmt:formatDate var="reg_date" value="${userAll.reg_date }" pattern="yyyy년 MM월 dd일"/>
 							<tr>
 								<td class="id">${userAll.id }</td>
-								<td class="pwd">${userAll.pwd }</td>
+								<td class="pwd" style="display:none">${userAll.pwd }</td>
 								<td>${userAll.name }</td>
 								<td>${userAll.email }</td>
 								<td>${userAll.tel }</td>

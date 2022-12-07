@@ -8,11 +8,11 @@
 	</select>
 	
 	<select id="w_selectAll" resultType="WishDto">
-		select pd_wishNum, id, pd_num, pd_title, pd_subtitle,  pd_days, pd_price, pd_wishCheck from pd_wish where id = #{id} order by pd_wishNum desc
+		select pd_wishNum, id, pd_num, pd_title, pd_img, pd_subtitle,  pd_days, pd_price, pd_wishCheck from pd_wish where id = #{id} order by pd_wishNum desc
 	</select>
 	
 	<select id="w_select" resultType="WishDto">
-		select pd_wishNum, id, pd_num, pd_title, pd_subtitle,  pd_days, pd_price, pd_wishCheck from pd_wish where id = #{id} and pd_num = #{pd_num}
+		select pd_wishNum, id, pd_num, pd_title, pd_img, pd_subtitle,  pd_days, pd_price, pd_wishCheck from pd_wish where id = #{id} and pd_num = #{pd_num}
 	</select>
 	
 	<update id="w_deleteAll">
@@ -24,7 +24,7 @@
 	</update>
 	
 	<insert id="w_insert" parameterType="wishDto">
-		insert into pd_wish (id, pd_num, pd_title, pd_subtitle,  pd_days, pd_price) values(#{id}, #{pd_num}, #{pd_title}, #{pd_subtitle},  #{pd_days}, #{pd_price})
+		insert into pd_wish (id, pd_num, pd_title, pd_img, pd_subtitle,  pd_days, pd_price) values(#{id}, #{pd_num}, #{pd_title}, #{pd_img}, #{pd_subtitle},  #{pd_days}, #{pd_price})
 	</insert>
 	
 	<update id="w_addWish" parameterType="map">
@@ -32,7 +32,7 @@
 	</update>
 	
 	<sql id="selectFromWish">
-		select pd_wishNum, id, pd_num, pd_title, pd_subtitle,  pd_days, pd_price, pd_wishCheck from pd_wish
+		select pd_wishNum, id, pd_num, pd_img, pd_title, pd_subtitle,  pd_days, pd_price, pd_wishCheck from pd_wish
 	</sql>
 	
 	<select id="w_selectPage" parameterType="map" resultType="WishDto">
